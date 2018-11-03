@@ -16,6 +16,15 @@ h1 {
 	text-align: center;
 	color: yellow;
 }
+p{
+	text-align: left;
+	color: white;
+}
+h3 {
+	text-align: left;
+	color: white;
+	font-size: 30;
+}
 </style>
 <h1>
 	RULES OF PACMAN
@@ -26,7 +35,11 @@ h1 {
 		$obj = json_decode($json);
 		$rules = $obj->rules;
 		foreach ($rules as $rule) {
-			echo "<li>$rule->desc</li>";
+			echo "<div>";
+			echo "<h3>$rule->desc</h3>";
+			echo "<p>rule description<p>";
+			echo "</div>";
+			echo "<br><br>";
 		}
 	?>
 </ul>
