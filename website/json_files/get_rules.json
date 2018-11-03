@@ -1,0 +1,8 @@
+{
+  "rules":[
+    {"desc":"first_rule"},
+    {"desc":"second_rule"},
+    {"desc":"third_rule"},
+    {"desc":"fourth_rule"}
+  ]
+}
