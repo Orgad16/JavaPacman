@@ -18,14 +18,7 @@ p {
 </style>
 <h1>ABOUT</h1>
 <p>
-	<?php
-		$json = file_get_contents('./json_files/get_about.json');
-		$obj = json_decode($json);
-		$abouts = $obj->abouts;
-		foreach ($abouts as $about) {
-			echo "$about";
-		}
-	?>
+This is the about on the page, passing it as a json
 </p>
 
 
