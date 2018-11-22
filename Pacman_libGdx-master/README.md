@@ -18,4 +18,4 @@ Java executable: [Link](https://github.com/yichen0831/Pacman_libGdx/releases/dow
 W / S / A / D: move
 Enter: restart game when out of lives
 
-# test for pull request
+# test pull request merge
