@@ -131,7 +131,7 @@ public class PlayScreen implements Screen {
         tiledMap = new TmxMapLoader().load("core/assets/map/map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / 16f, batch);
 
-        new WorldBuilder(tiledMap, engine, world, rayHandler).buildAll();
+        new WorldBuilder(tiledMap, null, engine, world, rayHandler).buildAll();
 
         stageViewport = new FitViewport(WIDTH * 20, HEIGHT * 20);
         stage = new Stage(stageViewport, batch);

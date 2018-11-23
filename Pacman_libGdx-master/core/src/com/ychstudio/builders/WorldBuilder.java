@@ -4,6 +4,7 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -25,6 +26,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.ychstudio.ai.astar.AStarMap;
 import com.ychstudio.ai.astar.AStartPathFinding;
 import com.ychstudio.components.AnimationComponent;
@@ -49,14 +52,54 @@ public class WorldBuilder {
 
     private boolean wall;
 
-    public WorldBuilder(TiledMap tiledMap, Engine engine, World world, RayHandler rayHandler) {
-        this.tiledMap = tiledMap;
+    public WorldBuilder(TiledMap tiledMap, JsonArray parsedMap, Engine engine, World world, RayHandler rayHandler) {
+        //this.tiledMap = tiledMap;
+        if (tiledMap != null) {
+            this.tiledMap = tiledMap;
+        } else {
+            this.tiledMap = createMapFrom(parsedMap);
+        }
         this.engine = engine;
         this.world = world;
         this.rayHandler = rayHandler;
 
         assetManager = GameManager.instance.assetManager;
         actorAtlas = assetManager.get("core/assets/images/actors.pack", TextureAtlas.class);
+    }
+
+    public TiledMap createMapFrom(JsonArray map) {
+        TiledMap tiledMap = new TiledMap();
+        MapLayers layers = tiledMap.getLayers();
+
+        final float WIDTH = Gdx.graphics.getWidth();
+        final float HEIGHT = Gdx.graphics.getHeight();
+
+        // TODO: create TiledMapTileLayer with width, height and number of pixels per cube (like in the GUI) X 2 (W,H,s,s)
+        TiledMapTileLayer layer = new TiledMapTileLayer(Integer.valueOf(Float.toString(WIDTH)), Integer.valueOf(Float.toString(HEIGHT)), 32, 32);
+
+
+
+        for (JsonElement element : map) {
+            JsonArray array = element.getAsJsonArray();
+
+            for (JsonElement jsonElement : array) {
+                int x = jsonElement.getAsJsonObject().get("x").getAsInt();
+                int y = jsonElement.getAsJsonObject().get("y").getAsInt();
+                boolean is_wall = jsonElement.getAsJsonObject().get("is_wall").getAsBoolean();
+
+
+
+                // TODO: iterate over the wight and height
+                    // TODO: create StaticTiledMapTile with the right tile.
+                    // TODO: insert values into cells and append to layer that we created above.
+
+                // TODO: add the layer we created to the layers we got with MapLayers layers.
+
+            }
+        }
+
+
+        return tiledMap;
     }
 
     public void buildAll() {
