@@ -10,17 +10,19 @@ public class JsonHandler {
     private BufferedReader bufferedReader;
     private FileWriter writer;
     private Gson gson;
+    private JsonObject content;
 
     public JsonHandler(String path) throws IOException{
         this.path = path;
         this.bufferedReader = new BufferedReader(new FileReader(path));
         this.writer = new FileWriter(path);
         this.gson = new Gson();
+        this.content = null;
     }
 
     public JsonObject getContent() {
-        JsonObject content = gson.fromJson(bufferedReader, JsonObject.class);
-
+        JsonObject tempContent = gson.fromJson(bufferedReader, JsonObject.class);
+        this.content = tempContent;
         try {
             bufferedReader.close();
         } catch (IOException e) {
@@ -72,8 +74,8 @@ public class JsonHandler {
         } else { return new JsonObject(); }
     }
 
-    public boolean editJson(String questionToEdit, JsonObject contentToChange, String field) {
-        JsonObject tempContent = getContent();
+    public void editJson(String questionToEdit, JsonObject contentToChange, String field) {
+        JsonObject tempContent = content;
 
         // get the specified field, in out questions case it will be: "questions"
         JsonArray array = tempContent.get(field).getAsJsonArray();
@@ -124,6 +126,6 @@ public class JsonHandler {
             }
         }
 
-        return true;
+        content = tempContent;
     }
 }
