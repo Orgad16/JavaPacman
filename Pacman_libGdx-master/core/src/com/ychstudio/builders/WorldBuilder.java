@@ -62,7 +62,7 @@ public class WorldBuilder {
         if (tiledMap != null) {
             this.tiledMap = tiledMap;
         } else {
-            this.tiledMap = createMapFrom(parsedMap);
+            this.tiledMap = createMap();
         }
         this.engine = engine;
         this.world = world;
@@ -72,27 +72,32 @@ public class WorldBuilder {
         actorAtlas = assetManager.get("core/assets/images/actors.pack", TextureAtlas.class);
     }
 
-    public TiledMap createMapFrom(String map) {
-        TiledMap tiledMap = new TiledMap();
-        MapLayers layers = tiledMap.getLayers();
+    private TiledMap createMap() {
+        TiledMap tiledMap;
+//        MapLayers layers = tiledMap.getLayers();
+//
+//        final float WIDTH = Gdx.graphics.getWidth();
+//        final float HEIGHT = Gdx.graphics.getHeight();
+//
+//        // TODO: create TiledMapTileLayer with width, height and number of pixels per cube (like in the GUI) X 2 (W,H,s,s)
+//        TiledMapTileLayer layer = new TiledMapTileLayer(Integer.valueOf(Float.toString(WIDTH)), Integer.valueOf(Float.toString(HEIGHT)), 32, 32);
+//
+//        JsonHandler handler;
+//        try {
+//            handler = new JsonHandler(map);
+//            JsonObject mapData = handler.getContent();
+//
+//            //dataArray =
+//
+//            // parse map data into tiledMap
+//            // TODO: iterate over the height and width and get from mapData the corresponding data
+//
+//        } catch (IOException handlerException) {
+//            handlerException.printStackTrace();
+//        }
+        MapBuilder mapBuilder = new MapBuilder();
+        tiledMap = mapBuilder.create();
 
-        final float WIDTH = Gdx.graphics.getWidth();
-        final float HEIGHT = Gdx.graphics.getHeight();
-
-        // TODO: create TiledMapTileLayer with width, height and number of pixels per cube (like in the GUI) X 2 (W,H,s,s)
-        TiledMapTileLayer layer = new TiledMapTileLayer(Integer.valueOf(Float.toString(WIDTH)), Integer.valueOf(Float.toString(HEIGHT)), 32, 32);
-
-        JsonHandler handler;
-        try {
-            handler = new JsonHandler(map);
-            JsonObject mapData = handler.getContent();
-
-            // parse map data into tiledMap
-            // TODO: iterate over the height and width and get from mapData the corresponding data
-
-        } catch (IOException handlerException) {
-            handlerException.printStackTrace();
-        }
 
         return tiledMap;
     }
