@@ -1,4 +1,4 @@
-package com.ychstudio.utils;
+package com.ychstudio.systems;
 
 import com.google.gson.*;
 import java.io.*;
@@ -14,15 +14,15 @@ public class JsonHandler {
 
     public JsonHandler(String path) throws IOException{
         this.path = path;
-        this.bufferedReader = new BufferedReader(new FileReader(path));
-        this.writer = new FileWriter(path);
+        this.bufferedReader = new BufferedReader(new FileReader(this.path));
+        this.writer = new FileWriter(this.path);
         this.gson = new Gson();
-        this.content = null;
+        this.content = getContent();
     }
 
     public JsonObject getContent() {
-        JsonObject tempContent = gson.fromJson(bufferedReader, JsonObject.class);
-        this.content = tempContent;
+        this.content = gson.fromJson(bufferedReader, JsonObject.class);
+
         try {
             bufferedReader.close();
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class JsonHandler {
         return content;
     }
 
-    public boolean writeAll(JsonObject newData){
+    private boolean writeAll(JsonObject newData){
         try {
             writer.write(gson.toJson(newData));
         } catch (IOException writeException) {
@@ -48,33 +48,23 @@ public class JsonHandler {
         return true;
     }
 
-    public JsonObject writeSingle(JsonObject question, String field) {
+    public void writeSingle(JsonObject objectToWrite, String field) {
 
         // getting the content of the json file
-        JsonObject tempContent = getContent();
+        JsonObject tempContent = content;
 
         // get the questions array list
         JsonArray array = tempContent.get(field).getAsJsonArray();
 
         // adding the new question to the array
-        array.add(question);
+        array.add(objectToWrite);
 
-        // removing the questions array to append new one
-        tempContent.remove(field);
+        // update the json file
+        updateJson(tempContent, array, field);
 
-        // appending the new questions array (with the new question) to the content.
-        tempContent.add(field, array);
-
-        // writing the new content to the json file and getting response (true/false)
-        boolean wrote = writeAll(tempContent);
-
-        // if the writing was successful -> return the new content, else -> return empty JsonObject
-        if (wrote) {
-            return tempContent;
-        } else { return new JsonObject(); }
     }
 
-    public void editJson(String questionToEdit, JsonObject contentToChange, String field) {
+    public void editQuestion(String questionToEdit, JsonObject contentToChange, String field) {
         JsonObject tempContent = content;
 
         // get the specified field, in out questions case it will be: "questions"
@@ -126,6 +116,37 @@ public class JsonHandler {
             }
         }
 
-        content = tempContent;
+        updateJson(tempContent, array, field);
+
     }
+
+    public void removeFromJson(String objectToRemove, String conditionField, String fromObjects) {
+        JsonObject tempContent = content;
+
+        JsonArray array = tempContent.get(fromObjects).getAsJsonArray();
+
+        for (JsonElement element : array) {
+            if (element.getAsJsonObject().get(conditionField).getAsInt() == Integer.valueOf(objectToRemove)) {
+                array.remove(element);
+            }
+        }
+
+        updateJson(tempContent, array, fromObjects);
+
+    }
+
+    private void updateJson(JsonObject contentToUpdate, JsonArray arrayToReplace, String field) {
+        contentToUpdate.remove(field);
+        contentToUpdate.add(field, arrayToReplace);
+        content = contentToUpdate;
+        writeAll(content);
+    }
+
+    //TODO: add function to remove game record
+    // json file example for game records:
+    // {"game_records":[
+    //      {"id": 1,
+    //      "name": "",
+    //      "score": 1234},{...},{...}
+    // ]}
 }
