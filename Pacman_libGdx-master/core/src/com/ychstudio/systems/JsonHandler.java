@@ -7,33 +7,26 @@ import java.io.*;
 public class JsonHandler {
 
     private String path;
-    private BufferedReader bufferedReader;
+    private JsonParser jsonParser;
     private FileWriter writer;
     private Gson gson;
     private JsonObject content;
 
     public JsonHandler(String path) throws IOException{
         this.path = path;
-        this.bufferedReader = new BufferedReader(new FileReader(this.path));
-        this.writer = new FileWriter(this.path);
+        this.jsonParser = new JsonParser();
         this.gson = new Gson();
-        this.content = getContent();
+        this.content = jsonParser.parse(new FileReader(this.path)).getAsJsonObject();
     }
 
-    public JsonObject getContent() {
-        this.content = gson.fromJson(bufferedReader, JsonObject.class);
-
-        try {
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return content;
+    public JsonObject getContent(){
+        return this.content;
     }
+
 
     private boolean writeAll(JsonObject newData){
         try {
+            this.writer = new FileWriter(path);
             writer.write(gson.toJson(newData));
         } catch (IOException writeException) {
             writeException.printStackTrace();
@@ -128,6 +121,7 @@ public class JsonHandler {
         for (JsonElement element : array) {
             if (element.getAsJsonObject().get(conditionField).getAsInt() == Integer.valueOf(objectToRemove)) {
                 array.remove(element);
+                break;
             }
         }
 

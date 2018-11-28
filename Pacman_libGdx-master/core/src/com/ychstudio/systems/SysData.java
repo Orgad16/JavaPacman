@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class SysData {
 
-    final String questionPath = "./assets/jsonFiles/questions.json";
-    final String gameRecordsPath = "./assets/jsonFiles/gameRecords.json";
+    final String questionPath = "core/assets/jsonFiles/questions.json";
+    final String gameRecordsPath = "core/assets/jsonFiles/gameRecords.json";
     private JsonHandler questionHandler;
     private JsonHandler recordsHandler;
 
@@ -46,15 +46,15 @@ public class SysData {
     /**
      * this function will remove the specific question from the json file
      * @param questionId the question id
-     * @param conditionField the conditional field that will check against
-     * @param fromObjects the property name of the array
+     * Field conditionField the conditional field that will check against
+     * Field fromObjects the property name of the array
      * @throws IOException
      */
-    public void removeQuestion(String questionId, String conditionField, String fromObjects) throws IOException {
+    public void removeQuestion(String questionId) throws IOException {
 
         initHandler("question");
 
-        questionHandler.removeFromJson(questionId, conditionField, "questions");
+        questionHandler.removeFromJson(questionId, "question", "questions");
     }
 
 
@@ -105,11 +105,11 @@ public class SysData {
      * @param conditionField the conditional field that we check against
      * @throws IOException
      */
-    public void removeGameScore(String gameId, String conditionField) throws IOException{
+    public void removeGameScore(String gameId) throws IOException{
 
         initHandler("records");
 
-        recordsHandler.removeFromJson(gameId, conditionField, "game_records");
+        recordsHandler.removeFromJson(gameId, "id", "game_records");
     }
 
 
@@ -129,11 +129,20 @@ public class SysData {
 }
 
 // json file example for game records:
-// {"game_records":[
-//      {"id": 1,
-//      "name": "",
-//      "score": 1234},{...},{...}
-// ]}
+// {
+//         "game_records":[
+//         {
+//         "id": "1",
+//         "name": "",
+//         "score": "1234"
+//         },
+//         {
+//         "id": "2",
+//         "name": "tony",
+//         "score": "123"
+//         }
+//         ]
+//         }
 
 
 // json file example for questions
