@@ -26,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -41,8 +42,12 @@ import com.ychstudio.components.TextureComponent;
 import com.ychstudio.components.TransformComponent;
 import com.ychstudio.gamesys.GameManager;
 
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
 
-import java.io.IOException;
 
 
 public class WorldBuilder {
@@ -54,7 +59,7 @@ public class WorldBuilder {
 
     private final AssetManager assetManager;
     private final TextureAtlas actorAtlas;
-
+    private  final JsonObject json;
     private boolean wall;
 
     public WorldBuilder(TiledMap tiledMap, String parsedMap, Engine engine, World world, RayHandler rayHandler) {
@@ -67,7 +72,7 @@ public class WorldBuilder {
         this.engine = engine;
         this.world = world;
         this.rayHandler = rayHandler;
-
+        this.json=genrateMap();
         assetManager = GameManager.instance.assetManager;
         actorAtlas = assetManager.get("core/assets/images/actors.pack", TextureAtlas.class);
     }
@@ -100,6 +105,34 @@ public class WorldBuilder {
 
 
         return tiledMap;
+    }
+
+    public JsonObject genrateMap() {
+        // create a script engine manager
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+        // JavaScript code in a String. This code defines a script object 'obj'
+        // with one method called 'hello'.
+        // evaluate script
+        try {
+            engine.eval(new java.io.FileReader("core/assets/scripts/mapgen.js"));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Invocable inv = (Invocable) engine;
+        Object res = null;
+        try {
+            res = inv.invokeFunction("mapgen");
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        return gson.fromJson(res.toString(),JsonObject.class);
     }
 
     public void buildAll() {
@@ -150,7 +183,7 @@ public class WorldBuilder {
                 wall = false;
                 world.QueryAABB(queryCallback, x + 0.2f, y + 0.2f, x + 0.8f, y + 0.8f);
                 if (wall) {
-                   aStarMap.getNodeAt(x, y).isWall = true;
+                    aStarMap.getNodeAt(x, y).isWall = true;
                 }
             }
         }
@@ -473,4 +506,6 @@ public class WorldBuilder {
         engine.addEntity(entity);
         body.setUserData(entity);
     }
+
+
 }
