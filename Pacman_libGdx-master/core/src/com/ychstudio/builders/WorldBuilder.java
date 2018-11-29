@@ -4,6 +4,7 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -25,6 +26,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.ychstudio.ai.astar.AStarMap;
 import com.ychstudio.ai.astar.AStartPathFinding;
 import com.ychstudio.components.AnimationComponent;
@@ -37,6 +42,14 @@ import com.ychstudio.components.TextureComponent;
 import com.ychstudio.components.TransformComponent;
 import com.ychstudio.gamesys.GameManager;
 
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.io.FileNotFoundException;
+
+
+
 public class WorldBuilder {
 
     private final TiledMap tiledMap;
@@ -46,17 +59,80 @@ public class WorldBuilder {
 
     private final AssetManager assetManager;
     private final TextureAtlas actorAtlas;
-
+    private  final JsonObject json;
     private boolean wall;
 
-    public WorldBuilder(TiledMap tiledMap, Engine engine, World world, RayHandler rayHandler) {
-        this.tiledMap = tiledMap;
+    public WorldBuilder(TiledMap tiledMap, String parsedMap, Engine engine, World world, RayHandler rayHandler) {
+        //this.tiledMap = tiledMap;
+        if (tiledMap != null) {
+            this.tiledMap = tiledMap;
+        } else {
+            this.tiledMap = createMap();
+        }
         this.engine = engine;
         this.world = world;
         this.rayHandler = rayHandler;
-
+        this.json=genrateMap();
         assetManager = GameManager.instance.assetManager;
         actorAtlas = assetManager.get("core/assets/images/actors.pack", TextureAtlas.class);
+    }
+
+    private TiledMap createMap() {
+        TiledMap tiledMap;
+//        MapLayers layers = tiledMap.getLayers();
+//
+//        final float WIDTH = Gdx.graphics.getWidth();
+//        final float HEIGHT = Gdx.graphics.getHeight();
+//
+//        // TODO: create TiledMapTileLayer with width, height and number of pixels per cube (like in the GUI) X 2 (W,H,s,s)
+//        TiledMapTileLayer layer = new TiledMapTileLayer(Integer.valueOf(Float.toString(WIDTH)), Integer.valueOf(Float.toString(HEIGHT)), 32, 32);
+//
+//        JsonHandler handler;
+//        try {
+//            handler = new JsonHandler(map);
+//            JsonObject mapData = handler.getContent();
+//
+//            //dataArray =
+//
+//            // parse map data into tiledMap
+//            // TODO: iterate over the height and width and get from mapData the corresponding data
+//
+//        } catch (IOException handlerException) {
+//            handlerException.printStackTrace();
+//        }
+        MapBuilder mapBuilder = new MapBuilder();
+        tiledMap = mapBuilder.create();
+
+
+        return tiledMap;
+    }
+
+    public JsonObject genrateMap() {
+        // create a script engine manager
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+        // JavaScript code in a String. This code defines a script object 'obj'
+        // with one method called 'hello'.
+        // evaluate script
+        try {
+            engine.eval(new java.io.FileReader("core/assets/scripts/mapgen.js"));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Invocable inv = (Invocable) engine;
+        Object res = null;
+        try {
+            res = inv.invokeFunction("mapgen");
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        return gson.fromJson(res.toString(),JsonObject.class);
     }
 
     public void buildAll() {
@@ -107,7 +183,7 @@ public class WorldBuilder {
                 wall = false;
                 world.QueryAABB(queryCallback, x + 0.2f, y + 0.2f, x + 0.8f, y + 0.8f);
                 if (wall) {
-                   aStarMap.getNodeAt(x, y).isWall = true;
+                    aStarMap.getNodeAt(x, y).isWall = true;
                 }
             }
         }
@@ -430,4 +506,6 @@ public class WorldBuilder {
         engine.addEntity(entity);
         body.setUserData(entity);
     }
+
+
 }
