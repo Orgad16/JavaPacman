@@ -1,6 +1,8 @@
 package group23.pacman;
 
 import java.io.IOException;
+
+import group23.pacman.controller.MainViewController;
 import group23.pacman.model.Game;
 import group23.pacman.view.CharacterSelectController;
 import group23.pacman.view.CreditsController;
@@ -16,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene; 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage; 
 
@@ -88,14 +91,15 @@ public class MainApp extends Application{
 	
 	@Override 
 	public void start(Stage gameWindow) {
-		
-		this.gameWindow = gameWindow;
-		//this.gameWindow.setResizable(false);
-		this.gameWindow.setTitle("Pacman");
-		
-		initRootLayout();
-		showWelcomeScreen();
-		
+		//Font.loadFont(getClass().getResource("/assets/css/old_school_font.ttf").toExternalForm(), 10);
+		//System.out.println(f);
+		//this.gameWindow = gameWindow;
+		//this.gameWindow.setTitle("Pacman");
+		//initRootLayout();
+		//showWelcomeScreen();
+		MainViewController controller = new MainViewController();
+		gameWindow.setScene(new Scene(controller.view));
+		gameWindow.show();
 	}
 	
 	
