@@ -2,6 +2,7 @@ package group23.pacman;
 
 import java.io.IOException;
 
+import group23.pacman.controller.JoystickManager;
 import group23.pacman.controller.MainViewController;
 import group23.pacman.model.Game;
 import group23.pacman.view.CharacterSelectController;
@@ -15,7 +16,8 @@ import group23.pacman.view.ResultsController;
 import group23.pacman.view.WelcomeScreenController;
 import javafx.application.Application; 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene; 
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
@@ -100,6 +102,13 @@ public class MainApp extends Application{
 		MainViewController controller = new MainViewController();
 		gameWindow.setScene(new Scene(controller.view));
 		gameWindow.show();
+		//gameWindow.setMaximized(true);
+        gameWindow.setFullScreen(true);
+
+        JoystickManager
+                .shared
+                .register(KeyCode.I,KeyCode.K,KeyCode.J,KeyCode.L,KeyCode.ENTER,KeyCode.SHIFT);
+
 	}
 	
 	

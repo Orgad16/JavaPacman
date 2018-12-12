@@ -6,6 +6,7 @@
 <?import ui.UIView?>
 
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ToggleButton?>
 <UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
 
     <VBox alignment="CENTER" spacing="100.0">
@@ -16,9 +17,9 @@
       </ImageView>
 
         <VBox alignment="CENTER" maxHeight="100" maxWidth="150" spacing="16.0">
-            <Button fx:id="playBtn" styleClass="button-retro" text="PLAY" />
-            <Button fx:id="settingsBtn" styleClass="button-retro" text="OPTIONS" />
-            <Button fx:id="leaderboardBtn" styleClass="button-retro" text="LEADERBOARD" />
+            <ToggleButton fx:id="playBtn" styleClass="button-retro" text="PLAY" />
+            <ToggleButton fx:id="settingsBtn" styleClass="button-retro" text="OPTIONS" />
+            <ToggleButton fx:id="leaderboardBtn" styleClass="button-retro" text="LEADERBOARD" />
         </VBox>
     </VBox>
 
