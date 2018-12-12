@@ -335,16 +335,7 @@ public class LeaderboardController {
 	
 	/* Adds key listener to scene from main app */
 	public void addKeyListener() {
-		
-		mainApp.getScene().setOnKeyPressed(new EventHandler<KeyEvent> (){
-	    	@Override
-	    	public void handle(KeyEvent event) {
-	    		
-	    		if (event.getCode() == KeyCode.ESCAPE) {
-	    			mainApp.showWelcomeScreen();
-	    		}
-	    	}
-	    });
+
 	}
 	
 	

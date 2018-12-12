@@ -3,12 +3,11 @@ package group23.pacman.controller;
 import group23.pacman.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
-import ui.UIViewController;
 
 /**
  * Created by Antonio Zaitoun on 10/12/2018.
  */
-public class MainViewController extends UIViewController implements JoystickManager.JoystickListener {
+public class MainViewController extends RootController implements JoystickManager.JoystickListener {
 
     private final MainApp mainApp;
 
@@ -54,12 +53,7 @@ public class MainViewController extends UIViewController implements JoystickMana
         mainApp = app;
         playBtn.setSelected(true);
 
-        view.setOnKeyPressed(JoystickManager.shared);
 
-        // register controller to joystick manager
-        JoystickManager
-                .shared
-                .subscribe(JOYSTICK_LISTENER_ID, this);
     }
 
     @Override
@@ -80,13 +74,27 @@ public class MainViewController extends UIViewController implements JoystickMana
         }
     }
 
-    public void handleAction() {
-        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+    @Override
+    public void didBecomeActive() {
+        view.setOnKeyPressed(JoystickManager.shared);
 
+        // register controller to joystick manager
+        JoystickManager
+                .shared
+                .subscribe(JOYSTICK_LISTENER_ID, this);
+    }
+
+    @Override
+    public void didEnterBackground() {
+        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+    }
+
+    public void handleAction() {
         switch (current_index){
             case 0:
                 // play
-                mainApp.show_player_selection_menu();
+                PlayerSelectionController controller = new PlayerSelectionController(mainApp);
+                mainApp.pushViewController(controller,true);
                 break;
             case 1:
                 // options

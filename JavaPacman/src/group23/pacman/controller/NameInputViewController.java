@@ -5,12 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
-import ui.UIViewController;
 
 /**
  * Created By Tony on 12/12/2018
  */
-public class NameInputViewController extends UIViewController implements JoystickManager.JoystickListener{
+public class NameInputViewController extends RootController implements JoystickManager.JoystickListener{
 
     private static final String JOYSTICK_LISTENER_ID = "NameInputViewController";
 
@@ -72,6 +71,21 @@ public class NameInputViewController extends UIViewController implements Joystic
     }
 
     @Override
+    public void didBecomeActive() {
+        view.setOnKeyPressed(JoystickManager.shared);
+
+        // register controller to joystick manager
+        JoystickManager
+                .shared
+                .subscribe(JOYSTICK_LISTENER_ID, this);
+    }
+
+    @Override
+    public void didEnterBackground() {
+        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+    }
+
+    @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         //TODO change this later to match the current joystick
         if(joystickId == 1){
@@ -98,6 +112,7 @@ public class NameInputViewController extends UIViewController implements Joystic
                         //go to next
                     } else if(current == back) {
                         // go back
+                        app.popViewController(true);
                     } else {
                       // append letter
                       appendLetter(current.getText());

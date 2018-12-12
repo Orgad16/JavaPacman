@@ -30,7 +30,7 @@ public class CreditsController {
 	private void handleButton(KeyEvent event) {
 		
 		if (event.getCode() == KeyCode.ESCAPE) {
-			mainApp.showWelcomeScreen();
+			//mainApp.showWelcomeScreen();
 		}
 	}
 	

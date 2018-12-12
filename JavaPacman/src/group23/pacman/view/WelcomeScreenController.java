@@ -138,11 +138,11 @@ public class WelcomeScreenController {
 				if (opacity >= 1) {
 					if (numPlayers == 1) {
 						this.stop();
-						mainApp.showLevelSelect();
+						//mainApp.showLevelSelect();
 					}
 					else {
 						this.stop();
-						mainApp.showCharacterSelect();
+						//mainApp.showCharacterSelect();
 					}	
 					
 				}
@@ -154,150 +154,6 @@ public class WelcomeScreenController {
 	
 	/* Adds listener to the button in this view */
 	public void addKeyListener() {
-
-		mainApp.getScene().setOnKeyPressed(new EventHandler<KeyEvent> (){
-			@Override
-			public void handle(KeyEvent event) {
-				/* KEY PRESS TYPE 1 */
-				/* ENTER is the confirmation key */
-				if (event.getCode() == KeyCode.ENTER) {
-					
-					playSfx(0);
-					
-					/* If the player presses ENTER while selecting game mode, save the game mode and play fade animation, then send user to the map/level selection screen 
-					 * If there is more than one player, then send them to the character selection screen. */
-					if (playSelected) {
-						
-						mainApp.setPlayers(numPlayers);
-						fadeTransition();
-
-					}
-					
-					/* If user presses ENTER while not selecting game mode, but is hovered on the play button, show the various game modes and 
-					 * the buttons for selection. */
-					else if (buttonIndex == 0) {
-						
-						/* Lock user in game mode select */
-						playSelected = true;
-						
-						/* Default game mode is single player */
-						numPlayers = 1;
-						
-						/* Load buttons */
-						Image singlePlayer = new Image("assets/Elements-welcomeScreen/singlePlayer.png",BUTTON_WIDTH,BUTTON_HEIGHT,false,false);
-						singlePlayerImage.setImage(singlePlayer);
-						
-						Image twoPlayer = new Image("assets/Elements-welcomeScreen/twoPlayer.png",BUTTON_WIDTH,BUTTON_HEIGHT,false,false);
-						twoPlayerImage.setImage(twoPlayer);
-						
-						Image threePlayer = new Image("assets/Elements-welcomeScreen/threePlayer.png",BUTTON_WIDTH,BUTTON_HEIGHT,false,false);
-						threePlayerImage.setImage(threePlayer);
-						
-						highlightPlayers();
-						
-					}
-					
-					/* If user presses ENTER while hovering over the tutorial button */
-					else if (buttonIndex == 1) {
-						
-						mainApp.showHelp();
-					}
-					
-					/* If user presses ENTER while on the exit button, close the game */
-					else if (buttonIndex == 2) {
-						
-						mainApp.showLeaderboard();
-					}
-					else if (buttonIndex == 3) {
-						
-						mainApp.showCredits();
-					}
-					else if (buttonIndex == 4) {
-						Platform.exit();
-					}
-				}
-				
-				/* Key press TYPE 2 */
-				/* The UP and DOWN key presses help the user navigate this view */
-				else if (event.getCode() == KeyCode.UP) {
-					
-					/* If locked in game mode selection, the up key navigates through the game mode selection buttons */
-					if (playSelected) {
-						
-						/* Never have less than 1 player */
-						numPlayers--;
-						if (numPlayers < 1) {
-							numPlayers = 1;
-						}
-						else {
-							playSfx(1);
-						}
-						highlightPlayers();
-					}
-					
-					/* If not locked in game mode selection, go up the button list */
-					else {
-						
-						/* Button index starts at 0, never less */
-						buttonIndex--;
-						if (buttonIndex <0) {
-							buttonIndex = 0;
-						}
-						else {
-							playSfx(1);
-						}
-						highlightButton();
-					}
-				}
-				/* Key press TYPE 3 */
-				/* DOWN key has the same functionality as UP key description, though in the other direction */
-				else if (event.getCode() == KeyCode.DOWN) {
-					
-					if (playSelected) {
-						
-						numPlayers++;
-						if (numPlayers>3) {
-							numPlayers = 3;
-						}
-						else {
-							playSfx(1);
-						}
-	
-						highlightPlayers();
-					}
-				
-					else {
-						
-						buttonIndex++;
-						if (buttonIndex > 4) {
-							buttonIndex = 4;
-						}
-						else {
-							playSfx(1);
-						}
-						highlightButton();
-					}
-				}
-				
-				/* Key press TYPE 4 */
-				/* ESCAPE key does nothing unless user is trying to break out of game mode select */
-				else if (event.getCode() == KeyCode.ESCAPE) {
-					
-					if (playSelected) {
-						singlePlayerImage.setImage(new Image("assets/misc/empty.png"));
-						twoPlayerImage.setImage(new Image("assets/misc/empty.png"));
-						threePlayerImage.setImage(new Image("assets/misc/empty.png"));
-						playSelected = false;
-						numPlayers = 1;
-					}
-				}
-				
-//				/* DEBUG statements */
-//				System.out.println("Button Index " + buttonIndex);
-//				System.out.println("Number of players " + numPlayers + "\n");
-			}
-		});
-		
 
 	}
 	

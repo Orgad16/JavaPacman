@@ -8,7 +8,7 @@ import ui.UIViewController;
 /**
  * Created By Tony on 12/12/2018
  */
-public class PlayerSelectionController extends UIViewController implements JoystickManager.JoystickListener{
+public class PlayerSelectionController extends RootController implements JoystickManager.JoystickListener{
 
     @FXML
     ToggleButton players_1;
@@ -55,6 +55,21 @@ public class PlayerSelectionController extends UIViewController implements Joyst
     }
 
     @Override
+    public void didBecomeActive() {
+        view.setOnKeyPressed(JoystickManager.shared);
+
+        // register controller to joystick manager
+        JoystickManager
+                .shared
+                .subscribe(JOYSTICK_LISTENER_ID, this);
+    }
+
+    @Override
+    public void didEnterBackground() {
+        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+    }
+
+    @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         if(joystickId == 1) {
             switch (selectedKey){
@@ -68,13 +83,13 @@ public class PlayerSelectionController extends UIViewController implements Joyst
                     break;
                 case ONE:
                     // select
-                    app.show_name_selection(current_index + 1);
-                    JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+                    NameInputViewController controller = new NameInputViewController(app,current_index + 1);
+                    app.pushViewController(controller,true);
                     break;
                 case TWO:
                     // go back
-                    app.show_main_menu();
-                    JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+                    //app.show_main_menu();
+                    app.popViewController(true);
                     break;
             }
         }

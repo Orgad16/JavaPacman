@@ -54,7 +54,7 @@ public class HelpScreenController {
 					setRightBackground();
 				}
 				else if (event.getCode() == KeyCode.ESCAPE) {
-					mainApp.showWelcomeScreen();
+					//mainApp.showWelcomeScreen();
 				}
 			}
 		});
@@ -122,7 +122,7 @@ public class HelpScreenController {
 	public void setMainApp(MainApp mainApp) {
 		
 		this.mainApp = mainApp;
-		this.scene = mainApp.getScene();
+		//this.scene = mainApp.getScene();
 		
 	}
 	

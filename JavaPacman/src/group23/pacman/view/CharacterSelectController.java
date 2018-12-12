@@ -74,81 +74,7 @@ public class CharacterSelectController {
 		
 		
 	}
-	
 
-	public void addKeyListener() {
-		
-		mainApp.getScene().setOnKeyPressed(new EventHandler<KeyEvent> (){
-	    	@Override
-	    	public void handle(KeyEvent event) {
-	    		/* ENTER key confirms character selection */
-	    		if (event.getCode() == KeyCode.ENTER) {
-	    			
-	    			/* Two players */
-	    			if (numPlayers == 2) {
-	    				
-	    				mainApp.setPlayer2(ghostIndex);
-	    				fadeTransition(1);
-
-	    			}
-	    			
-	    			/* Three players */
-	    			else if (numPlayers == 3) {
-	    				
-	    				/* Now allow third player to select if they haven't already */
-	    				if (firstPick) {
-	    					firstPick = false;
-	    					mainApp.setPlayer2(ghostIndex);
-	    					ghostIndex = 1;
-	    					highlightGhost();
-	    					player_banner.setImage(new Image("assets/Elements-CharSel/player_three_banner.png"));
-
-	    				}
-	    				else {
-	    					mainApp.setPlayer3(ghostIndex);
-	    					fadeTransition(1);
-	    				}
-	    			}
-	    			
-	    		}
-	    		
-	    		/* LEFT and RIGHT keys scroll through choose-able sprites */
-	    		else if (event.getCode() == KeyCode.LEFT) {
-	    			
-	    			ghostIndex--;
-	    			
-	    			if (ghostIndex < 1) {
-	    				ghostIndex = 1;
-	    			}
-	    			else {
-	    				playSfx();
-	    				highlightGhost();
-	    			}
-	    		}
-	    		
-	    		else if (event.getCode() == KeyCode.RIGHT) {
-	    			
-	    			ghostIndex++;
-	    			
-	    			if (ghostIndex > MAX_GHOSTS) {
-	    				ghostIndex = MAX_GHOSTS;
-	    			}
-	    			else {
-	    				playSfx();
-	    				highlightGhost();
-	    			}
-	    		}
-	    		
-	    		else if (event.getCode() == KeyCode.ESCAPE) {
-	    			
-	    			fadeTransition(2);
-	    		}
-	    	}
-	    });
-		
-		
-	}
-	
 	
 	public void animate() {
 		
@@ -205,7 +131,7 @@ public class CharacterSelectController {
 				else if (mode == 1){
 					if (opacity >= 1) {
 						animationLoop.stop();
-						mainApp.showLevelSelect();
+						//mainApp.showLevelSelect();
 						this.stop();
 						
 					}
@@ -213,7 +139,7 @@ public class CharacterSelectController {
 				else if (mode == 2){
 					if (opacity >= 1) {
 						animationLoop.stop();
-						mainApp.showWelcomeScreen();
+						//mainApp.showWelcomeScreen();
 						this.stop();
 						
 					}

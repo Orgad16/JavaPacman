@@ -157,7 +157,7 @@ public class LevelSelectController {
 				}
 				else if (mode == 1){
 					if (opacity >= 1) {
-						mainApp.showGameView();
+						//mainApp.showGameView();
 						this.stop();
 						
 					}
@@ -165,7 +165,7 @@ public class LevelSelectController {
 				else if (mode == 2) {
 					
 					if (opacity >= 1) {
-						mainApp.showWelcomeScreen();
+						//mainApp.showWelcomeScreen();
 						this.stop();
 						
 					}
@@ -208,7 +208,7 @@ public class LevelSelectController {
 				    			level = 'r';
 				    			break;
 				    	}
-				    	mainApp.setMap(level);
+				    	//mainApp.setMap(level);
 				    	fadeTransition(1);
 		    		}
 			    		
@@ -273,7 +273,7 @@ public class LevelSelectController {
 	public void setMainApp(MainApp mainApp) {
 		
 		this.mainApp = mainApp;
-		this.scene = mainApp.getScene();
+		//this.scene = mainApp.getScene();
 	}
 		
 	

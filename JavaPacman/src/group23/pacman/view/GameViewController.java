@@ -239,7 +239,7 @@ public class GameViewController {
 		/* Add canvas for drawing the wall objects, and only 
 		 * draw the walls once */
 		Canvas canvasWall = new Canvas(1366,768);
-		mainApp.getPane().getChildren().add(canvasWall);
+		//mainApp.getPane().getChildren().add(canvasWall);
 		GraphicsContext gcWall = canvasWall.getGraphicsContext2D();
 		ArrayList<GameObject> objects = gameStateController.getGame().getOtherGameObjects();
 		for (GameObject object : objects) {
@@ -250,22 +250,22 @@ public class GameViewController {
 		
 		/* Add separate canvas for drawing everything else */
 		Canvas canvas = new Canvas(1366,768);
-		mainApp.getPane().getChildren().add(canvas);
+		//mainApp.getPane().getChildren().add(canvas);
 		
 		/* Separate canvas for countdown timer */
 		Canvas canvas2 = new Canvas(1366,768);
-		mainApp.getPane().getChildren().add(canvas2);
-		countdownGraphicsContext = canvas2.getGraphicsContext2D();
+		//mainApp.getPane().getChildren().add(canvas2);
+		//countdownGraphicsContext = canvas2.getGraphicsContext2D();
 		
 		/* Separate canvas for pause overlay */
 		Canvas canvas3 = new Canvas(1366,768);
-		mainApp.getPane().getChildren().add(canvas3);
-		pauseOverlay = canvas3.getGraphicsContext2D();
+		//mainApp.getPane().getChildren().add(canvas3);
+		//pauseOverlay = canvas3.getGraphicsContext2D();
 		
 		
 		/* Separate canvas for exit prompt */
 		Canvas canvas4 = new Canvas(1366,768);
-		mainApp.getPane().getChildren().add(canvas4);
+		//mainApp.getPane().getChildren().add(canvas4);
 		exitPrompt = canvas4.getGraphicsContext2D();
 		
 		
@@ -461,8 +461,8 @@ public class GameViewController {
 	public void showMenu() {
 		
 		stopGame();
-		mainApp.gameToMenu();
-		mainApp.showWelcomeScreen();
+		//mainApp.gameToMenu();
+		//mainApp.showWelcomeScreen();
 	}
 	
 	
@@ -495,7 +495,7 @@ public class GameViewController {
 					int time = timer.getTimeRemaining();
 					int lives = gameStateController.getGame().getPacman().getLives();
 					int score = gameStateController.getGame().getIntScore();
-					mainApp.showResults(time,lives,score,gameStateController.getGame().getMap());
+					//mainApp.showResults(time,lives,score,gameStateController.getGame().getMap());
 				}
 			}
 		}.start();
@@ -507,8 +507,8 @@ public class GameViewController {
 	/* Creates dialog stage using method from mainApp to get user's name */
 	public void showTextField() {
 		
-		mainApp.setName();
-		name = mainApp.getName();
+		//mainApp.setName();
+		//name = mainApp.getName();
 	}
 	
 	
@@ -615,8 +615,8 @@ public class GameViewController {
 	
 	/* Public getter to pass scene to GameStateController */
 	public Scene getScene() {
-		
-		return this.mainApp.getScene();
+		return null;
+		//return this.mainApp.getScene();
 	}
 	
 	/* Public setter to reference main app */
@@ -644,7 +644,5 @@ public class GameViewController {
 		
 		return this.countingDown;
 	}
-	
-	
 
 }

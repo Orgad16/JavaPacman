@@ -84,37 +84,7 @@ public class ResultsController {
 	}
 	
 	
-	/* Adds key listener to the scene from the main app */
-	public void addKeyListener() {
-		
-		mainApp.getScene().setOnKeyPressed(new EventHandler<KeyEvent> (){
-	    	@Override
-	    	public void handle(KeyEvent event) {
-		    	if (event.getCode() == KeyCode.ESCAPE) {
-		    		if (waitMode == 1 || waitMode == 2) {
-		    			mainApp.showWelcomeScreen();
-		    		}
-		    	}
-		    	else if (event.getCode() == KeyCode.ENTER) {
-		    		if (waitMode == 1 || waitMode == 2) {
-		    			mainApp.showLevelSelect();
-		    		}
-		    	}
-		    	else if (event.getCode() == KeyCode.Y) {
-		    		if (scoreBeaten) {
-		    			mainApp.setName();
-		    			new ScoreHandler().writeScore(totalScore, mainApp.getName(),map);
-		    			mainApp.showWelcomeScreen();
-		    		}
-		    	}
-		    	else if (event.getCode() == KeyCode.N) {
-		    		if (scoreBeaten) {
-		    			mainApp.showWelcomeScreen();
-		    		}
-		    	}
-	    	}
-	    });
-	}
+
 	
 	
 	/* Public method used by main app to print the score to the screen */
