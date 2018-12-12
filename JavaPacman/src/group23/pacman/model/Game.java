@@ -318,9 +318,6 @@ public class Game {
 				countDown = false;
 			}
 		}
-		for (TemporaryGhost temporaryGhost : temporaryGhosts) {
-			temporaryGhost.getAI().setChase(false);
-		}
 
 	}
 	
