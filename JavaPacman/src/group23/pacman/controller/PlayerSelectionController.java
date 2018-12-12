@@ -18,29 +18,7 @@ public class PlayerSelectionController extends RootController implements Joystic
 
     private int current_index = 0;
 
-    private void move_left(){
-        all_buttons()[current_index].setSelected(false);
-        current_index--;
-
-        if(current_index == -1){
-            current_index = all_buttons().length - 1;
-        }
-        all_buttons()[current_index].setSelected(true);
-    }
-
-    private void move_right(){
-        all_buttons()[current_index].setSelected(false);
-        current_index++;
-
-        if(current_index == all_buttons().length){
-            current_index = 0;
-        }
-        all_buttons()[current_index].setSelected(true);
-    }
-
-    ToggleButton[] all_buttons(){
-        return new ToggleButton[]{players_1,players_2};
-    }
+    private UINavigationAdapter<ToggleButton> navigationAdapter = new UINavigationAdapter<>();
 
     private static final String JOYSTICK_LISTENER_ID = "PlayerSelectionController";
 
@@ -50,8 +28,7 @@ public class PlayerSelectionController extends RootController implements Joystic
         super("/group23/pacman/view/PlayerSelectionController.fxml");
         this.app = app;
         players_1.setSelected(true);
-        view.setOnKeyPressed(JoystickManager.shared);
-        JoystickManager.shared.subscribe(JOYSTICK_LISTENER_ID,this);
+        navigationAdapter.addRow(players_1,players_2);
     }
 
     @Override
@@ -75,11 +52,13 @@ public class PlayerSelectionController extends RootController implements Joystic
             switch (selectedKey){
                 case LEFT:
                     // move left
-                    move_left();
+                    navigationAdapter.current().setSelected(false);
+                    navigationAdapter.move_left().setSelected(true);
                     break;
                 case RIGHT:
                     // move right
-                    move_right();
+                    navigationAdapter.current().setSelected(false);
+                    navigationAdapter.move_right().setSelected(true);
                     break;
                 case ONE:
                     // select

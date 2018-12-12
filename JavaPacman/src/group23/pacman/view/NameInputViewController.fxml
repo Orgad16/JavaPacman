@@ -8,7 +8,7 @@
 <UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
 
     <VBox alignment="CENTER" spacing="100.0">
-
+        <Label fx:id="title_label" styleClass="label-retro" style="-fx-font-size: 40px;" text="SELECT PLAYER NAME"/>
         <VBox alignment="CENTER" spacing="16.0">
             <Label fx:id="nameLabel" styleClass="label-retro" style="-fx-font-size: 20px;" text="NAME: "/>
 

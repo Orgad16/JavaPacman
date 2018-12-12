@@ -58,8 +58,11 @@ public class MapSelectionViewController extends RootController implements Joysti
                     adapter.move_down().setSelected(true);
                     break;
                 case ONE:
+                    // map selected
                     break;
                 case TWO:
+                    //go back
+                    app.popViewController(true);
                     break;
             }
         }

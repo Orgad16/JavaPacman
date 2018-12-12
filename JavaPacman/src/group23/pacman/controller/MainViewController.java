@@ -22,29 +22,7 @@ public class MainViewController extends RootController implements JoystickManage
 
     private int current_index = 0;
 
-    private void move_up(){
-        all_buttons()[current_index].setSelected(false);
-        current_index--;
-
-        if(current_index == -1){
-            current_index = all_buttons().length - 1;
-        }
-        all_buttons()[current_index].setSelected(true);
-    }
-
-    private void move_down(){
-        all_buttons()[current_index].setSelected(false);
-        current_index++;
-
-        if(current_index == all_buttons().length){
-            current_index = 0;
-        }
-        all_buttons()[current_index].setSelected(true);
-    }
-
-    ToggleButton[] all_buttons(){
-        return new ToggleButton[]{playBtn,settingsBtn,leaderboardBtn};
-    }
+    UINavigationAdapter<ToggleButton> navigationAdapter = new UINavigationAdapter<>();
 
     private static final String JOYSTICK_LISTENER_ID = "MainViewController";
 
@@ -52,6 +30,10 @@ public class MainViewController extends RootController implements JoystickManage
         super("/group23/pacman/view/MainViewController.fxml");
         mainApp = app;
         playBtn.setSelected(true);
+        navigationAdapter.addRow(playBtn);
+        navigationAdapter.addRow(settingsBtn);
+        navigationAdapter.addRow(leaderboardBtn);
+
 
 
     }
@@ -62,10 +44,12 @@ public class MainViewController extends RootController implements JoystickManage
         if(joystickId == 1) {
             switch (selectedKey){
                 case UP:
-                    move_up();
+                    navigationAdapter.current().setSelected(false);
+                    navigationAdapter.move_up().setSelected(false);
                     break;
                 case DOWN:
-                    move_down();
+                    navigationAdapter.current().setSelected(false);
+                    navigationAdapter.move_down().setSelected(true);
                     break;
                 case ONE:
                     handleAction();
@@ -90,7 +74,7 @@ public class MainViewController extends RootController implements JoystickManage
     }
 
     public void handleAction() {
-        switch (current_index){
+        switch (navigationAdapter.getX()){
             case 0:
                 // play
                 PlayerSelectionController controller = new PlayerSelectionController(mainApp);

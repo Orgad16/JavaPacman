@@ -28,6 +28,9 @@ public class NameInputViewController extends RootController implements JoystickM
     @FXML
     private Label nameLabel;
 
+    @FXML
+    private Label title_label;
+
     private MainApp app;
 
     private StringBuilder currentName = new StringBuilder();
@@ -39,8 +42,13 @@ public class NameInputViewController extends RootController implements JoystickM
 
     public NameInputViewController(MainApp app,int playerIndex) {
         super("/group23/pacman/view/NameInputViewController.fxml");
+
+        // init variables
         this.app = app;
         this.playerIndex = playerIndex;
+
+        // update label
+        title_label.setText("SELECT PLAYER "+ ( playerIndex + 1 )+ " NAME");
 
         ToggleButton[] firstRow = new ToggleButton[13];
         ToggleButton[] secondRow = new ToggleButton[13];
@@ -62,12 +70,11 @@ public class NameInputViewController extends RootController implements JoystickM
             }
         }
 
+        // setup movement adapter
         movmentAdapter.addRow(firstRow);
         movmentAdapter.addRow(secondRow);
         movmentAdapter.addRow(back,next);
         movmentAdapter.current().setSelected(true);
-
-        view.setOnKeyPressed(JoystickManager.shared);
 
 
         // reset all player names
@@ -151,7 +158,6 @@ public class NameInputViewController extends RootController implements JoystickM
     public void deleteLetter(){
         if(currentName.length() == 0)
             return;
-
         currentName.deleteCharAt(currentName.length()-1);
         nameLabel.setText("NAME: "+currentName.toString());
     }
