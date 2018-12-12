@@ -111,7 +111,7 @@ public class Game {
 		// TODO: get questions to assign to ghosts
 
 		for (int i=4; i<7; i++) {
-			TemporaryGhost temp_ghost = new TemporaryGhost(board.getTempGhosts()[0],board.getTempGhosts()[1], board, i, null, 0);
+			TemporaryGhost temp_ghost = new TemporaryGhost(board.getTempGhosts()[0],board.getTempGhosts()[1], board, i-2, i, null, 0);
 			characters.add(temp_ghost);
 			temporaryGhosts.add(temp_ghost);
 		}
