@@ -41,9 +41,6 @@ public class GameStateController {
 		this.levelCleared = false;
 		this.gameOver = false;
 		this.escapePressed = false;
-
-		
-		
 	}
 		
 	

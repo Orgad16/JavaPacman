@@ -68,6 +68,4 @@ public class UINavigationAdapter<T> {
         }
         return current();
     }
-
-
 }
