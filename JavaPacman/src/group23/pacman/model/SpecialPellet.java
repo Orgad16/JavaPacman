@@ -8,7 +8,8 @@ public class SpecialPellet extends Pellet{
 	
 	public SpecialPellet(int x, int y) {
 		
-		super(x,y);
+		super(x,y, TYPE.SPECIAL_PELLET.toString());
+		setImage();
 		
 	}
 	

@@ -165,7 +165,7 @@ public class AI {
 	}
 
 	
-	
+	//TODO:
 	/* Chooses a direction using the private move generator method,while checking if the direction is a valid move on the board */
 	public char chooseMovement(boolean hasLeftSpawn, char currentDirection, int ghostX, int ghostY, int pacmanX, int pacmanY, char pacmanDirection) {
 		

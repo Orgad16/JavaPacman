@@ -17,7 +17,11 @@ public class Game {
 	private Ghost ghost;
 	private Ghost ghost2;
 	private Ghost ghost3;
-	private Ghost ghost4;
+	//private Ghost ghost4;
+
+	ArrayList<TemporaryGhost> temporaryGhosts = new ArrayList<>(3);
+
+	//TODO: add temporary ghost
 	
 	/*Ghost A.I scatter behaviour */
 	private int scatterScore;
@@ -98,12 +102,30 @@ public class Game {
 		characters.add(ghost);
 		characters.add(ghost2);
 		characters.add(ghost3);
-		characters.add(ghost4);
 		
 	
 	}
-	
-	
+
+	private void setUpTempGhosts() {
+
+		// TODO: get questions to assign to ghosts
+
+		for (int i=4; i<7; i++) {
+			TemporaryGhost temp_ghost = new TemporaryGhost(board.getTempGhosts()[0],board.getTempGhosts()[1], board, i, null, 0);
+			characters.add(temp_ghost);
+			temporaryGhosts.add(temp_ghost);
+		}
+
+	}
+
+	private void updateTempGhostsOnBoard() {
+		for (TemporaryGhost temporaryGhost : temporaryGhosts) {
+			temporaryGhost.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
+		}
+	}
+
+
+	// TODO: remove this function! not needed -> to setup the other users for the ghosts
 	private void setUpGhosts(int player2Ghost,int player3Ghost) {
 		
 		Vector<Integer> vector = new Vector<Integer>(4);
@@ -117,7 +139,8 @@ public class Game {
 			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 3,1);
 			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,2);
 			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,3);
-			ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,4);
+
+
 		}
 		
 		else if (numPlayers == 2) {
@@ -129,24 +152,12 @@ public class Game {
 			/* The AI's will now have the remaining ghost sprites not chosen by the players */
 			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,vector.elementAt(0));
 			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,vector.elementAt(1));
-			ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,vector.elementAt(2));
-		}
-		else if (numPlayers == 3) {
-			
-			/* Get and set player ghost choices then remove them from remaining choices */
-			vector.removeElement(player2Ghost);
-			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 0,player2Ghost);
-			vector.removeElement(player3Ghost);
-			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 0,player3Ghost);
-			
-			/* The AI's will now have the remaining ghost sprites not chosen by the players */
-			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,vector.elementAt(0));
-			ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,vector.elementAt(1));
+			//ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,vector.elementAt(2));
 		}
 		
 
 	}
-	
+
 	
 	/* When updating the game state, we need to check for collisions before updating moving characters
 	 * due to the nature of how we implemented the MovingCharacter interface */
@@ -158,12 +169,16 @@ public class Game {
 		ghost.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost2.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
-		ghost4.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
+		//ghost4.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
+		//temp_ghost_1.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
+		updateTempGhostsOnBoard();
 		gasZone.update();
-		
+
+		//TODO: remove the gasZone
 	}
 	
-	
+
+	//TODO: add to checkCollisions for other ghosts and candy (question candy)
 	/* Checks character movement collisions and player pellet collisions */
 	private void checkCollisions() {
 		
@@ -213,11 +228,20 @@ public class Game {
 			if (board.isValidDestination(character.getHasLeftSpawn(), character.getDirection(), (int) character.getX(), (int) character.getY())) {
 				character.updateDestination();
 			}
+
+			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
+				// TODO: check collide with TempGhost and ghost is alive
+
+					// TODO: check if the ghost collided with is the correct ghost
+					// TODO: do actions according to the collision
+			}
 			
 		}
 		
 		/* Loops through the game objects to check if the player has collided with a pellet. Pellet is removed on collision */
 		for (GameObject object : objects) {
+
+			// TODO: add if for the other candies
 
 			if (pacman.collidedWith(object)) {
 				if (object.getType() == GameObject.TYPE.PELLET || object.getType() == GameObject.TYPE.SPECIAL_PELLET ) {
@@ -233,8 +257,13 @@ public class Game {
 					
 					break;
 				}
-		
+				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
+					objects.remove(object);
+					setUpTempGhosts();
+					break;
+				}
 			}
+
 		}
 	}
 	
@@ -267,7 +296,7 @@ public class Game {
 			ghost.getAI().setChase(false);
 			ghost2.getAI().setChase(false);
 			ghost3.getAI().setChase(false);
-			ghost4.getAI().setChase(false);
+			//ghost4.getAI().setChase(false);
 			scatterTime = System.currentTimeMillis();
 			countDown = true;
 			scatter = false;
@@ -285,10 +314,14 @@ public class Game {
 				ghost.getAI().setChase(true);
 				ghost2.getAI().setChase(true);
 				ghost3.getAI().setChase(true);
-				ghost4.getAI().setChase(true);
+				//ghost4.getAI().setChase(true);
 				countDown = false;
 			}
 		}
+		for (TemporaryGhost temporaryGhost : temporaryGhosts) {
+			temporaryGhost.getAI().setChase(false);
+		}
+
 	}
 	
 	
@@ -333,11 +366,15 @@ public class Game {
 		
 		return this.ghost3;
 	}
-	
-	public Ghost getGhost4() {
-		
-		return this.ghost4;
+
+	public ArrayList<TemporaryGhost> getTempGhost() {
+		return temporaryGhosts;
 	}
+
+	//	public Ghost getGhost4() {
+//
+//		return this.ghost4;
+//	}
 	
 	/* Public getter to reference other game objects (i.e walls, pellets ) */
 	public ArrayList<GameObject> getOtherGameObjects() {

@@ -28,6 +28,7 @@ public class Board {
 	
 	/* Spawn point coordinates */
 	private int[] ghostCoords;
+	private int[] tempGhostsCoords;
 	private int[] pacmanCoords;
 	
 	/* Keep track of clear condition */
@@ -39,6 +40,7 @@ public class Board {
 		/* Create the list and arrays of objects/states to be placed on the map */
 		pacmanCoords = new int[2];
 		ghostCoords = new int[2];
+		tempGhostsCoords = new int[2];
 		status = new boolean[75][75];
 		node = new boolean[75][75];
 		ghostOnlyPath = new boolean[75][75];
@@ -86,6 +88,8 @@ public class Board {
 			 * T is a turn node
 			 * S is the spawn point of the main character
 			 * G is the spawn point of a ghost
+			 * Q is the question pellet
+			 * Z is the position that the temp ghosts start from
 			 */
 			while ((line = bufferedReader.readLine()) != null ) {
 				position = 0;
@@ -104,13 +108,21 @@ public class Board {
 						position++;
 					}
 					else if (line.charAt(i) == 'P') {
-						Pellet pellet = new Pellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
+						Pellet pellet = new Pellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, GameObject.TYPE.PELLET.toString());
 						objects.add(pellet);
 						status[position][row] = false;
 						node[position][row] = false;
 						ghostOnlyPath[position][row] = false;
 						position++;
 						pellets++;
+					}
+					else if (line.charAt(i) == 'Q') {
+						QuestionPellet qPellet = new QuestionPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, null);
+						objects.add(qPellet);
+						status[position][row] = false;
+						node[position][row] = false;
+						ghostOnlyPath[position][row] = false;
+						position++;
 					}
 					else if (line.charAt(i) == 'W') {
 						SpecialPellet sPellet = new SpecialPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
@@ -154,6 +166,12 @@ public class Board {
 						ghostCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
 						position++;
 					}
+					else if (line.charAt(i) == 'Z'){
+						tempGhostsCoords[0] = (position-2)*TILE_SIZE + X_OFFSET;
+						tempGhostsCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
+						position++;
+					}
+
 					
 				
 				}
@@ -257,6 +275,10 @@ public class Board {
 	public int[] getGhost() {
 		
 		return ghostCoords;
+	}
+
+	public int[] getTempGhosts() {
+		return tempGhostsCoords;
 	}
 	
 }

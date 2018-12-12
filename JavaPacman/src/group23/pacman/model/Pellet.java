@@ -14,7 +14,7 @@ public class Pellet extends GameObject {
 	protected int x;
 	protected int y;
 	
-	public Pellet(int x, int y) {
+	public Pellet(int x, int y, String class_type) {
 		
 		hitBox = new Rectangle();
 		hitBox.setHeight(SPRITE_HEIGHT);
@@ -23,7 +23,9 @@ public class Pellet extends GameObject {
 		hitBox.setY(y);
 		this.x = x;
 		this.y = y;
-		setImage();
+		if (class_type.equals(TYPE.PELLET.toString())) {
+			setImage();
+		}
 		
 	}
 	

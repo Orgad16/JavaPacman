@@ -10,9 +10,11 @@ public abstract class GameObject {
 		
 		PELLET,
 		SPECIAL_PELLET,
+		QUESTION_PELLET,
 		WALL,
 		GASZONE,
 		GHOST,
+		TEMP_GHOST,
 		PACMAN
 	}
 	
