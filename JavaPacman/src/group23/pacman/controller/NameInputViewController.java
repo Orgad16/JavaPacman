@@ -32,12 +32,15 @@ public class NameInputViewController extends RootController implements JoystickM
 
     private StringBuilder currentName = new StringBuilder();
 
+    private int playerIndex;
+
     // adapter used for joystick navigation
     UINavigationAdapter<ToggleButton> movmentAdapter = new UINavigationAdapter<>();
 
-    public NameInputViewController(MainApp app,int count) {
+    public NameInputViewController(MainApp app,int playerIndex) {
         super("/group23/pacman/view/NameInputViewController.fxml");
         this.app = app;
+        this.playerIndex = playerIndex;
 
         ToggleButton[] firstRow = new ToggleButton[13];
         ToggleButton[] secondRow = new ToggleButton[13];
@@ -49,7 +52,6 @@ public class NameInputViewController extends RootController implements JoystickM
             String letter = Character.toString((char) ('A' + i));
             button.setId(letter);
             button.setText(letter);
-            System.out.println(letter);
 
             if (i < 13){
                 letters1.getChildren().add(button);
@@ -66,7 +68,12 @@ public class NameInputViewController extends RootController implements JoystickM
         movmentAdapter.current().setSelected(true);
 
         view.setOnKeyPressed(JoystickManager.shared);
-        JoystickManager.shared.subscribe(JOYSTICK_LISTENER_ID,this);
+
+
+        // reset all player names
+        if(playerIndex == 0){
+            GameSettings.instance.getPlayerNames().clear();
+        }
 
     }
 
@@ -77,18 +84,18 @@ public class NameInputViewController extends RootController implements JoystickM
         // register controller to joystick manager
         JoystickManager
                 .shared
-                .subscribe(JOYSTICK_LISTENER_ID, this);
+                .subscribe(identifier(), this);
     }
 
     @Override
     public void didEnterBackground() {
-        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+        JoystickManager.shared.unsubscribe(identifier());
     }
 
     @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         //TODO change this later to match the current joystick
-        if(joystickId == 1){
+        if(joystickId == playerIndex + 1){
             switch (selectedKey){
                 case UP:
                     movmentAdapter.current().setSelected(false);
@@ -109,7 +116,23 @@ public class NameInputViewController extends RootController implements JoystickM
                 case ONE:
                     ToggleButton current = movmentAdapter.current();
                     if(current == next) {
+
                         //go to next
+                        if(playerIndex + 1 == GameSettings.instance.getNumbrOfPlayers()){
+                            // go to map selection
+                            app.pushViewController(
+                                    new MapSelectionViewController(app),
+                                    true
+                            );
+                        }else {
+                            // go to next player name
+                            GameSettings.instance.getPlayerNames().add(currentName.toString());
+                            app.pushViewController(
+                                    new NameInputViewController(app,playerIndex + 1),
+                                    true
+                            );
+                        }
+
                     } else if(current == back) {
                         // go back
                         app.popViewController(true);

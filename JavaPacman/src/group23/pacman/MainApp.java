@@ -162,6 +162,18 @@ public class MainApp extends Application{
 						KeyCode.ENTER, //one
 						KeyCode.SHIFT // two
 				);
+
+		// joystick 2
+		JoystickManager
+				.shared
+				.register(
+						KeyCode.W,
+						KeyCode.S,
+						KeyCode.A,
+						KeyCode.D,
+						KeyCode.Z,
+						KeyCode.X
+				);
 	}
 
 	public static void main(String[] args) {

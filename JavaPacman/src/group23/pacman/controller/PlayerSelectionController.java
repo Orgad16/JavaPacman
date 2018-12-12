@@ -83,7 +83,8 @@ public class PlayerSelectionController extends RootController implements Joystic
                     break;
                 case ONE:
                     // select
-                    NameInputViewController controller = new NameInputViewController(app,current_index + 1);
+                    GameSettings.instance.setNumbrOfPlayers(current_index + 1);
+                    NameInputViewController controller = new NameInputViewController(app,0);
                     app.pushViewController(controller,true);
                     break;
                 case TWO:
