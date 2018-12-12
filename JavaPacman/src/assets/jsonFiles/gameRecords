@@ -1,0 +1,14 @@
+{
+  "game_records": [
+    {
+      "id": "1",
+      "name": "tomer",
+      "score": "200"
+    },
+    {
+      "id": "2",
+      "name": "tony",
+      "score": "100"
+    }
+  ]
+}

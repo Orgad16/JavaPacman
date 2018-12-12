@@ -14,7 +14,7 @@ public class Question{
 
         this.questionID = question;
         this.answers = answers;
-        this.correct_ans = correct_ans;
+        this.correct_ans = correct_ans - 1; // to adjust to arrays and the setUpTempGhosts function in game class
         this.level = level;
         this.team = team;
 

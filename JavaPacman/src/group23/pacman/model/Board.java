@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import group23.pacman.system.SysData;
+
 /**The class that deals with objects pertaining to the map. Has methods which determine
  * whether a moving character can traverse in a certain direction or along a certain path.
  */
@@ -91,6 +95,11 @@ public class Board {
 			 * Q is the question pellet
 			 * Z is the position that the temp ghosts start from
 			 */
+
+			// getting the questions for the question pellets
+			ArrayList<Question> questions = getQuestionsFromJson();
+			int indexForQuestion = 0;
+
 			while ((line = bufferedReader.readLine()) != null ) {
 				position = 0;
 				for (int i =0;i< line.length();i++) {
@@ -117,12 +126,13 @@ public class Board {
 						pellets++;
 					}
 					else if (line.charAt(i) == 'Q') {
-						QuestionPellet qPellet = new QuestionPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, null);
+						QuestionPellet qPellet = new QuestionPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, questions.get(indexForQuestion));
 						objects.add(qPellet);
 						status[position][row] = false;
 						node[position][row] = false;
 						ghostOnlyPath[position][row] = false;
 						position++;
+						indexForQuestion++;
 					}
 					else if (line.charAt(i) == 'W') {
 						SpecialPellet sPellet = new SpecialPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
@@ -280,5 +290,50 @@ public class Board {
 	public int[] getTempGhosts() {
 		return tempGhostsCoords;
 	}
+
+
+	/**
+	 * This function will get the question from the json file using the SysData class and convert it to question entity
+	 * @return array list of Questions
+	 * @throws IOException
+	 */
+	private ArrayList<Question> getQuestionsFromJson() throws IOException {
+		ArrayList<Question> qList = new ArrayList<>();
+
+		// getting the questions as json array
+		SysData sysData = new SysData();
+		JsonArray jsonList = sysData.getQuestions();
+
+		// loop over the json array and create a Question entity
+		for (JsonElement element : jsonList) {
+
+			// getting the question field
+			String qField = element.getAsJsonObject().get("question").getAsString();
+
+			// getting the answers for question
+			ArrayList<String> aList = new ArrayList<>();
+			for (JsonElement answer : element.getAsJsonObject().get("answers").getAsJsonArray()) {
+				aList.add(answer.getAsString());
+			}
+
+			// getting the correct answer for that question
+			int correctAns = element.getAsJsonObject().get("correct_ans").getAsInt();
+
+			// getting the level of the question
+			int qLevel = element.getAsJsonObject().get("level").getAsInt();
+
+			// getting the team that wrote the question
+			String qTeam = element.getAsJsonObject().get("team").getAsString();
+
+			Question q = new Question(qField, aList, correctAns, qLevel, qTeam);
+
+			qList.add(q);
+		}
+
+		return qList;
+
+
+	}
 	
 }
+

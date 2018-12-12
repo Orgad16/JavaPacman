@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 public class QuestionPellet extends Pellet {
 
 
-    protected static final int SPRITE_WIDTH = 20;
-    protected static final int SPRITE_HEIGHT = 20;
+    protected static final int SPRITE_WIDTH = 10;
+    protected static final int SPRITE_HEIGHT = 10;
 
     private Question question;
 
@@ -19,7 +19,11 @@ public class QuestionPellet extends Pellet {
     @Override
     public void setImage() {
 
-        image = new Image("assets/tempPellet.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+        image = new Image("assets/tempQuestionPellet.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
         this.type = TYPE.QUESTION_PELLET;
+    }
+
+    public Question getQuestion() {
+        return question;
     }
 }

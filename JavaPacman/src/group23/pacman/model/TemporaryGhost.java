@@ -17,4 +17,12 @@ public class TemporaryGhost extends Ghost{
     public boolean isRightGhost() {
         return question.getCorrect_ans() == answer;
     }
+
+    public int getAnswer() {
+        return answer;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
 }

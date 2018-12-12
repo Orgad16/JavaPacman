@@ -106,18 +106,29 @@ public class Game {
 	
 	}
 
-	private void setUpTempGhosts() {
+	/**
+	 * this function will take the question pellet that the pacman ate and init the temp ghosts
+	 * @param question the question the pacman ate
+	 */
+	private void setUpTempGhosts(QuestionPellet question) {
 
-		// TODO: get questions to assign to ghosts
+		//getting the question that the pacman ate
+		Question q = question.getQuestion();
 
 		for (int i=4; i<7; i++) {
-			TemporaryGhost temp_ghost = new TemporaryGhost(board.getTempGhosts()[0],board.getTempGhosts()[1], board, i-2, i, null, 0);
+
+			// type field should by between 2 and 4 -> set to i-2
+			// answer field should be between 0 and 2 -> set to i-4
+			TemporaryGhost temp_ghost = new TemporaryGhost(board.getTempGhosts()[0],board.getTempGhosts()[1], board, i-2, i, q, i-4);
 			characters.add(temp_ghost);
 			temporaryGhosts.add(temp_ghost);
 		}
 
 	}
 
+	/**
+	 * this function will update the temp ghosts on board
+	 */
 	private void updateTempGhostsOnBoard() {
 		for (TemporaryGhost temporaryGhost : temporaryGhosts) {
 			temporaryGhost.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
@@ -231,6 +242,22 @@ public class Game {
 
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
 				// TODO: check collide with TempGhost and ghost is alive
+				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
+					System.out.println("for question: " + ((TemporaryGhost) character).getQuestion().getQuestionID());
+					System.out.println("the right answer is: " + ((TemporaryGhost) character).getQuestion().getCorrect_ans());
+					if (((TemporaryGhost) character).isRightGhost()) {
+//						System.out.println("right, ghost answer: " + ((TemporaryGhost) character).getAnswer());
+//						System.out.println("ghost number: " + ((TemporaryGhost) character).ghost);
+						score += 1000;
+						temporaryGhosts.remove(character);
+						characters.remove(character);
+					}
+					else {
+						pacman.playDeathAnim();
+						//System.out.println("wrong, ghost answer: " +((TemporaryGhost) character).getAnswer());
+						//System.out.println("ghost number: " + ((TemporaryGhost) character).ghost);
+					}
+				}
 
 					// TODO: check if the ghost collided with is the correct ghost
 					// TODO: do actions according to the collision
@@ -259,7 +286,7 @@ public class Game {
 				}
 				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
 					objects.remove(object);
-					setUpTempGhosts();
+					setUpTempGhosts((QuestionPellet) object);
 					break;
 				}
 			}
