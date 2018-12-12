@@ -11,10 +11,10 @@ import ui.UIViewController;
 public class PlayerSelectionController extends RootController implements JoystickManager.JoystickListener{
 
     @FXML
-    ToggleButton players_1;
+    private ToggleButton players_1;
 
     @FXML
-    ToggleButton players_2;
+    private ToggleButton players_2;
 
     private int current_index = 0;
 

@@ -207,8 +207,4 @@ public class MainApp extends Application{
 		};
 		primaryAnimator.start();
 	}
-
-
-	
-
 }

@@ -29,7 +29,7 @@ import java.util.Vector;
  * ```
  *
  * By doing so we have defined two rows. By using ```current()``` we receive object A.
- * by calling move_right() we'll receive object C, and if we called move_down() we'll get object D.
+ * by calling move_left() we'll receive object C, and if we called move_down() we'll get object D.
  *
  * Do note that every time you call a move function the x,y positions will be updated.
  *
