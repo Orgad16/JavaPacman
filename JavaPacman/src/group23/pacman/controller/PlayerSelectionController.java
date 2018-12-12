@@ -22,11 +22,8 @@ public class PlayerSelectionController extends RootController implements Joystic
 
     private static final String JOYSTICK_LISTENER_ID = "PlayerSelectionController";
 
-    private MainApp app;
-
-    public PlayerSelectionController(MainApp app) {
+    public PlayerSelectionController() {
         super("/group23/pacman/view/PlayerSelectionController.fxml");
-        this.app = app;
         players_1.setSelected(true);
         navigationAdapter.addRow(players_1,players_2);
     }
@@ -63,13 +60,13 @@ public class PlayerSelectionController extends RootController implements Joystic
                 case ONE:
                     // select
                     GameSettings.instance.setNumbrOfPlayers(current_index + 1);
-                    NameInputViewController controller = new NameInputViewController(app,0);
-                    app.pushViewController(controller,true);
+                    NameInputViewController controller = new NameInputViewController(0);
+                    MainApp.getInstance().pushViewController(controller,true);
                     break;
                 case TWO:
                     // go back
                     //app.show_main_menu();
-                    app.popViewController(true);
+                    MainApp.getInstance().popViewController(true);
                     break;
             }
         }

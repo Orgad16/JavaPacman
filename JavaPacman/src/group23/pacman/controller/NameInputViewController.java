@@ -31,7 +31,6 @@ public class NameInputViewController extends RootController implements JoystickM
     @FXML
     private Label title_label;
 
-    private MainApp app;
 
     private StringBuilder currentName = new StringBuilder();
 
@@ -40,11 +39,10 @@ public class NameInputViewController extends RootController implements JoystickM
     // adapter used for joystick navigation
     UINavigationAdapter<ToggleButton> movmentAdapter = new UINavigationAdapter<>();
 
-    public NameInputViewController(MainApp app,int playerIndex) {
+    public NameInputViewController(int playerIndex) {
         super("/group23/pacman/view/NameInputViewController.fxml");
 
         // init variables
-        this.app = app;
         this.playerIndex = playerIndex;
 
         // update label
@@ -127,22 +125,22 @@ public class NameInputViewController extends RootController implements JoystickM
                         //go to next
                         if(playerIndex + 1 == GameSettings.instance.getNumbrOfPlayers()){
                             // go to map selection
-                            app.pushViewController(
-                                    new MapSelectionViewController(app),
+                            MainApp.getInstance().pushViewController(
+                                    new MapSelectionViewController(),
                                     true
                             );
                         }else {
                             // go to next player name
                             GameSettings.instance.getPlayerNames().add(currentName.toString());
-                            app.pushViewController(
-                                    new NameInputViewController(app,playerIndex + 1),
+                            MainApp.getInstance().pushViewController(
+                                    new NameInputViewController(playerIndex + 1),
                                     true
                             );
                         }
 
                     } else if(current == back) {
                         // go back
-                        app.popViewController(true);
+                        MainApp.getInstance().popViewController(true);
                     } else {
                       // append letter
                       appendLetter(current.getText());

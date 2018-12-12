@@ -9,33 +9,42 @@ import javafx.scene.control.ToggleButton;
  */
 public class MainViewController extends RootController implements JoystickManager.JoystickListener {
 
-    private final MainApp mainApp;
+    private static final String JOYSTICK_LISTENER_ID = "MainViewController";
 
+    /**
+     * play button menu
+     */
     @FXML
     private ToggleButton playBtn;
 
+    /**
+     * settings button menu
+     */
     @FXML
     private ToggleButton settingsBtn;
 
+    /**
+     * leaderboard button menu
+     */
     @FXML
     private ToggleButton leaderboardBtn;
 
-    private int current_index = 0;
+    /**
+     * navigation handler.
+     */
+    private UINavigationAdapter<ToggleButton> navigationAdapter = new UINavigationAdapter<>();
 
-    UINavigationAdapter<ToggleButton> navigationAdapter = new UINavigationAdapter<>();
 
-    private static final String JOYSTICK_LISTENER_ID = "MainViewController";
-
-    public MainViewController(MainApp app) {
+    public MainViewController() {
         super("/group23/pacman/view/MainViewController.fxml");
-        mainApp = app;
-        playBtn.setSelected(true);
+
+        // add buttons to navigation adapter
         navigationAdapter.addRow(playBtn);
         navigationAdapter.addRow(settingsBtn);
         navigationAdapter.addRow(leaderboardBtn);
 
-
-
+        // highlight default
+        navigationAdapter.current().setSelected(true);
     }
 
     @Override
@@ -77,8 +86,8 @@ public class MainViewController extends RootController implements JoystickManage
         switch (navigationAdapter.getX()){
             case 0:
                 // play
-                PlayerSelectionController controller = new PlayerSelectionController(mainApp);
-                mainApp.pushViewController(controller,true);
+                PlayerSelectionController controller = new PlayerSelectionController();
+                MainApp.getInstance().pushViewController(controller,true);
                 break;
             case 1:
                 // options

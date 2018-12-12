@@ -27,10 +27,13 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
     // Event listeners (subscribers)
     private Map<String,JoystickListener> subscribers = new HashMap<>();
 
+    // queue to unregister listeners.
     private Vector<String> unregisterQueue = new Vector<>(10);
 
+    // queue to register listeners.
     private Vector<Pair<String,JoystickListener>> registerQueue = new Vector<>(10);
 
+    // variable used to indicate if the handle function is being executed (mid execution).
     private boolean isHandling = false;
 
     @Override
@@ -43,13 +46,18 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
         if(keyMap != null){
             // for each joystick, invoke the subscribers
             keyMap.forEach((integer, key)
-                    -> subscribers.values().forEach(joystickListenerWeakReference
-                        -> joystickListenerWeakReference.onJoystickTriggered(integer,key)));
+                    // for each subscriber invoke listeners
+                    -> subscribers.values().forEach(joystickListener
+                        -> joystickListener.onJoystickTriggered(integer,key)));
         }
 
+        // register all controllers in register queue.
         for (Pair<String,JoystickListener> s : registerQueue) { subscribers.put(s.getKey(),s.getValue()); }
+
+        // unregister all in un-register queue
         for (String s : unregisterQueue) { subscribers.remove(s); }
 
+        // clear queues
         unregisterQueue.clear();
         registerQueue.clear();
 

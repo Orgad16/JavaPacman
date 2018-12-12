@@ -146,7 +146,7 @@ public class MainApp extends Application{
 			}
 		};
 		sleeper.setOnSucceeded(event -> {
-			MainViewController controller = new MainViewController(this);
+			MainViewController controller = new MainViewController();
 			pushViewController(controller,true);
 		});
 		new Thread(sleeper).start();
