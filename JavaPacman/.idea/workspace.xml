@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="20019165-d1b7-4601-986f-f8a664e0bb7c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java" />
-      <change beforePath="$PROJECT_DIR$/src/group23/pacman/controller/MapSelectionViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/MapSelectionViewController.java" />
-      <change beforePath="$PROJECT_DIR$/src/group23/pacman/controller/NameInputViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/NameInputViewController.java" />
-      <change beforePath="$PROJECT_DIR$/src/group23/pacman/controller/PlayerSelectionController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/PlayerSelectionController.java" />
-      <change beforePath="$PROJECT_DIR$/src/group23/pacman/controller/UINavigationAdapter.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/UINavigationAdapter.java" />
-      <change beforePath="$PROJECT_DIR$/src/group23/pacman/view/NameInputViewController.fxml" afterPath="$PROJECT_DIR$/src/group23/pacman/view/NameInputViewController.fxml" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NameInputViewController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NameInputViewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/NameInputViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1467">
-              <caret line="159" column="19" lean-forward="false" selection-start-line="159" selection-start-column="19" selection-end-line="159" selection-end-column="19" />
+            <state relative-caret-position="-692">
+              <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding>
                 <element signature="e#2682#2683#0" expanded="true" />
                 <element signature="e#2746#2747#0" expanded="true" />
@@ -51,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainViewController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainViewController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="76" column="40" lean-forward="false" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
+            <state relative-caret-position="175">
+              <caret line="47" column="64" lean-forward="false" selection-start-line="47" selection-start-column="64" selection-end-line="47" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -194,13 +189,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pacman" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pacman" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -783,18 +771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/MapSelectionViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="63" column="29" lean-forward="false" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1114#1115#0" expanded="true" />
-            <element signature="e#1186#1187#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/UINavigationAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="515">
@@ -819,6 +795,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/NameInputViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-692">
+          <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding>
+            <element signature="e#2682#2683#0" expanded="true" />
+            <element signature="e#2746#2747#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/PlayerSelectionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -830,22 +817,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/MapSelectionViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="76" column="40" lean-forward="false" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
-          <folding />
+        <state relative-caret-position="651">
+          <caret line="63" column="29" lean-forward="false" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1114#1115#0" expanded="true" />
+            <element signature="e#1186#1187#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/NameInputViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1467">
-          <caret line="159" column="19" lean-forward="false" selection-start-line="159" selection-start-column="19" selection-end-line="159" selection-end-column="19" />
-          <folding>
-            <element signature="e#2682#2683#0" expanded="true" />
-            <element signature="e#2746#2747#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="175">
+          <caret line="47" column="64" lean-forward="false" selection-start-line="47" selection-start-column="64" selection-end-line="47" selection-end-column="64" />
+          <folding />
         </state>
       </provider>
     </entry>

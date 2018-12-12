@@ -45,7 +45,7 @@ public class MainViewController extends RootController implements JoystickManage
             switch (selectedKey){
                 case UP:
                     navigationAdapter.current().setSelected(false);
-                    navigationAdapter.move_up().setSelected(false);
+                    navigationAdapter.move_up().setSelected(true);
                     break;
                 case DOWN:
                     navigationAdapter.current().setSelected(false);
