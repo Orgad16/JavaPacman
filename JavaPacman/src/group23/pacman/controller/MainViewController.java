@@ -1,5 +1,6 @@
 package group23.pacman.controller;
 
+import group23.pacman.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import ui.UIViewController;
@@ -7,16 +8,18 @@ import ui.UIViewController;
 /**
  * Created by Antonio Zaitoun on 10/12/2018.
  */
-public class MainViewController extends UIViewController {
+public class MainViewController extends UIViewController implements JoystickManager.JoystickListener {
+
+    private final MainApp mainApp;
 
     @FXML
-    ToggleButton playBtn;
+    private ToggleButton playBtn;
 
     @FXML
-    ToggleButton settingsBtn;
+    private ToggleButton settingsBtn;
 
     @FXML
-    ToggleButton leaderboardBtn;
+    private ToggleButton leaderboardBtn;
 
     private int current_index = 0;
 
@@ -44,28 +47,55 @@ public class MainViewController extends UIViewController {
         return new ToggleButton[]{playBtn,settingsBtn,leaderboardBtn};
     }
 
-    public MainViewController() {
+    private static final String JOYSTICK_LISTENER_ID = "MainViewController";
+
+    public MainViewController(MainApp app) {
         super("/group23/pacman/view/MainViewController.fxml");
+        mainApp = app;
         playBtn.setSelected(true);
 
         view.setOnKeyPressed(JoystickManager.shared);
+
+        // register controller to joystick manager
         JoystickManager
                 .shared
-                .subscribe("MainViewController", (joystickId, selectedKey) -> {
+                .subscribe(JOYSTICK_LISTENER_ID, this);
+    }
 
-            // only allow menu control for the first joystick
-            if(joystickId == 1) {
-                switch (selectedKey){
-                    case UP:
-                        move_up();
-                        break;
-                    case DOWN:
-                        move_down();
-                        break;
-                    case ONE:
-                        break;
-                }
+    @Override
+    public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
+        // only allow menu control for the first joystick
+        if(joystickId == 1) {
+            switch (selectedKey){
+                case UP:
+                    move_up();
+                    break;
+                case DOWN:
+                    move_down();
+                    break;
+                case ONE:
+                    handleAction();
+                    break;
             }
-        });
+        }
+    }
+
+    public void handleAction() {
+        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+
+        switch (current_index){
+            case 0:
+                // play
+                mainApp.show_player_selection_menu();
+                break;
+            case 1:
+                // options
+                //TODO: go to options
+                break;
+            case 2:
+                // leaderboards
+                //TODO: go to leaderboards
+                break;
+        }
     }
 }

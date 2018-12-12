@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<?import javafx.scene.control.Label?>
+<UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <VBox alignment="CENTER" spacing="100.0">
+        <Label styleClass="label-retro" style="-fx-font-size: 40px;" text="SELECT NUMBER OF PLAYERS"/>
+        <HBox alignment="CENTER" maxHeight="100" spacing="16.0">
+            <ToggleButton fx:id="players_1" styleClass="button-retro" text="1 Player" />
+            <ToggleButton fx:id="players_2" styleClass="button-retro" text="2 Players" />
+        </HBox>
+    </VBox>
+
+</UIView>

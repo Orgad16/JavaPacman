@@ -3,9 +3,11 @@ package group23.pacman.controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Created By Tony on 12/12/2018
@@ -25,8 +27,15 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
     // Event listeners (subscribers)
     private Map<String,JoystickListener> subscribers = new HashMap<>();
 
+    private Vector<String> unregisterQueue = new Vector<>(10);
+
+    private Vector<Pair<String,JoystickListener>> registerQueue = new Vector<>(10);
+
+    private boolean isHandling = false;
+
     @Override
     public void handle(KeyEvent event) {
+        isHandling = true;
 
         // get all joysticks that are listening to this key
         Map<Integer,Key> keyMap = key_mappings.get(event.getCode());
@@ -37,6 +46,14 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
                     -> subscribers.values().forEach(joystickListenerWeakReference
                         -> joystickListenerWeakReference.onJoystickTriggered(integer,key)));
         }
+
+        for (Pair<String,JoystickListener> s : registerQueue) { subscribers.put(s.getKey(),s.getValue()); }
+        for (String s : unregisterQueue) { subscribers.remove(s); }
+
+        unregisterQueue.clear();
+        registerQueue.clear();
+
+        isHandling = false;
     }
 
     /**
@@ -77,7 +94,11 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
      * @param listener The listener
      */
     public void subscribe(String id, JoystickListener listener) {
-        subscribers.put(id,listener);
+        if(isHandling) {
+            registerQueue.add(new Pair<>(id,listener));
+        }else {
+            subscribers.put(id, listener);
+        }
     }
 
     /**
@@ -85,7 +106,11 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
      * @param id the id that was used to register.
      */
     public void unsubscribe(String id) {
-        subscribers.remove(id);
+        if(isHandling) {
+            unregisterQueue.add(id);
+        }else {
+            subscribers.remove(id);
+        }
     }
 
 

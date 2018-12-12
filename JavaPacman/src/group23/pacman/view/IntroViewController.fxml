@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import ui.UIView?>
+<UIView fx:id="root"
+        prefHeight="400"
+        prefWidth="600"
+        stylesheets="@../../../assets/css/main_style.css"
+        xmlns="http://javafx.com/javafx/8.0.121"
+        xmlns:fx="http://javafx.com/fxml/1"
+        style="-fx-background-color: white;">
+
+    <ImageView fx:id="logo" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../assets/misc/intro.png" />
+        </image>
+    </ImageView>
+
+</UIView>
