@@ -1,7 +1,10 @@
-package group23.pacman.model;
+package group23.pacman.controller;
 
 import java.util.Date;
 
+/**
+ * Created By Orgad on 12/12/2018
+ */
 public class GameSetting {
 
     private int NumOfLife;
