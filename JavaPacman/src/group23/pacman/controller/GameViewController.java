@@ -57,6 +57,8 @@ public class GameViewController extends RootController implements JoystickManage
 
         //TODO: complete game setup
 
+        //-----------------------------
+        // how to create a dialog view
         DialogView dialogView = new DialogView();
 
         dialogView.titleLabel.setText("QUIT");
@@ -78,6 +80,8 @@ public class GameViewController extends RootController implements JoystickManage
 
         overlay.getChildren().add(dialogView);
         overlay.setVisible(true);
+
+        //-----------------------------
 
 
         Board.canvasWidth = (int) maze_canvas.getWidth();
