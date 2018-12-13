@@ -3,10 +3,15 @@ package group23.pacman.controller;
 import group23.pacman.model.Board;
 import group23.pacman.model.Game;
 import group23.pacman.model.GameObject;
+import group23.pacman.view.DialogView;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import ui.UIView;
 
 
 import java.util.ArrayList;
@@ -37,6 +42,9 @@ public class GameViewController extends RootController implements JoystickManage
     // Player Name
     @FXML
     private Label playerNameLabel;
+
+    @FXML
+    private UIView overlay;
     
 
     // adapter used for joystick navigation
@@ -48,6 +56,29 @@ public class GameViewController extends RootController implements JoystickManage
         int selectedMap = GameSettings.instance.getMap();
 
         //TODO: complete game setup
+
+        DialogView dialogView = new DialogView();
+
+        dialogView.titleLabel.setText("QUIT");
+        dialogView.descriptionLabel.setText("Are you sure you want to quit?");
+        ToggleButton quitButton= new ToggleButton();
+        quitButton.getStyleClass().add("button-retro");
+        quitButton.setText("Yes");
+
+        ToggleButton cancelButton = new ToggleButton();
+        cancelButton.getStyleClass().add("button-retro");
+        cancelButton.setText("Cancel");
+        cancelButton.setSelected(true);
+
+        HBox box = new HBox();
+        box.setSpacing(20);
+        box.getChildren().addAll(quitButton,cancelButton);
+
+        dialogView.contentView.getChildren().add(box);
+
+        overlay.getChildren().add(dialogView);
+        overlay.setVisible(true);
+
 
         Board.canvasWidth = (int) maze_canvas.getWidth();
         // init game with map and number of players

@@ -34,3 +34,11 @@
     -fx-font-family: '8BIT WONDER Nominal';
     -fx-text-fill: white;
 }
+
+.dialog_container {
+    -fx-background-color: black;
+    -fx-background-radius: 10px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+}

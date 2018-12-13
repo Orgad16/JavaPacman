@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.*?>
+<?import ui.UIView?>
+<fx:root type="javafx.scene.layout.StackPane" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Group>
+        <StackPane styleClass="dialog_container"  alignment="TOP_CENTER" minWidth="600">
+            <padding><Insets bottom="16" left="16" right="16" top="16" /></padding>
+            <VBox alignment="CENTER" spacing="20" StackPane.alignment="CENTER">
+                <Label fx:id="titleLabel" styleClass="label-retro" style="-fx-font-size: 30px;" text="Title"/>
+                <Label fx:id="descriptionLabel" styleClass="label-retro" style="-fx-font-size: 18px;" text="Description"/>
+                <UIView fx:id="contentView" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </StackPane>
+    </Group>
+
+</fx:root>
