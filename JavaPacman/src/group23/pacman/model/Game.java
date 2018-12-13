@@ -3,6 +3,7 @@ package group23.pacman.model;
 import group23.pacman.model.Pacman.STATE;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.Random;
 
 /**The class that handles all the game logics - collisions, level handling, and creation of the map.
  */
@@ -58,8 +59,13 @@ public class Game {
 	/* Clear condition */
 	private int pellets;
 	private int pelletsEaten;
-	
-	
+
+	/* Poison pellet which spawns every 20 seconds */
+	private PoisonPellet poisonPellet;
+
+	/*Adds coordinates after eating pellet*/
+	private ArrayList<GameObject> emptySpaces = new ArrayList<>();
+
 	
 	public Game(char map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
@@ -82,21 +88,23 @@ public class Game {
 		/* Clear condition (number of pellets to eat) */
 		pellets = board.getTotalPellets();
 		pelletsEaten = 0;
-		
-		
+
 		/* Set up character objects to add to ArrayList of MovingCharacter interface */
 		characters = new ArrayList<MovingCharacter>();
 		
 		/* Only one pacman object will be created */
 		pacman = new Pacman(board.getPacman()[0],board.getPacman()[1], board);
-		
+
+		poisonPellet = new PoisonPellet(0,0);
+		objects.add(poisonPellet);
+
 		setUpGhosts(player2Ghost,player3Ghost);
 		
 		/* Initialise the variables used to control the AI scatter behaviour */
 		scatter = false;
 		countDown = false;
 		scatterScore = 0;
-		
+
 		/* Add all these moving characters to the array list */
 		characters.add(pacman);
 		characters.add(ghost);
@@ -184,12 +192,15 @@ public class Game {
 		//temp_ghost_1.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		updateTempGhostsOnBoard();
 		gasZone.update();
-
+		updatePoisonOnBoard();
 		//TODO: remove the gasZone
 	}
 	
 
-	//TODO: add to checkCollisions for other ghosts and candy (question candy)
+	private void updatePoisonOnBoard() {
+		poisonPellet.update(emptySpaces);
+	}
+
 	/* Checks character movement collisions and player pellet collisions */
 	private void checkCollisions() {
 		
@@ -241,20 +252,13 @@ public class Game {
 			}
 
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
-				// TODO: check collide with TempGhost and ghost is alive
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
-					//System.out.println("for question: " + ((TemporaryGhost) character).getQuestion().getQuestionID());
-					//System.out.println("the right answer is: " + ((TemporaryGhost) character).getQuestion().getCorrect_ans());
 					if (((TemporaryGhost) character).isRightGhost()) {
-//						System.out.println("right, ghost answer: " + ((TemporaryGhost) character).getAnswer());
-//						System.out.println("ghost number: " + ((TemporaryGhost) character).ghost);
 						//TODO: adjust the score based on the level of the question
 						score += 250;
 					}
 					else {
 						pacman.playDeathAnim();
-						//System.out.println("wrong, ghost answer: " +((TemporaryGhost) character).getAnswer());
-						//System.out.println("ghost number: " + ((TemporaryGhost) character).ghost);
 					}
 					characters.removeAll(temporaryGhosts);
 					temporaryGhosts.removeAll(temporaryGhosts);
@@ -273,26 +277,33 @@ public class Game {
 			// TODO: add if for the other candies
 
 			if (pacman.collidedWith(object)) {
-				if (object.getType() == GameObject.TYPE.PELLET || object.getType() == GameObject.TYPE.SPECIAL_PELLET ) {
-					if (object.getType() == GameObject.TYPE.SPECIAL_PELLET) {
-						pacman.getWhip().addCharges();
-					}
-					else if (object.getType() == GameObject.TYPE.PELLET){
-						pelletsEaten++;
-						score += 10;
-					}
-					
-					objects.remove(object);
-					
-					break;
-				}
-				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
-					objects.remove(object);
-					setUpTempGhosts((QuestionPellet) object);
-					break;
-				}
-			}
 
+				// collide with silver pellet
+				if (object.getType() == GameObject.TYPE.SILVER_PELLET) {
+					pacman.getWhip().addCharges();
+				}
+
+				// collide with pellet
+				if (object.getType() == GameObject.TYPE.PELLET){
+					pelletsEaten++;
+					score += 10;
+
+				}
+
+				// collide with question pellet
+				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
+					setUpTempGhosts((QuestionPellet) object);
+				}
+
+				// collide with poison pellet
+				if (object.getType() == GameObject.TYPE.POISON_PELLET) {
+					pacman.playDeathAnim();
+					poisonPellet.stopDrawing();
+				}
+				emptySpaces.add(object);
+				objects.remove(object);
+				break;
+			}
 		}
 	}
 	
@@ -370,6 +381,12 @@ public class Game {
 	
 	
 	/** ALL PUBLIC GETTERS BELOW **/
+
+	/* Public getter to reference map type */
+	public PoisonPellet getPoisonPellet() {
+
+		return this.poisonPellet;
+	}
 	
 	/* Public getter to reference Pacman object */
 	public Pacman getPacman() {

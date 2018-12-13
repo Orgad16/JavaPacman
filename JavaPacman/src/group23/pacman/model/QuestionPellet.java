@@ -11,9 +11,9 @@ public class QuestionPellet extends Pellet {
     private Question question;
 
     public QuestionPellet(int x, int y, Question question) {
-        super(x, y, TYPE.QUESTION_PELLET.toString());
+        super(x, y);
         this.question = question;
-        setImage();
+
     }
 
     @Override

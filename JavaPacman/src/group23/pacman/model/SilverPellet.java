@@ -4,12 +4,11 @@ import javafx.scene.image.Image;
 
 /** Special pellet which gives power up to Pacman object */
 
-public class SpecialPellet extends Pellet{
+public class SilverPellet extends Pellet{
 	
-	public SpecialPellet(int x, int y) {
+	public SilverPellet(int x, int y) {
 		
-		super(x,y, TYPE.SPECIAL_PELLET.toString());
-		setImage();
+		super(x,y);
 		
 	}
 	
@@ -18,7 +17,7 @@ public class SpecialPellet extends Pellet{
 	public void setImage() {
 		
 		image = new Image("assets/tempSpecialPellet.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
-		this.type = GameObject.TYPE.SPECIAL_PELLET;
+		this.type = GameObject.TYPE.SILVER_PELLET;
 	}
 
 }

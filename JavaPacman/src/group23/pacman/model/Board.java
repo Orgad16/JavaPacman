@@ -85,7 +85,7 @@ public class Board {
 			/* Creates objects on the map based on their value in the text file
 			 * 0 creates a wall
 			 * P creates a pellet
-			 * W creates a special pellet
+			 * W creates a silver pellet
 			 * 1 is an empty position
 			 * R is a position that the character can be in but cannot turn 
 			 * O is a position that the ghost can be in, but only if it has not left the spawn point.
@@ -117,7 +117,7 @@ public class Board {
 						position++;
 					}
 					else if (line.charAt(i) == 'P') {
-						Pellet pellet = new Pellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, GameObject.TYPE.PELLET.toString());
+						Pellet pellet = new Pellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
 						objects.add(pellet);
 						status[position][row] = false;
 						node[position][row] = false;
@@ -135,7 +135,7 @@ public class Board {
 						indexForQuestion++;
 					}
 					else if (line.charAt(i) == 'W') {
-						SpecialPellet sPellet = new SpecialPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
+						SilverPellet sPellet = new SilverPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
 						objects.add(sPellet);
 						status[position][row] = false;
 						node[position][row] = false;
@@ -181,17 +181,11 @@ public class Board {
 						tempGhostsCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
 						position++;
 					}
-
-					
-				
 				}
-							
-				
 				row++;
 			}
 			bufferedReader.close();
-		} 
-		
+		}
 		catch (FileNotFoundException ex) {
 			System.out.println("Unable to open file ");
 		}
@@ -200,7 +194,6 @@ public class Board {
 			System.out.println("Error reading file ");
 		}
 	}
-	
 	
 	/* Passes objects back to the game class - to check for collisions */
 	public ArrayList<GameObject> getObjects() {
