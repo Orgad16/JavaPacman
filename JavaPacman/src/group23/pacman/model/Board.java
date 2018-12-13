@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import group23.pacman.system.SysData;
+import javafx.util.Pair;
 
 /**The class that deals with objects pertaining to the map. Has methods which determine
  * whether a moving character can traverse in a certain direction or along a certain path.
@@ -17,10 +19,10 @@ import group23.pacman.system.SysData;
 public class Board {
 	
 	/* Constants - do not change */
-	private final int TILE_SIZE = 10;
-	private final int X_OFFSET = 158;
-	private final int Y_OFFSET = 9;
-	private final int OFFSET = 1;
+	public static final int TILE_SIZE = 10;
+	public static final int X_OFFSET = 158;
+	public static final int Y_OFFSET = 9;
+	public static final int OFFSET = 1;
 	
 	/* Adds objects to list for Game object to reference */
 	private ArrayList<GameObject> objects;
@@ -29,7 +31,11 @@ public class Board {
 	private boolean[][] status;
 	private boolean[][] node;
 	private boolean[][] ghostOnlyPath;
-	
+	private List<Pair<Integer,Integer>> onlyTurns = new ArrayList<>();
+	public boolean[][] getGhostOnlyPath() {
+		return ghostOnlyPath;
+	}
+
 	/* Spawn point coordinates */
 	private int[] ghostCoords;
 	private int[] tempGhostsCoords;
@@ -125,15 +131,15 @@ public class Board {
 						position++;
 						pellets++;
 					}
-					else if (line.charAt(i) == 'Q') {
-						QuestionPellet qPellet = new QuestionPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, questions.get(indexForQuestion));
-						objects.add(qPellet);
-						status[position][row] = false;
-						node[position][row] = false;
-						ghostOnlyPath[position][row] = false;
-						position++;
-						indexForQuestion++;
-					}
+//					else if (line.charAt(i) == 'Q') {
+//						QuestionPellet qPellet = new QuestionPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, questions.get(indexForQuestion));
+//						objects.add(qPellet);
+//						status[position][row] = false;
+//						node[position][row] = false;
+//						ghostOnlyPath[position][row] = false;
+//						position++;
+//						indexForQuestion++;
+//					}
 					else if (line.charAt(i) == 'W') {
 						SilverPellet sPellet = new SilverPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
 						objects.add(sPellet);
@@ -158,6 +164,7 @@ public class Board {
 						status[position][row] = true;
 						node[position][row] = true;
 						ghostOnlyPath[position][row] = true;
+						onlyTurns.add(new Pair<>(position,row));
 						position++;
 					}
 					else if (line.charAt(i) == 'O'){
@@ -176,11 +183,11 @@ public class Board {
 						ghostCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
 						position++;
 					}
-					else if (line.charAt(i) == 'Z'){
-						tempGhostsCoords[0] = (position-2)*TILE_SIZE + X_OFFSET;
-						tempGhostsCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
-						position++;
-					}
+//					else if (line.charAt(i) == 'Z'){
+//						tempGhostsCoords[0] = (position-2)*TILE_SIZE + X_OFFSET;
+//						tempGhostsCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
+//						position++;
+//					}
 				}
 				row++;
 			}
@@ -278,6 +285,10 @@ public class Board {
 	public int[] getGhost() {
 		
 		return ghostCoords;
+	}
+
+	public List<Pair<Integer, Integer>> getOnlyTurns() {
+		return onlyTurns;
 	}
 
 	public int[] getTempGhosts() {

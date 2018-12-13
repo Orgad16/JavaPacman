@@ -1,9 +1,12 @@
 package group23.pacman.system;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import group23.pacman.model.Question;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SysData {
 
@@ -11,6 +14,8 @@ public class SysData {
     final String gameRecordsPath = "src/assets/jsonFiles/gameRecords.json";
     private JsonHandler questionHandler;
     private JsonHandler recordsHandler;
+
+    public static final SysData instance = new SysData();
 
 
     /**
@@ -126,6 +131,48 @@ public class SysData {
 
     }
 
+    public ArrayList<Question> getQuestionsFromJson() {
+        ArrayList<Question> qList = new ArrayList<>();
+
+        // getting the questions as json array
+        SysData sysData = new SysData();
+        JsonArray jsonList = null;
+        try {
+            jsonList = sysData.getQuestions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // loop over the json array and create a Question entity
+        for (JsonElement element : jsonList) {
+
+            // getting the question field
+            String qField = element.getAsJsonObject().get("question").getAsString();
+
+            // getting the answers for question
+            ArrayList<String> aList = new ArrayList<>();
+            for (JsonElement answer : element.getAsJsonObject().get("answers").getAsJsonArray()) {
+                aList.add(answer.getAsString());
+            }
+
+            // getting the correct answer for that question
+            int correctAns = element.getAsJsonObject().get("correct_ans").getAsInt();
+
+            // getting the level of the question
+            int qLevel = element.getAsJsonObject().get("level").getAsInt();
+
+            // getting the team that wrote the question
+            String qTeam = element.getAsJsonObject().get("team").getAsString();
+
+            Question q = new Question(qField, aList, correctAns, qLevel, qTeam);
+
+            qList.add(q);
+        }
+
+        return qList;
+
+
+    }
 }
 
 // json file example for game records:

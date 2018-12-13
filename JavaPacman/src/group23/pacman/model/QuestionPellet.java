@@ -2,18 +2,32 @@ package group23.pacman.model;
 
 import javafx.scene.image.Image;
 
-public class QuestionPellet extends Pellet {
+import java.util.List;
+import java.util.Random;
+
+public class QuestionPellet extends RandomPellet {
 
 
-    protected static final int SPRITE_WIDTH = 10;
-    protected static final int SPRITE_HEIGHT = 10;
+    private List<Question>  questions;
 
-    private Question question;
-
-    public QuestionPellet(int x, int y, Question question) {
+    public QuestionPellet(int x, int y,List<Question> questions) {
         super(x, y);
-        this.question = question;
+        this.questions = questions;
+    }
 
+    @Override
+    public boolean shouldShowPellet(Timer timer) {
+        return !questions.isEmpty() && timer.getTimeRemaining() % 10 == 0  && timer.getTimeRemaining() != 120;
+    }
+
+    @Override
+    public int appearForSeconds() {
+        return 8;
+    }
+
+    @Override
+    public TYPE getType() {
+        return TYPE.QUESTION_PELLET;
     }
 
     @Override
@@ -24,6 +38,8 @@ public class QuestionPellet extends Pellet {
     }
 
     public Question getQuestion() {
-        return question;
+        return questions.remove(new Random().nextInt(questions.size()));
     }
+
+
 }

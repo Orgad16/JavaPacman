@@ -69,7 +69,16 @@ public class Rectangle {
 		// TODO Auto-generated method stub
 		return width;
 	}
-    
-    
 
+
+    @Override
+    public String toString() {
+        return "Rectangle{" +
+                "x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                ", hitBoxEnabled=" + hitBoxEnabled +
+                '}';
+    }
 }

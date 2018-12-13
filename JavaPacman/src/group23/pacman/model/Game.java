@@ -1,9 +1,18 @@
 package group23.pacman.model;
 
 import group23.pacman.model.Pacman.STATE;
+import group23.pacman.system.SysData;
+import javafx.util.Pair;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import static group23.pacman.model.Board.TILE_SIZE;
+import static group23.pacman.model.Board.X_OFFSET;
+import static group23.pacman.model.Board.Y_OFFSET;
 
 /**The class that handles all the game logics - collisions, level handling, and creation of the map.
  */
@@ -63,10 +72,13 @@ public class Game {
 	/* Poison pellet which spawns every 20 seconds */
 	private PoisonPellet poisonPellet;
 
+	private QuestionPellet questionPellet;
+
 	/*Adds coordinates after eating pellet*/
 	private ArrayList<GameObject> emptySpaces = new ArrayList<>();
 
-	
+	private List<Question> questionList = SysData.instance.getQuestionsFromJson();
+
 	public Game(char map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
 		this.map = map;
@@ -96,7 +108,10 @@ public class Game {
 		pacman = new Pacman(board.getPacman()[0],board.getPacman()[1], board);
 
 		poisonPellet = new PoisonPellet(0,0);
+        questionPellet = new QuestionPellet(0,0,questionList);
+
 		objects.add(poisonPellet);
+		objects.add(questionPellet);
 
 		setUpGhosts(player2Ghost,player3Ghost);
 		
@@ -110,8 +125,6 @@ public class Game {
 		characters.add(ghost);
 		characters.add(ghost2);
 		characters.add(ghost3);
-		
-	
 	}
 
 	/**
@@ -122,12 +135,14 @@ public class Game {
 
 		//getting the question that the pacman ate
 		Question q = question.getQuestion();
-
+        List<Pair<Integer,Integer>> locations = movementLocations();
+		Random rnd = new Random();
 		for (int i=4; i<7; i++) {
-
+		    Pair<Integer,Integer> loc = locations.get(rnd.nextInt(locations.size()));
+            System.out.println(loc);
 			// type field should by between 2 and 4 -> set to i-2
 			// answer field should be between 0 and 2 -> set to i-4
-			TemporaryGhost temp_ghost = new TemporaryGhost(board.getTempGhosts()[0],board.getTempGhosts()[1], board, i-2, i, q, i-4);
+			TemporaryGhost temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET ,loc.getValue() * TILE_SIZE + Y_OFFSET, board, i-2, i, q, i-4);
 			characters.add(temp_ghost);
 			temporaryGhosts.add(temp_ghost);
 		}
@@ -158,8 +173,6 @@ public class Game {
 			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 3,1);
 			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,2);
 			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,3);
-
-
 		}
 		
 		else if (numPlayers == 2) {
@@ -173,7 +186,7 @@ public class Game {
 			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,vector.elementAt(1));
 			//ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,vector.elementAt(2));
 		}
-		
+
 
 	}
 
@@ -188,18 +201,22 @@ public class Game {
 		ghost.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost2.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
-		//ghost4.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
-		//temp_ghost_1.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		updateTempGhostsOnBoard();
 		gasZone.update();
-		updatePoisonOnBoard();
+        poisonPellet.update(emptySpaces);
+        questionPellet.update(emptySpaces);
 		//TODO: remove the gasZone
 	}
-	
 
-	private void updatePoisonOnBoard() {
-		poisonPellet.update(emptySpaces);
-	}
+	public List<Pair<Integer,Integer>>  movementLocations(){
+        List<Pair<Integer,Integer>> locations = board.getOnlyTurns();
+        int x = (int) (pacman.getX() - X_OFFSET) / TILE_SIZE;
+        int y = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
+
+        // filter locations close to the pacman
+        return locations.stream().filter(o -> ( x + 3 < o.getKey() && y + 3 < o.getValue())).collect(Collectors.toList());
+    }
+
 
 	/* Checks character movement collisions and player pellet collisions */
 	private void checkCollisions() {
