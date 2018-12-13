@@ -10,6 +10,7 @@ import javafx.concurrent.Task;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -130,8 +131,8 @@ public class MainApp extends Application{
 		primaryScene.setFill(Color.BLACK);
 		gameWindow.setScene(primaryScene);
 		gameWindow.show();
-		//gameWindow.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		//gameWindow.setFullScreen(true);
+		gameWindow.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		gameWindow.setFullScreen(true);
 
 		IntroController introController = new IntroController();
 		change_root(introController.view);

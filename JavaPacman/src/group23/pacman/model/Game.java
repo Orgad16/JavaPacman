@@ -48,7 +48,7 @@ public class Game {
 	private int score;
 	
 	/* Each game has a unique map */
-	private char map;
+	private int map;
 	
 	/* Keep track of number of players/game mode */
 	private int numPlayers;
@@ -79,7 +79,7 @@ public class Game {
 
 	private List<Question> questionList = SysData.instance.getQuestionsFromJson();
 
-	public Game(char map,int numPlayers,int player2Ghost,int player3Ghost) {
+	public Game(int map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
 		this.map = map;
 		this.numPlayers = numPlayers;
@@ -448,7 +448,7 @@ public class Game {
 	}
 	
 	/* Public getter to reference map type */
-	public char getMap() {
+	public int getMap() {
 		
 		return this.map;
 	}

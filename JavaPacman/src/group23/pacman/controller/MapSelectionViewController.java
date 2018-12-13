@@ -45,10 +45,6 @@ public class MapSelectionViewController extends RootController implements Joysti
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         if(joystickId == 1) {
             switch (selectedKey){
-                case UP:
-                    adapter.current().setSelected(false);
-                    adapter.move_up().setSelected(true);
-                    break;
                 case LEFT:
                     adapter.current().setSelected(false);
                     adapter.move_left().setSelected(true);
@@ -57,13 +53,12 @@ public class MapSelectionViewController extends RootController implements Joysti
                     adapter.current().setSelected(false);
                     adapter.move_right().setSelected(true);
                     break;
-                case DOWN:
-                    adapter.current().setSelected(false);
-                    adapter.move_down().setSelected(true);
-                    break;
                 case ONE:
                     // map selected
                     GameSettings.instance.setMap(adapter.getY());
+                    GameViewController gameViewController = new GameViewController();
+
+                    MainApp.getInstance().pushViewController(gameViewController,true);
                     break;
                 case TWO:
                     //go back

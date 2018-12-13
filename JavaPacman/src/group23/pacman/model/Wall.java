@@ -10,22 +10,22 @@ public class Wall extends GameObject{
 	private Image mapBlock;
 	private double x;
 	private double y;
-	public Wall(Rectangle rectangle,char map) {
+	public Wall(Rectangle rectangle,int map) {
 		
 		
 		/* Choose which tile block to load into the map */
 		String mapBlock;
 		switch (map) {
-			case 'r' :
+			case 0 :
 				mapBlock = "assets/tiles/mapBlock-ruins.png";
 				break;
-			case 'f' :
+			case 1 :
 				mapBlock = "assets/tiles/mapBlock-forest.png";
 				break;
-			case 'd' :
+			case 2 :
 				mapBlock = "assets/tiles/mapBlock-deserttemple.png";
 				break;
-			case 's' :
+			case 3 :
 				mapBlock = "assets/tiles/mapBlock-sea.png";
 				break;
 			default :

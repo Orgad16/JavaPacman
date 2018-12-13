@@ -116,20 +116,20 @@ public class GameViewController {
 	public void setGame(Game game) {
 		
 		/* First, select map based on user input */
-		char map = game.getMap();
+		int map = game.getMap();
 		String backgroundImage;
 		
 		switch (map) {
-			 case 'r' :
+			 case 0 :
 			    backgroundImage = "bg/backgrounds-game/background-ruins_game.png";
 				break;
-	    	case 'f' :
+	    	case 1 :
 	    		backgroundImage = "bg/backgrounds-game/background-forest_game.png";
 	    		break;
-	    	case 'd' :
+	    	case 2 :
 	    		backgroundImage = "bg/backgrounds-game/background-deserttemple_game.png";
 	  	    	break;
-		    case 's' :
+		    case 3 :
 		    	backgroundImage = "bg/backgrounds-game/background-sea_game.png";
 		    	break;	   
 		    default :

@@ -59,23 +59,23 @@ public class Board {
 	}
 	
 	
-	public void createBoard(char map) {
+	public void createBoard(int map) {
 		
 		String line,mapTxt;
 		
 		/* Parse the map.txt file, loads the map into the game */
 		try {
 			switch (map) {
-				case 'r' :
+				case 0 :
 					mapTxt = "maps/ruins.txt";
 					break;
-				case 'f' :
+				case 1 :
 					mapTxt = "maps/forest.txt";
 					break;
-				case 'd' :
+				case 2 :
 					mapTxt = "maps/deserttemple.txt";
 					break;
-				case 's' :
+				case 3 :
 					mapTxt = "maps/sea.txt";
 					break;
 				default :

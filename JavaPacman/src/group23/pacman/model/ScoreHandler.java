@@ -84,7 +84,7 @@ public class ScoreHandler {
 	}
 
 	/* Writing a new highscore to the text file, only if it has beaten an existing score */
-	public void writeScore(int newScore,String newName, char newMapName) {
+	public void writeScore(int newScore,String newName, int newMapName) {
 		
 		if (newScore > firstScore) {
 			thirdScore = secondScore;

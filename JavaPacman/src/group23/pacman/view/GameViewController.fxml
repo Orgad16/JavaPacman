@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import ui.UIView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <HBox spacing="30">
+        <StackPane style="-fx-background-color:blue;">
+
+            <!--Maze Canvas: contains walls and background-->
+            <Canvas fx:id="maze_canvas" width="1366" height="768" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+            <!--Objects Canvas: pellets, pacman, ghosts-->
+            <Canvas fx:id="game_canvas" width="1366" height="768" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+        </StackPane>
+        <VBox spacing="20" minWidth="200" alignment="CENTER">
+            <Label fx:id="scoreLabel" styleClass="label-retro" style="-fx-font-size: 20px;" text="SCORE"/>
+            <Label fx:id="lifeLabel" styleClass="label-retro" style="-fx-font-size: 20px;" text="SCORE"/>
+            <Label fx:id="timerLabel" styleClass="label-retro" style="-fx-font-size: 20px;" text="02:00"/>
+            <Label fx:id="playerNameLabel" styleClass="label-retro" style="-fx-font-size: 20px;" text="NAME"/>
+        </VBox>
+    </HBox>
+
+</UIView>
