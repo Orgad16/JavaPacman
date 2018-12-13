@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import group23.pacman.system.SysData;
+import javafx.util.Pair;
 
 /**The class that deals with objects pertaining to the map. Has methods which determine
  * whether a moving character can traverse in a certain direction or along a certain path.
@@ -13,10 +19,10 @@ import java.util.ArrayList;
 public class Board {
 	
 	/* Constants - do not change */
-	private final int TILE_SIZE = 10;
-	private final int X_OFFSET = 158;
-	private final int Y_OFFSET = 9;
-	private final int OFFSET = 1;
+	public static final int TILE_SIZE = 10;
+	public static final int X_OFFSET = 158;
+	public static final int Y_OFFSET = 9;
+	public static final int OFFSET = 1;
 	
 	/* Adds objects to list for Game object to reference */
 	private ArrayList<GameObject> objects;
@@ -25,9 +31,14 @@ public class Board {
 	private boolean[][] status;
 	private boolean[][] node;
 	private boolean[][] ghostOnlyPath;
-	
+	private List<Pair<Integer,Integer>> onlyTurns = new ArrayList<>();
+	public boolean[][] getGhostOnlyPath() {
+		return ghostOnlyPath;
+	}
+
 	/* Spawn point coordinates */
 	private int[] ghostCoords;
+	private int[] tempGhostsCoords;
 	private int[] pacmanCoords;
 	
 	/* Keep track of clear condition */
@@ -39,6 +50,7 @@ public class Board {
 		/* Create the list and arrays of objects/states to be placed on the map */
 		pacmanCoords = new int[2];
 		ghostCoords = new int[2];
+		tempGhostsCoords = new int[2];
 		status = new boolean[75][75];
 		node = new boolean[75][75];
 		ghostOnlyPath = new boolean[75][75];
@@ -79,14 +91,21 @@ public class Board {
 			/* Creates objects on the map based on their value in the text file
 			 * 0 creates a wall
 			 * P creates a pellet
-			 * W creates a special pellet
+			 * W creates a silver pellet
 			 * 1 is an empty position
 			 * R is a position that the character can be in but cannot turn 
 			 * O is a position that the ghost can be in, but only if it has not left the spawn point.
 			 * T is a turn node
 			 * S is the spawn point of the main character
 			 * G is the spawn point of a ghost
+			 * Q is the question pellet
+			 * Z is the position that the temp ghosts start from
 			 */
+
+			// getting the questions for the question pellets
+			ArrayList<Question> questions = getQuestionsFromJson();
+			int indexForQuestion = 0;
+
 			while ((line = bufferedReader.readLine()) != null ) {
 				position = 0;
 				for (int i =0;i< line.length();i++) {
@@ -112,8 +131,17 @@ public class Board {
 						position++;
 						pellets++;
 					}
+//					else if (line.charAt(i) == 'Q') {
+//						QuestionPellet qPellet = new QuestionPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET, questions.get(indexForQuestion));
+//						objects.add(qPellet);
+//						status[position][row] = false;
+//						node[position][row] = false;
+//						ghostOnlyPath[position][row] = false;
+//						position++;
+//						indexForQuestion++;
+//					}
 					else if (line.charAt(i) == 'W') {
-						SpecialPellet sPellet = new SpecialPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
+						SilverPellet sPellet = new SilverPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
 						objects.add(sPellet);
 						status[position][row] = false;
 						node[position][row] = false;
@@ -136,6 +164,7 @@ public class Board {
 						status[position][row] = true;
 						node[position][row] = true;
 						ghostOnlyPath[position][row] = true;
+						onlyTurns.add(new Pair<>(position,row));
 						position++;
 					}
 					else if (line.charAt(i) == 'O'){
@@ -154,16 +183,16 @@ public class Board {
 						ghostCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
 						position++;
 					}
-					
-				
+//					else if (line.charAt(i) == 'Z'){
+//						tempGhostsCoords[0] = (position-2)*TILE_SIZE + X_OFFSET;
+//						tempGhostsCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
+//						position++;
+//					}
 				}
-							
-				
 				row++;
 			}
 			bufferedReader.close();
-		} 
-		
+		}
 		catch (FileNotFoundException ex) {
 			System.out.println("Unable to open file ");
 		}
@@ -172,7 +201,6 @@ public class Board {
 			System.out.println("Error reading file ");
 		}
 	}
-	
 	
 	/* Passes objects back to the game class - to check for collisions */
 	public ArrayList<GameObject> getObjects() {
@@ -258,5 +286,58 @@ public class Board {
 		
 		return ghostCoords;
 	}
+
+	public List<Pair<Integer, Integer>> getOnlyTurns() {
+		return onlyTurns;
+	}
+
+	public int[] getTempGhosts() {
+		return tempGhostsCoords;
+	}
+
+
+	/**
+	 * This function will get the question from the json file using the SysData class and convert it to question entity
+	 * @return array list of Questions
+	 * @throws IOException
+	 */
+	private ArrayList<Question> getQuestionsFromJson() throws IOException {
+		ArrayList<Question> qList = new ArrayList<>();
+
+		// getting the questions as json array
+		SysData sysData = new SysData();
+		JsonArray jsonList = sysData.getQuestions();
+
+		// loop over the json array and create a Question entity
+		for (JsonElement element : jsonList) {
+
+			// getting the question field
+			String qField = element.getAsJsonObject().get("question").getAsString();
+
+			// getting the answers for question
+			ArrayList<String> aList = new ArrayList<>();
+			for (JsonElement answer : element.getAsJsonObject().get("answers").getAsJsonArray()) {
+				aList.add(answer.getAsString());
+			}
+
+			// getting the correct answer for that question
+			int correctAns = element.getAsJsonObject().get("correct_ans").getAsInt();
+
+			// getting the level of the question
+			int qLevel = element.getAsJsonObject().get("level").getAsInt();
+
+			// getting the team that wrote the question
+			String qTeam = element.getAsJsonObject().get("team").getAsString();
+
+			Question q = new Question(qField, aList, correctAns, qLevel, qTeam);
+
+			qList.add(q);
+		}
+
+		return qList;
+
+
+	}
 	
 }
+

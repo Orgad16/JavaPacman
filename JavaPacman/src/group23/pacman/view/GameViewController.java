@@ -6,6 +6,7 @@ import group23.pacman.MainApp;
 import group23.pacman.controller.GameStateController;
 import group23.pacman.model.Game;
 import group23.pacman.model.GameObject;
+import group23.pacman.model.TemporaryGhost;
 import group23.pacman.model.Timer;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -151,9 +152,6 @@ public class GameViewController {
 				break;
 			case 2:
 				gameStateController.listenTwoPlayer();
-				break;
-			case 3:
-				gameStateController.listenThreePlayer();
 				break;
 			default:
 				gameStateController.listenSinglePlayer();
@@ -420,7 +418,11 @@ public class GameViewController {
 		gameStateController.getGame().getGhost().draw(graphicsContext);
 		gameStateController.getGame().getGhost2().draw(graphicsContext);
 		gameStateController.getGame().getGhost3().draw(graphicsContext);
-		gameStateController.getGame().getGhost4().draw(graphicsContext);
+		ArrayList<TemporaryGhost> tempGhosts = gameStateController.getGame().getTempGhost();
+		for (TemporaryGhost tempGhost : tempGhosts) {
+			tempGhost.draw(graphicsContext);
+		}
+		//gameStateController.getGame().getGhost4().draw(graphicsContext);
 		
 		gameStateController.getGame().getGasZone().draw(graphicsContext);
 		

@@ -24,6 +24,7 @@ public class Pellet extends GameObject {
 		this.x = x;
 		this.y = y;
 		setImage();
+
 		
 	}
 	

@@ -9,10 +9,13 @@ public abstract class GameObject {
 	public enum TYPE{
 		
 		PELLET,
-		SPECIAL_PELLET,
+		SILVER_PELLET,
+		POISON_PELLET,
+		QUESTION_PELLET,
 		WALL,
 		GASZONE,
 		GHOST,
+		TEMP_GHOST,
 		PACMAN
 	}
 	

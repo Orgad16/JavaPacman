@@ -169,7 +169,7 @@
   <component name="GradleLocalSettings">
     <option name="modificationStamps">
       <map>
-        <entry key="$USER_HOME$/Downloads/JFoenix-master" value="2988561848000" />
+        <entry key="$PROJECT_DIR$/../../JFoenix-master" value="2988561848000" />
       </map>
     </option>
   </component>
@@ -246,13 +246,15 @@
               <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
               <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="bg" type="462c0819:PsiDirectoryNode" />
+              <item name="pacman" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
               <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pacman" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
@@ -478,6 +480,15 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="32" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
@@ -522,6 +533,49 @@
       <option name="time" value="50" />
     </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>List&lt;Pair&lt;Integer,Integer&gt;&gt; locations = new ArrayList&lt;&gt;();
+for (int i = 0; i &lt; board.ghostOnlyPath.length; i++) {
+    for (int j = 0; j &lt; board.ghostOnlyPath[i].length; j++) {
+        if(board.ghostOnlyPath[i][j]){
+            locations.add(new Pair&lt;&gt;(i,j));
+        }
+    }
+}
+
+locations.get(new Random().nextInt(locations.size()));</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>javafx.util.Pair</custom-info>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>List&lt;Pair&lt;Integer,Integer&gt;&gt; locations = new ArrayList&lt;&gt;();
+for (int i = 0; i &lt; board.ghostOnlyPath.length; i++) {
+    for (int j = 0; j &lt; board.ghostOnlyPath[i].length; j++) {
+        if(board.ghostOnlyPath[i][j]){
+            locations.add(new Pair&lt;&gt;(i,j));
+        }
+    }
+}
+locations</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>javafx.util.Pair</custom-info>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>board.ghostOnlyPath</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>this</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/bg/backgrounds-LevelSelect/background-deserttemple_levelselect.png">

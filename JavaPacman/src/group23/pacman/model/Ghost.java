@@ -72,6 +72,12 @@ public class Ghost extends GameObject implements MovingCharacter {
 			case 4:
 				this.ghost = "ghost4";
 				break;
+			case 5:
+				this.ghost = "ghost5";
+				break;
+			case 6:
+				this.ghost = "ghost6";
+				break;
 			default :
 				this.ghost = "ghost1";
 				break;
@@ -86,9 +92,13 @@ public class Ghost extends GameObject implements MovingCharacter {
 		spawnGhost();
 		this.hitBox.setHeight(SPRITE_HEIGHT - OFFSET);
 		this.hitBox.setWidth(SPRITE_WIDTH - OFFSET);
-		this.type = GameObject.TYPE.GHOST;
 
-		
+		if (ghost > 3) {
+			this.type = TYPE.TEMP_GHOST;
+		} else {
+			this.type = TYPE.GHOST;
+		}
+
 		this.vector = 'S';
 		this.queuedDirection = 'S';
 		

@@ -140,7 +140,7 @@ public class Pacman extends GameObject implements MovingCharacter {
     	Rectangle hitBox = object.getHitBox();
     	
     	
-    	if (object.getType() == GameObject.TYPE.PELLET || object.getType() == GameObject.TYPE.SPECIAL_PELLET) {
+    	if (object.getType() == GameObject.TYPE.PELLET || object.getType() == GameObject.TYPE.SILVER_PELLET || object.getType() == TYPE.QUESTION_PELLET || object.getType() == TYPE.POISON_PELLET) {
     		if (this.hitBox.intersects(hitBox)) {
     			playSfx(1);
     		}
