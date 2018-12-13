@@ -243,23 +243,25 @@ public class Game {
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
 				// TODO: check collide with TempGhost and ghost is alive
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
-					System.out.println("for question: " + ((TemporaryGhost) character).getQuestion().getQuestionID());
-					System.out.println("the right answer is: " + ((TemporaryGhost) character).getQuestion().getCorrect_ans());
+					//System.out.println("for question: " + ((TemporaryGhost) character).getQuestion().getQuestionID());
+					//System.out.println("the right answer is: " + ((TemporaryGhost) character).getQuestion().getCorrect_ans());
 					if (((TemporaryGhost) character).isRightGhost()) {
 //						System.out.println("right, ghost answer: " + ((TemporaryGhost) character).getAnswer());
 //						System.out.println("ghost number: " + ((TemporaryGhost) character).ghost);
-						score += 1000;
-						temporaryGhosts.remove(character);
-						characters.remove(character);
+						//TODO: adjust the score based on the level of the question
+						score += 250;
 					}
 					else {
 						pacman.playDeathAnim();
 						//System.out.println("wrong, ghost answer: " +((TemporaryGhost) character).getAnswer());
 						//System.out.println("ghost number: " + ((TemporaryGhost) character).ghost);
 					}
+					characters.removeAll(temporaryGhosts);
+					temporaryGhosts.removeAll(temporaryGhosts);
+					return;
 				}
 
-					// TODO: check if the ghost collided with is the correct ghost
+
 					// TODO: do actions according to the collision
 			}
 			
