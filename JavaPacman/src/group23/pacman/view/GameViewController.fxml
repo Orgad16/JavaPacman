@@ -7,10 +7,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
 <UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
 
-    <HBox spacing="30">
-        <StackPane style="-fx-background-color:blue;">
+    <HBox spacing="30" alignment="CENTER">
+        <StackPane style="-fx-background-color:blue;" >
 
             <!--Maze Canvas: contains walls and background-->
             <Canvas fx:id="maze_canvas" width="1366" height="768" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
