@@ -9,18 +9,27 @@ import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import group23.pacman.MainApp;
 import group23.pacman.system.SysData;
 import javafx.util.Pair;
+import sun.applet.Main;
 
 /**The class that deals with objects pertaining to the map. Has methods which determine
  * whether a moving character can traverse in a certain direction or along a certain path.
  */
 
 public class Board {
-	
+
+
+	public static int canvasWidth = 768;
+
+	public static int X_OFFSET(){
+		return (canvasWidth - (75 * TILE_SIZE)) / 2;
+	}
+
 	/* Constants - do not change */
 	public static final int TILE_SIZE = 10;
-	public static final int X_OFFSET = 158;
+	//public static final int X_OFFSET = 158;
 	public static final int Y_OFFSET = 9;
 	public static final int OFFSET = 1;
 	
@@ -32,9 +41,6 @@ public class Board {
 	private boolean[][] node;
 	private boolean[][] ghostOnlyPath;
 	private List<Pair<Integer,Integer>> onlyTurns = new ArrayList<>();
-	public boolean[][] getGhostOnlyPath() {
-		return ghostOnlyPath;
-	}
 
 	/* Spawn point coordinates */
 	private int[] ghostCoords;
@@ -111,7 +117,7 @@ public class Board {
 				for (int i =0;i< line.length();i++) {
 					if (line.charAt(i)==('0')) {
 						Rectangle rect = new Rectangle();
-						rect.setX(position*TILE_SIZE + X_OFFSET);
+						rect.setX(position*TILE_SIZE + X_OFFSET());
 						rect.setY(row*TILE_SIZE + Y_OFFSET);
 						rect.setWidth(TILE_SIZE);
 						rect.setHeight(TILE_SIZE);
@@ -123,7 +129,7 @@ public class Board {
 						position++;
 					}
 					else if (line.charAt(i) == 'P') {
-						Pellet pellet = new Pellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
+						Pellet pellet = new Pellet(position*TILE_SIZE + X_OFFSET(),row*TILE_SIZE + Y_OFFSET);
 						objects.add(pellet);
 						status[position][row] = false;
 						node[position][row] = false;
@@ -141,7 +147,7 @@ public class Board {
 //						indexForQuestion++;
 //					}
 					else if (line.charAt(i) == 'W') {
-						SilverPellet sPellet = new SilverPellet(position*TILE_SIZE + X_OFFSET,row*TILE_SIZE + Y_OFFSET);
+						SilverPellet sPellet = new SilverPellet(position*TILE_SIZE + X_OFFSET(),row*TILE_SIZE + Y_OFFSET);
 						objects.add(sPellet);
 						status[position][row] = false;
 						node[position][row] = false;
@@ -174,12 +180,12 @@ public class Board {
 						position++;
 					}
 					else if (line.charAt(i) == 'S'){
-						pacmanCoords[0] = (position-2)*TILE_SIZE + X_OFFSET;
+						pacmanCoords[0] = (position-2)*TILE_SIZE + X_OFFSET();
 						pacmanCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
 						position++;
 					}
 					else if (line.charAt(i) == 'G'){
-						ghostCoords[0] = (position-2)*TILE_SIZE + X_OFFSET;
+						ghostCoords[0] = (position-2)*TILE_SIZE + X_OFFSET();
 						ghostCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
 						position++;
 					}
@@ -217,8 +223,8 @@ public class Board {
 	/* Checks if character is in the exact x,y position to do a 90 degree turn */
 	public boolean validTurningPoint(int x, int y) {
 		
-		if (((x - X_OFFSET)%TILE_SIZE == 0) && ((y - Y_OFFSET)%TILE_SIZE == 0)){
-			return this.status[(x - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ];
+		if (((x - X_OFFSET())%TILE_SIZE == 0) && ((y - Y_OFFSET)%TILE_SIZE == 0)){
+			return this.status[(x - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ];
 		}
 		else {
 			return false;
@@ -229,8 +235,8 @@ public class Board {
 	/* Checks if the specified position is an intersection node. */
 	public boolean isNode(int x, int y) {
 		
-		if (((x - X_OFFSET)%TILE_SIZE == 0) && ((y - Y_OFFSET)%TILE_SIZE == 0)){
-			return this.node[(x - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ];
+		if (((x - X_OFFSET())%TILE_SIZE == 0) && ((y - Y_OFFSET)%TILE_SIZE == 0)){
+			return this.node[(x - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ];
 		}
 		else {
 			return false;
@@ -244,25 +250,25 @@ public class Board {
 		if (hasLeftSpawn) {
 	    	switch (direction) {
 				case 'U':
-					return this.status[(x - X_OFFSET)/TILE_SIZE][(y - OFFSET - Y_OFFSET)/TILE_SIZE];
+					return this.status[(x - X_OFFSET())/TILE_SIZE][(y - OFFSET - Y_OFFSET)/TILE_SIZE];
 				case 'D':
-					return this.status[(x - X_OFFSET)/TILE_SIZE][(y + TILE_SIZE - Y_OFFSET)/TILE_SIZE];
+					return this.status[(x - X_OFFSET())/TILE_SIZE][(y + TILE_SIZE - Y_OFFSET)/TILE_SIZE];
 				case 'L':
-					return this.status[(x - OFFSET - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
+					return this.status[(x - OFFSET - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
 				case 'R':
-					return this.status[(x + TILE_SIZE - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
+					return this.status[(x + TILE_SIZE - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
 	    	}
 		}
 		else {
 			switch (direction) {
 			case 'U':
-				return this.ghostOnlyPath[(x - X_OFFSET)/TILE_SIZE][(y - OFFSET - Y_OFFSET)/TILE_SIZE];
+				return this.ghostOnlyPath[(x - X_OFFSET())/TILE_SIZE][(y - OFFSET - Y_OFFSET)/TILE_SIZE];
 			case 'D':
-				return this.ghostOnlyPath[(x - X_OFFSET)/TILE_SIZE][(y + TILE_SIZE - Y_OFFSET)/TILE_SIZE];
+				return this.ghostOnlyPath[(x - X_OFFSET())/TILE_SIZE][(y + TILE_SIZE - Y_OFFSET)/TILE_SIZE];
 			case 'L':
-				return this.ghostOnlyPath[(x - OFFSET - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
+				return this.ghostOnlyPath[(x - OFFSET - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
 			case 'R':
-				return this.ghostOnlyPath[(x + TILE_SIZE - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
+				return this.ghostOnlyPath[(x + TILE_SIZE - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE];
 			}
 		}
     	return false;
@@ -270,7 +276,7 @@ public class Board {
 	
 	
 	public boolean isValidPos(int x, int y) {
-		boolean validPos = this.status[(x - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ] || this.ghostOnlyPath[(x - X_OFFSET)/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ];
+		boolean validPos = this.status[(x - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ] || this.ghostOnlyPath[(x - X_OFFSET())/TILE_SIZE][(y - Y_OFFSET)/TILE_SIZE ];
 		return validPos;
 	}
 	

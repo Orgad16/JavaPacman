@@ -29,6 +29,14 @@ public class MainApp extends Application{
 	/* The window for showing the game/application */
 	private Stage gameWindow;
 
+	public int getScreenWidth(){
+		return (int) gameWindow.getScene().getWidth();
+	}
+
+	public int getScreenHeight(){
+		return (int) gameWindow.getScene().getHeight();
+	}
+
 	/**
 	 * The navigation stack.
 	 * Do not insert to this stack manually. you'll regret it.

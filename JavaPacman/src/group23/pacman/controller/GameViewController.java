@@ -1,5 +1,6 @@
 package group23.pacman.controller;
 
+import group23.pacman.model.Board;
 import group23.pacman.model.Game;
 import group23.pacman.model.GameObject;
 import javafx.fxml.FXML;
@@ -48,6 +49,7 @@ public class GameViewController extends RootController implements JoystickManage
 
         //TODO: complete game setup
 
+        Board.canvasWidth = (int) maze_canvas.getWidth();
         // init game with map and number of players
         Game game = new Game(selectedMap, numberOfPlayers, 0, 0);
 

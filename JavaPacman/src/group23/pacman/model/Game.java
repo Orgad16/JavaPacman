@@ -142,7 +142,7 @@ public class Game {
             System.out.println(loc);
 			// type field should by between 2 and 4 -> set to i-2
 			// answer field should be between 0 and 2 -> set to i-4
-			TemporaryGhost temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET ,loc.getValue() * TILE_SIZE + Y_OFFSET, board, i-2, i, q, i-4);
+			TemporaryGhost temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET() ,loc.getValue() * TILE_SIZE + Y_OFFSET, board, i-2, i, q, i-4);
 			characters.add(temp_ghost);
 			temporaryGhosts.add(temp_ghost);
 		}
@@ -210,7 +210,7 @@ public class Game {
 
 	public List<Pair<Integer,Integer>>  movementLocations(){
         List<Pair<Integer,Integer>> locations = board.getOnlyTurns();
-        int x = (int) (pacman.getX() - X_OFFSET) / TILE_SIZE;
+        int x = (int) (pacman.getX() - X_OFFSET()) / TILE_SIZE;
         int y = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
 
         // filter locations close to the pacman
