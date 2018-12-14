@@ -304,6 +304,26 @@
               <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
               <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="tiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="bg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="bg" type="462c0819:PsiDirectoryNode" />
+              <item name="backgrounds-game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pacman" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -797,17 +817,7 @@ locations</expression-string>
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/tiles/mapBlock-ruins.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/tiles/mapBlock-deserttemple.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/tiles/mapBlock-forest.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1051,6 +1061,14 @@ locations</expression-string>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/model/Pacman.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="112" column="16" lean-forward="false" selection-start-line="112" selection-start-column="16" selection-end-line="112" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>

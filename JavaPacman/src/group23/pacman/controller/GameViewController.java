@@ -24,6 +24,7 @@ import java.util.ArrayList;
  */
 public class GameViewController extends RootController implements JoystickManager.JoystickListener{
 
+
     @FXML
     private Canvas maze_canvas;
 
@@ -62,6 +63,8 @@ public class GameViewController extends RootController implements JoystickManage
         int selectedMap = GameSettings.instance.getMap();
 
         //TODO: complete game setup
+        GraphicsContext mzBg = maze_canvas.getGraphicsContext2D();
+        GraphicsContext gcWall = game_canvas.getGraphicsContext2D();
 
         //-----------------------------
         // how to create a dialog view
