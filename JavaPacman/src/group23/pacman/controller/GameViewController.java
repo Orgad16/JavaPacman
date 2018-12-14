@@ -80,7 +80,7 @@ public class GameViewController extends RootController implements JoystickManage
         dialogView.contentView.getChildren().add(box);
 
         overlay.getChildren().add(dialogView);
-        overlay.setVisible(true);
+        overlay.setVisible(false);
 
         //-----------------------------
 
@@ -93,9 +93,9 @@ public class GameViewController extends RootController implements JoystickManage
         GraphicsContext gcWall = maze_canvas.getGraphicsContext2D();
         ArrayList<GameObject> objects = game.getOtherGameObjects();
         for (GameObject object : objects) {
-            if (object.getType() == GameObject.TYPE.WALL) {
-                object.draw(gcWall);
-            }
+            //if (object.getType() == GameObject.TYPE.WALL) {
+            object.draw(gcWall);
+            //}
         }
 
         // draw all other objects on game canvas
