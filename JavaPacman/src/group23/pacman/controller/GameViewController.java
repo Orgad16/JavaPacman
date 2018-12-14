@@ -1,17 +1,20 @@
 package group23.pacman.controller;
 
-import group23.pacman.model.Board;
-import group23.pacman.model.Game;
-import group23.pacman.model.GameObject;
+import group23.pacman.MainApp;
+import group23.pacman.model.*;
 import group23.pacman.view.DialogView;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import ui.UIView;
+
 
 
 import java.util.ArrayList;
@@ -45,7 +48,10 @@ public class GameViewController extends RootController implements JoystickManage
 
     @FXML
     private UIView overlay;
-    
+
+
+    private Game game;
+
 
     // adapter used for joystick navigation
     UINavigationAdapter<Canvas> gameViewAdapter = new UINavigationAdapter<>();
@@ -78,26 +84,27 @@ public class GameViewController extends RootController implements JoystickManage
 
         dialogView.contentView.getChildren().add(box);
 
-        overlay.getChildren().add(dialogView);
-        overlay.setVisible(true);
+//        overlay.getChildren().add(dialogView);
+//        overlay.setVisible(false);
 
         //-----------------------------
 
 
         Board.canvasWidth = (int) maze_canvas.getWidth();
         // init game with map and number of players
-        Game game = new Game(selectedMap, numberOfPlayers, 0, 0);
+        game = new Game(selectedMap, numberOfPlayers, 0, 0);
 
         // draw on maze canvas with walls only
-        GraphicsContext gcWall = maze_canvas.getGraphicsContext2D();
+        GraphicsContext mzGC = maze_canvas.getGraphicsContext2D();
         ArrayList<GameObject> objects = game.getOtherGameObjects();
         for (GameObject object : objects) {
-            if (object.getType() == GameObject.TYPE.WALL) {
-                object.draw(gcWall);
-            }
+            if (object.getType() == GameObject.TYPE.WALL)
+                object.draw(mzGC);
         }
-
         // draw all other objects on game canvas
+
+        draw(maze_canvas.getGraphicsContext2D());
+        //maze_canvas.setVisible(false);
 
         gameViewAdapter.addRow(maze_canvas, game_canvas);
     }
@@ -120,6 +127,30 @@ public class GameViewController extends RootController implements JoystickManage
     @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         // TODO: handle joystick controller input
+    }
+
+    private void draw(GraphicsContext graphicsContext) {
+        //GameStateController gameStateController = new GameStateController(this, game);
+        game.getPacman().update();
+        game.getPacman().draw(graphicsContext);
+//        game.getPacman().getWhip().draw(graphicsContext);
+        System.out.println(game.getPacman().getHitBox());
+
+		/* Draws other objects (pellets) */
+        ArrayList<GameObject> objects = game.getOtherGameObjects();
+
+        for (GameObject object : objects) {
+            if (object.getType() != GameObject.TYPE.WALL)
+                object.draw(graphicsContext);
+        }
+
+//        game.getGhost().draw(graphicsContext);
+//        game.getGhost2().draw(graphicsContext);
+//        game.getGhost3().draw(graphicsContext);
+//        ArrayList<TemporaryGhost> tempGhosts = game.getTempGhost();
+//        for (TemporaryGhost tempGhost : tempGhosts) {
+//            tempGhost.draw(graphicsContext);
+//        }
     }
 
 

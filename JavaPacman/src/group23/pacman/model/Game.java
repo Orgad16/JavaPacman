@@ -394,10 +394,15 @@ public class Game {
 		ScoreHandler scoreHandler = new ScoreHandler();
 		scoreHandler.writeScore(score, name, map);
 	}
-	
-	
-	
+
+
+
+
 	/** ALL PUBLIC GETTERS BELOW **/
+
+	public ArrayList<MovingCharacter> getCharacters() {
+		return characters;
+	}
 
 	/* Public getter to reference map type */
 	public PoisonPellet getPoisonPellet() {
