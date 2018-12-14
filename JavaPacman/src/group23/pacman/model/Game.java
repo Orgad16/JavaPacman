@@ -80,8 +80,6 @@ public class Game {
 
 	private List<Question> questionList = SysData.instance.getQuestionsFromJson();
 
-	private List<Score> scoresList= ScoreSetting.getAllScore();
-
 	public Game(int map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
 		this.map = map;
