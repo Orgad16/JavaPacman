@@ -69,8 +69,6 @@ public class MainViewController extends RootController implements JoystickManage
 
     @Override
     public void didBecomeActive() {
-       // view.setOnKeyPressed(JoystickManager.shared);
-
         // register controller to joystick manager
         JoystickManager
                 .shared
@@ -79,7 +77,9 @@ public class MainViewController extends RootController implements JoystickManage
 
     @Override
     public void didEnterBackground() {
-        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+        JoystickManager
+                .shared
+                .unsubscribe(JOYSTICK_LISTENER_ID);
     }
 
     public void handleAction() {

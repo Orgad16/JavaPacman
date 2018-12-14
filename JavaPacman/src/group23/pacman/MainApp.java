@@ -85,6 +85,7 @@ public class MainApp extends Application{
 		if (olderController != null && olderController instanceof RootController){
 			((RootController)olderController).didEnterBackground();
 		}
+		controller.view.requestFocus();
 	}
 
 	/**
@@ -117,6 +118,8 @@ public class MainApp extends Application{
 		if (toRemove != null && toRemove instanceof RootController){
 			((RootController)toRemove).didEnterBackground();
 		}
+
+		controller.view.requestFocus();
 	}
 
 	/**
@@ -146,8 +149,8 @@ public class MainApp extends Application{
 		primaryScene.setFill(Color.BLACK);
 		gameWindow.setScene(primaryScene);
 		gameWindow.show();
-		//gameWindow.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		//gameWindow.setFullScreen(true);
+		gameWindow.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		gameWindow.setFullScreen(true);
 
 		IntroController introController = new IntroController();
 		change_root(introController.view);
@@ -190,6 +193,8 @@ public class MainApp extends Application{
 						KeyCode.Z,
 						KeyCode.X
 				);
+
+		primaryScene.setOnKeyPressed(JoystickManager.shared);
 
 	}
 

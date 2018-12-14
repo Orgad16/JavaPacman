@@ -30,7 +30,6 @@ public class PlayerSelectionController extends RootController implements Joystic
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
 
         // register controller to joystick manager
         JoystickManager

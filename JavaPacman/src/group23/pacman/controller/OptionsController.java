@@ -8,7 +8,6 @@ public class OptionsController extends RootController implements JoystickManager
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
 
         // register controller to joystick manager
         JoystickManager
