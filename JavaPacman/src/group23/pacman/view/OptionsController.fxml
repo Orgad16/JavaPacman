@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.Group?>
+<UIView fx:id="root" stylesheets="@../../../assets/css/main_style.css"
+        xmlns="http://javafx.com/javafx/8.0.121"
+        xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <VBox alignment="CENTER" spacing="100.0">
+        <Label styleClass="label-retro" style="-fx-font-size: 40px;" text="Options"/>
+        <Group>
+            <VBox alignment="CENTER" maxHeight="100" spacing="16.0" >
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton styleClass="button-retro" prefWidth="350" text="SOUND"/>
+                    <Label styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton styleClass="button-retro" prefWidth="350" text="FULL SCREEN"/>
+                    <Label styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton styleClass="button-retro"  prefWidth="350" text="ALLOW TONGUE"/>
+                    <Label styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton styleClass="button-retro" prefWidth="350" text="TUTORIAL"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton styleClass="button-retro"  prefWidth="350"  text="MANAGE QUESTIONS"/>
+                </HBox>
+
+            </VBox>
+        </Group>
+
+    </VBox>
+
+</UIView>

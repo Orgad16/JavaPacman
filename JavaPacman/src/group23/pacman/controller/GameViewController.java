@@ -1,5 +1,6 @@
 package group23.pacman.controller;
 
+import group23.pacman.MainApp;
 import group23.pacman.model.Board;
 import group23.pacman.model.Game;
 import group23.pacman.model.GameObject;
@@ -104,7 +105,6 @@ public class GameViewController extends RootController implements JoystickManage
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
 
         // register controller to joystick manager
         JoystickManager

@@ -69,7 +69,7 @@ public class MainViewController extends RootController implements JoystickManage
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
+       // view.setOnKeyPressed(JoystickManager.shared);
 
         // register controller to joystick manager
         JoystickManager
@@ -92,6 +92,8 @@ public class MainViewController extends RootController implements JoystickManage
             case 1:
                 // options
                 //TODO: go to options
+                OptionsController questionController = new OptionsController();
+                MainApp.getInstance().pushViewController(questionController);
                 break;
             case 2:
                 // leaderboards
