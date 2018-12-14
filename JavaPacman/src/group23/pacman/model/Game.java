@@ -1,6 +1,7 @@
 package group23.pacman.model;
 
 import group23.pacman.model.Pacman.STATE;
+import group23.pacman.system.ScoreSetting;
 import group23.pacman.system.SysData;
 import javafx.util.Pair;
 
@@ -78,6 +79,8 @@ public class Game {
 	private ArrayList<GameObject> emptySpaces = new ArrayList<>();
 
 	private List<Question> questionList = SysData.instance.getQuestionsFromJson();
+
+	private List<Score> scoresList= ScoreSetting.getAllScore();
 
 	public Game(int map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
