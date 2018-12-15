@@ -39,6 +39,10 @@ public class MainApp extends Application{
 		return (int) gameWindow.getScene().getHeight();
 	}
 
+	public Stage getGameWindow() {
+		return gameWindow;
+	}
+
 	/**
 	 * The navigation stack.
 	 * Do not insert to this stack manually. you'll regret it.
@@ -88,6 +92,11 @@ public class MainApp extends Application{
 		controller.view.requestFocus();
 	}
 
+
+	public void popViewController(){
+		popViewController(true);
+	}
+
 	/**
 	 * Use this method to remove the most recent view controller from the navigation stack.
 	 * @param animated
@@ -120,6 +129,7 @@ public class MainApp extends Application{
 		}
 
 		controller.view.requestFocus();
+		controller.view.setOnMouseClicked(null);
 	}
 
 	/**

@@ -107,7 +107,7 @@ public class GameViewController extends RootController implements JoystickManage
         }
 
         // need to update the game first
-        game.update();
+        //game.update();
         draw(mzBg);
 
         // draw all other objects on objects canvas - pellets, pacman, ghosts

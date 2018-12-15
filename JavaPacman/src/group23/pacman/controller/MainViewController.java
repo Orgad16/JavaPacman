@@ -91,13 +91,13 @@ public class MainViewController extends RootController implements JoystickManage
                 break;
             case 1:
                 // options
-                //TODO: go to options
                 OptionsController questionController = new OptionsController();
                 MainApp.getInstance().pushViewController(questionController);
                 break;
             case 2:
                 // leaderboards
-                //TODO: go to leaderboards
+                LeaderboardViewController leaderboardViewController = new LeaderboardViewController();
+                MainApp.getInstance().pushViewController(leaderboardViewController);
                 break;
         }
     }

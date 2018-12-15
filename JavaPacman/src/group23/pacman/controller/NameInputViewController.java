@@ -11,8 +11,6 @@ import javafx.scene.layout.HBox;
  */
 public class NameInputViewController extends RootController implements JoystickManager.JoystickListener{
 
-    private static final String JOYSTICK_LISTENER_ID = "NameInputViewController";
-
     @FXML
     private ToggleButton back;
 
@@ -138,7 +136,7 @@ public class NameInputViewController extends RootController implements JoystickM
 
                     } else if(current == back) {
                         // go back
-                        MainApp.getInstance().popViewController(true);
+                        MainApp.getInstance().popViewController();
                     } else {
                       // append letter
                       appendLetter(current.getText());

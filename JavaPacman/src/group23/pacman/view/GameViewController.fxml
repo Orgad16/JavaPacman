@@ -12,7 +12,7 @@
 
     <AnchorPane>
         <HBox spacing="30" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-            <StackPane style="-fx-background-color:blue;">
+            <StackPane>
 
                 <!--Maze Canvas: contains walls and background-->
                 <Canvas fx:id="maze_canvas" width="1366" height="768" />

@@ -16,26 +16,26 @@
         <Group>
             <VBox alignment="CENTER" maxHeight="100" spacing="16.0" >
                 <HBox spacing="30" alignment="CENTER_LEFT">
-                    <ToggleButton styleClass="button-retro" prefWidth="350" text="SOUND"/>
-                    <Label styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                    <ToggleButton fx:id="sound_btn" styleClass="button-retro" prefWidth="350" text="SOUND"/>
+                    <Label fx:id="sound_lbl" styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
                 </HBox>
 
                 <HBox spacing="30" alignment="CENTER_LEFT">
-                    <ToggleButton styleClass="button-retro" prefWidth="350" text="FULL SCREEN"/>
-                    <Label styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                    <ToggleButton fx:id="fs_btn" styleClass="button-retro" prefWidth="350" text="FULL SCREEN"/>
+                    <Label fx:id="fs_lbl" styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
                 </HBox>
 
                 <HBox spacing="30" alignment="CENTER_LEFT">
-                    <ToggleButton styleClass="button-retro"  prefWidth="350" text="ALLOW TONGUE"/>
-                    <Label styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                    <ToggleButton fx:id="tongue_btn" styleClass="button-retro"  prefWidth="350" text="ALLOW TONGUE"/>
+                    <Label fx:id="tongue_lbl" styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
                 </HBox>
 
                 <HBox spacing="30" alignment="CENTER_LEFT">
-                    <ToggleButton styleClass="button-retro" prefWidth="350" text="TUTORIAL"/>
+                    <ToggleButton fx:id="tutorial_btn" styleClass="button-retro" prefWidth="350" text="TUTORIAL"/>
                 </HBox>
 
                 <HBox spacing="30" alignment="CENTER_LEFT">
-                    <ToggleButton styleClass="button-retro"  prefWidth="350"  text="MANAGE QUESTIONS"/>
+                    <ToggleButton fx:id="questions_btn" styleClass="button-retro"  prefWidth="350"  text="MANAGE QUESTIONS"/>
                 </HBox>
 
             </VBox>
