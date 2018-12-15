@@ -17,6 +17,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import ui.UIView;
@@ -24,7 +25,7 @@ import javafx.scene.image.ImageView;
 import group23.pacman.controller.GameStateController;
 
 
-
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -62,9 +63,6 @@ public class GameViewController extends RootController implements JoystickManage
 
     private Game game;
 
-
-    private Game game;
-
     private GameStateController gameStateController;
 
     private long holdTime;
@@ -81,16 +79,6 @@ public class GameViewController extends RootController implements JoystickManage
 
     /* Essentially the game loop */
     private AnimationTimer animationLoop;
-
-
-    /* GraphicsContext for separate canvas which is used to paint the countdown timer */
-    private GraphicsContext countdownGraphicsContext;
-
-    /* GraphicsContext for separate canvas which is used to paint the pause_overlay */
-    private GraphicsContext pauseOverlay;
-
-    /* GraphicsContext for separate canvas which is used to paint the exit confirmation screen */
-    private GraphicsContext exitPrompt;
 
     /* Time */
     private long time = 0;
@@ -111,88 +99,46 @@ public class GameViewController extends RootController implements JoystickManage
     private boolean timerPaused;
 
     // adapter used for joystick navigation
-    UINavigationAdapter<Canvas> gameViewAdapter = new UINavigationAdapter<>();
+    UINavigationAdapter<ToggleButton> currentDialogAdapter = null;
 
     public GameViewController() {
 
         super("/group23/pacman/view/GameViewController.fxml");
         int numberOfPlayers = GameSettings.instance.getNumbrOfPlayers();
         int selectedMap = GameSettings.instance.getMap();
-
-        //TODO: complete game setup
-
-        //-----------------------------
-        // how to create a dialog view
-//        DialogView dialogView = new DialogView();
-//
-//        dialogView.titleLabel.setText("QUIT");
-//        dialogView.descriptionLabel.setText("Are you sure you want to quit?");
-//        ToggleButton quitButton= new ToggleButton();
-//        quitButton.getStyleClass().add("button-retro");
-//        quitButton.setText("Yes");
-//
-//        ToggleButton cancelButton = new ToggleButton();
-//        cancelButton.getStyleClass().add("button-retro");
-//        cancelButton.setText("Cancel");
-//        cancelButton.setSelected(true);
-//
-//        HBox box = new HBox();
-//        box.setSpacing(20);
-//        box.getChildren().addAll(quitButton,cancelButton);
-//
-//        dialogView.contentView.getChildren().add(box);
-
-//        overlay.getChildren().add(dialogView);
-//        overlay.setVisible(false);
-
-        ToggleButton cancelButton = new ToggleButton();
-        cancelButton.getStyleClass().add("button-retro");
-        cancelButton.setText("Cancel");
-        cancelButton.setSelected(true);
-
-        HBox box = new HBox();
-        box.setSpacing(20);
-        box.getChildren().addAll(quitButton,cancelButton);
-
-        dialogView.contentView.getChildren().add(box);
-
-        overlay.getChildren().add(dialogView);
-        overlay.setVisible(false);
-
-        //-----------------------------
-
-
         Board.canvasWidth = (int) maze_canvas.getWidth();
+
+        Media toggle = new Media(new File("bin/assets/sfx/toggle.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(toggle);
+        mediaPlayer.setVolume(0.3);
+
+        // init timer
+        timer = new Timer(120);
+
         // init game with map and number of players
         game = new Game(selectedMap, numberOfPlayers, 0, 0);
         gameStateController = new GameStateController(this, game);
 
-        //gameStateController.listenSinglePlayer();
 
-        // draw on maze canvas with walls only
-        GraphicsContext mzGC = maze_canvas.getGraphicsContext2D();
-        ArrayList<GameObject> objects = game.getOtherGameObjects();
+        // create reference
+        graphicsContext = game_canvas.getGraphicsContext2D();
+
+        // draw walls
+        GraphicsContext gcWall = maze_canvas.getGraphicsContext2D();
+        ArrayList<GameObject> objects = gameStateController.getGame().getOtherGameObjects();
         for (GameObject object : objects) {
-            //if (object.getType() == GameObject.TYPE.WALL) {
-            object.draw(gcWall);
-            //}
-            if (object.getType() == GameObject.TYPE.WALL)
-                object.draw(mzGC);
+            if (object.getType() == GameObject.TYPE.WALL) {
+                object.draw(gcWall);
+            }
         }
-        // draw all other objects on game canvas
 
-        // need to update the game first
-        //game.update();
-        draw(mzBg);
-        //TODO: init game state controller
-        //TODO: add functions to handle the game state update() function§
-        //gameStateController.update();
+        gameStateController.update();
 
-        draw(mzGC);
-        //maze_canvas.setVisible(false);
+        draw(graphicsContext);
 
-        gameViewAdapter.addRow(maze_canvas, game_canvas);
+        startCountdown();
 
+        startGame();
     }
 
     @Override
@@ -212,13 +158,65 @@ public class GameViewController extends RootController implements JoystickManage
     @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         // TODO: handle joystick controller input
+
+        if(joystickId == 1) {
+            switch (selectedKey) {
+                case UP:
+                    if (!countingDown() && !gamePaused())
+                        game.getPacman().queueMovement('U');
+                    break;
+                case DOWN:
+                    if (!countingDown() && !gamePaused())
+                        game.getPacman().queueMovement('D');
+                    break;
+                case LEFT:
+                    if (!countingDown() && !gamePaused())
+                        game.getPacman().queueMovement('L');
+
+                    if(gamePaused() && currentDialogAdapter != null) {
+                        currentDialogAdapter.current().setSelected(false);
+                        currentDialogAdapter.move_left().setSelected(true);
+                    }
+                    break;
+                case RIGHT:
+                    if (!countingDown() && !gamePaused())
+                        game.getPacman().queueMovement('R');
+
+                    if(gamePaused() && currentDialogAdapter != null) {
+                        currentDialogAdapter.current().setSelected(false);
+                        currentDialogAdapter.move_right().setSelected(true);
+                    }
+                    break;
+                case ONE:
+                    if (!countingDown() && !gamePaused())
+                        game.getPacman().whip();
+
+                    if(gamePaused() && currentDialogAdapter != null) {
+                        int index = currentDialogAdapter.getY();
+                        if(index == 0) {
+                            // exit game
+                            int pops = MainApp.getInstance().getNavigationStackSize();
+                            for (int i = 0; i < pops - 1; i++) {
+                                MainApp.getInstance().popViewController( i == pops - 2);
+                            }
+                        } else {
+                            // resume
+                            resumeGame();
+                        }
+                    }
+
+                    break;
+                case TWO:
+                    // pause game
+                    pauseGame();
+                    break;
+            }
+        }
     }
 
     private void draw(GraphicsContext graphicsContext) {
 
         gameStateController.getGame().getPacman().draw(graphicsContext);
-//        game.getPacman().getWhip().draw(graphicsContext);
-        System.out.println(game.getPacman().getHitBox());
 
 		/* Draws other objects (pellets) */
         ArrayList<GameObject> objects = gameStateController.getGame().getOtherGameObjects();
@@ -228,11 +226,12 @@ public class GameViewController extends RootController implements JoystickManage
                 object.draw(graphicsContext);
         }
 
-
         gameStateController.getGame().getGhost().draw(graphicsContext);
         gameStateController.getGame().getGhost2().draw(graphicsContext);
         gameStateController.getGame().getGhost3().draw(graphicsContext);
+
         ArrayList<TemporaryGhost> tempGhosts = gameStateController.getGame().getTempGhost();
+
         for (TemporaryGhost tempGhost : tempGhosts) {
             tempGhost.draw(graphicsContext);
         }
@@ -275,7 +274,7 @@ public class GameViewController extends RootController implements JoystickManage
 
     public boolean gamePaused() {
 
-        return (this.running==false);
+        return (!this.running);
     }
 
     public Timer getTimer() {
@@ -299,15 +298,41 @@ public class GameViewController extends RootController implements JoystickManage
 
     public void pauseGame() {
 
-        pauseOverlay.clearRect(0, 0, 1366, 768);
-        pauseOverlay.drawImage(new Image("bg/backgrounds-game/pause_panel.png"),0,0);
+        DialogView dialogView = new DialogView();
+        dialogView.titleLabel.setText("Pause");
+        dialogView.descriptionLabel.setText("Exit game?");
+
+        ToggleButton exitBtn = new ToggleButton("Exit");
+        exitBtn.getStyleClass().add("button-retro");
+
+        ToggleButton resumeBtn = new ToggleButton("Resume");
+        resumeBtn.getStyleClass().add("button-retro");
+
+        HBox box = new HBox();
+        box.getChildren().addAll(exitBtn,resumeBtn);
+        box.setSpacing(10);
+
+        dialogView.contentView.getChildren().add(box);
+
+        // setup navigation adapter
+        currentDialogAdapter = new UINavigationAdapter<>();
+        currentDialogAdapter.addRow(exitBtn,resumeBtn);
+        currentDialogAdapter.move_right().setSelected(true);
+
+        overlay.getChildren().add(dialogView);
+        overlay.setVisible(true);
+
         this.running = false;
         playSfx();
     }
 
     public void resumeGame() {
 
-        pauseOverlay.clearRect(0,0,1366,768);
+        //pauseOverlay.clearRect(0,0,1366,768);
+        currentDialogAdapter = null;
+        overlay.getChildren().clear();
+        overlay.setVisible(false);
+
         this.running = true;
         playSfx();
     }
@@ -371,8 +396,16 @@ public class GameViewController extends RootController implements JoystickManage
 
         countDownTime = System.currentTimeMillis();
 
-        //countdownGraphicsContext.drawImage(new Image("bg/backgrounds-game/countdown_overlay.png"), 0, 0);
-        //countdownGraphicsContext.drawImage(new Image("assets/Elements-GameView/ready.png"),470,360);
+        //show overlay with count down dialog
+        DialogView dialogView = new DialogView();
+        dialogView.titleLabel.setText("GAME STARTING IN");
+        dialogView.descriptionLabel.setText("3");
+
+        // add to overlay
+        overlay.getChildren().add(dialogView);
+
+        // reveal overlay
+        overlay.setVisible(true);
 
         new AnimationTimer() {
 
@@ -390,15 +423,20 @@ public class GameViewController extends RootController implements JoystickManage
 						/* Wait for timer to count from 5 seconds to 3 seconds before removing "Ready" sign.
 						 * Add 48 because getSecOnes() method returns seconds + 48 for ascii value */
                         if (timerStart.getSecOnes() <= 3 + 48) {
-                            //countdownGraphicsContext.clearRect(0, 0, 1366, 768);
-                            //countdownGraphicsContext.drawImage(new Image("bg/backgrounds-game/countdown_overlay.png"), 0, 0);
-                            //countdownGraphicsContext.drawImage(new Image(getDigit((char)timerStart.getSecOnes()),100,100,false,false),483,334);
+
+                            // update the dialog to the current time
+                            char time = (char) timerStart.getSecOnes();
+                            dialogView.descriptionLabel.setText("" + time);
                         }
                     }
 					/* After time has counted to 0, start the game */
                     if (timerStart.timedOut()) {
                         this.stop();
                         //countdownGraphicsContext.clearRect(0,0,1366,768);
+                        // remove dialog and hide overlay
+                        overlay.getChildren().remove(dialogView);
+                        overlay.setVisible(false);
+
                         running = true;
                         countingDown = false;
                     }
@@ -422,11 +460,13 @@ public class GameViewController extends RootController implements JoystickManage
             public void handle(long now) {
 
 				/* Make sure game isn't in paused state */
-                if (running == true) {
-                    //graphicsContext.clearRect(0, 0, 1366, 768);
+                if (running) {
+                    //graphicsContext.clearRect(0, 0, 1366, 768)
+
+                    graphicsContext.clearRect(0, 0, game_canvas.getWidth(), game_canvas.getHeight());
                     gameStateController.update();
                     draw(graphicsContext);
-                    //updateTimer();
+                    updateTimer();
                 }
                 else {
                     time = System.currentTimeMillis();
@@ -434,6 +474,18 @@ public class GameViewController extends RootController implements JoystickManage
             }
         };
         animationLoop.start();
+
+    }
+
+    private void updateTimer() {
+
+        if (System.currentTimeMillis() - time >= 1000) {
+            if (!timerPaused) {
+                timer.countDown(1);
+                //setTimerImage();
+            }
+            time = System.currentTimeMillis();
+        }
 
     }
 }

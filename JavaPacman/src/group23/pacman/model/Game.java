@@ -137,6 +137,12 @@ public class Game {
 		//getting the question that the pacman ate
 		Question q = question.getQuestion();
         List<Pair<Integer,Integer>> locations = movementLocations();
+
+        if(locations.isEmpty()){
+            System.err.println("NO MOVEMENT LOCATIONS FOUND");
+            return;
+        }
+
 		Random rnd = new Random();
 		for (int i=4; i<7; i++) {
 		    Pair<Integer,Integer> loc = locations.get(rnd.nextInt(locations.size()));

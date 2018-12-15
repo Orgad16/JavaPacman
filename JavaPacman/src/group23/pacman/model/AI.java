@@ -9,7 +9,7 @@ public class AI {
 	
 	/* Constants for the map offset and size*/
 	private static final int GRID_SIZE = 30;
-	private static final int X_OFFSET = 158;
+	//private static final int X_OFFSET = 158;
 	private static final int Y_OFFSET = 9;
 	
 	/* Board object to help determine whether a move is valid */
@@ -173,7 +173,7 @@ public class AI {
 		/* Random */
 		if (type == 1) {
 			/* End scatter behaviour if it has reached the corner */
-			if (ghostX == X_OFFSET + GRID_SIZE && ghostY == Y_OFFSET + GRID_SIZE) {
+			if (ghostX == Board.X_OFFSET() + GRID_SIZE && ghostY == Y_OFFSET + GRID_SIZE) {
 				chase = true;
 			}
 			if (chase) {
@@ -187,7 +187,7 @@ public class AI {
 				int pacmanYNew = pacmanY;
 				
 				/* Top left corner */
-				pacmanXNew = X_OFFSET + GRID_SIZE;
+				pacmanXNew = Board.X_OFFSET() + GRID_SIZE;
 				pacmanYNew = Y_OFFSET + GRID_SIZE;
 				setNodes(ghostX, ghostY, pacmanXNew, pacmanYNew);
 				path = computeShortest(nodes.get(0), nodes.get(nodes.size() - 1));
@@ -198,7 +198,7 @@ public class AI {
 		/* Chaser */
 		else if (type == 2) {
 			/* End scatter behaviour if it has reached the corner */
-			if (ghostX == X_OFFSET + 23*GRID_SIZE && ghostY == Y_OFFSET + GRID_SIZE) {
+			if (ghostX == Board.X_OFFSET() + 23*GRID_SIZE && ghostY == Y_OFFSET + GRID_SIZE) {
 				chase = true;
 			}
 			int pacmanXNew = pacmanX;
@@ -206,7 +206,7 @@ public class AI {
 			
 			if (!chase) {
 				/* Top right corner */
-				pacmanXNew = X_OFFSET + 23*GRID_SIZE;
+				pacmanXNew = Board.X_OFFSET() + 23*GRID_SIZE;
 				pacmanYNew = Y_OFFSET + GRID_SIZE;
 			}
 			setNodes(ghostX, ghostY, pacmanXNew, pacmanYNew);
@@ -217,7 +217,7 @@ public class AI {
 		/* Crazy Ghost */ 
 		else if (type == 3) {
 			/* End scatter behaviour if it has reached the corner */
-			if (ghostX == X_OFFSET + GRID_SIZE && ghostY == Y_OFFSET + 23*GRID_SIZE) {
+			if (ghostX == Board.X_OFFSET() + GRID_SIZE && ghostY == Y_OFFSET + 23*GRID_SIZE) {
 				chase = true;
 			}
 			int pacmanXNew = pacmanX;
@@ -238,7 +238,7 @@ public class AI {
 			}
 			else {
 				/* Bottom left corner */
-				pacmanXNew = X_OFFSET + GRID_SIZE;
+				pacmanXNew = Board.X_OFFSET() + GRID_SIZE;
 				pacmanYNew = Y_OFFSET + 23*GRID_SIZE;
 				setNodes(ghostX, ghostY, pacmanXNew, pacmanYNew);
 				path = computeShortest(nodes.get(0), nodes.get(nodes.size() - 1));
@@ -249,7 +249,7 @@ public class AI {
 		/* Shy Ghost */
 		else if (type == 4) {
 			/* End scatter behaviour if it has reached the corner */
-			if (ghostX == X_OFFSET + 23*GRID_SIZE && ghostY == Y_OFFSET + 23*GRID_SIZE) {
+			if (ghostX == Board.X_OFFSET() + 23*GRID_SIZE && ghostY == Y_OFFSET + 23*GRID_SIZE) {
 				chase = true;
 			}
 			
@@ -259,7 +259,7 @@ public class AI {
 			/* If the ghost is within an 5 GRID_SIZE radius of pacman, it will move to its corner. */
 			if (Math.sqrt(Math.pow(ghostX - pacmanX, 2) + Math.pow(ghostY - pacmanY, 2)) < 5*GRID_SIZE || !chase) {
 				/* Bottom right corner */
-				pacmanXNew = X_OFFSET + 23*GRID_SIZE;
+				pacmanXNew = Board.X_OFFSET() + 23*GRID_SIZE;
 				pacmanYNew = Y_OFFSET + 23*GRID_SIZE;
 			}
 			
@@ -364,8 +364,8 @@ public class AI {
 		/* Find all the turning points in the map and create nodes for them */
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 25; j++) {
-				if (board.isNode(i*GRID_SIZE + X_OFFSET, j*GRID_SIZE + Y_OFFSET)) {
-					nodes.add(new Node(i*GRID_SIZE + X_OFFSET, j*GRID_SIZE + Y_OFFSET));
+				if (board.isNode(i*GRID_SIZE + Board.X_OFFSET(), j*GRID_SIZE + Y_OFFSET)) {
+					nodes.add(new Node(i*GRID_SIZE + Board.X_OFFSET(), j*GRID_SIZE + Y_OFFSET));
 				}
 			}
 		}

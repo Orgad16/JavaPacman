@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ui.UIViewController;
 
+import java.io.File;
 import java.util.Vector;
 
 public class MainApp extends Application{
@@ -54,6 +55,9 @@ public class MainApp extends Application{
 	 */
 	private Vector<UIViewController> navigationStack = new Vector<>();
 
+	public int getNavigationStackSize(){
+		return navigationStack.size();
+	}
 
 	public void pushViewController(UIViewController controller){
 		pushViewController(controller,true);
