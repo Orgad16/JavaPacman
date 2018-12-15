@@ -25,7 +25,7 @@ public class PoisonPellet extends RandomPellet {
 
     @Override
     public void setImage() {
-        image = new Image("assets/tempPoisonPellet.png", SPRITE_WIDTH, SPRITE_HEIGHT, false, false);
+        image = new Image("assets/pellet_poison.png", 15, SPRITE_WIDTH, false, false);
     }
 }
 

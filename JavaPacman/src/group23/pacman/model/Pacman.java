@@ -314,13 +314,13 @@ public class Pacman extends GameObject implements MovingCharacter {
 	/* Set up the frame animation for the main character */
 	private void setUpAnimations() {
 
-		Image leftC = new Image("assets/Pacman/leftClosed.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+		Image leftC = new Image("assets/Pacman/leftClose.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		Image leftO = new Image("assets/Pacman/leftOpen.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
-		Image rightC = new Image("assets/Pacman/rightClosed.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+		Image rightC = new Image("assets/Pacman/rightClose.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		Image rightO = new Image("assets/Pacman/rightOpen.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
-		Image upC = new Image("assets/Pacman/upClosed.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+		Image upC = new Image("assets/Pacman/upClose.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		Image upO = new Image("assets/Pacman/upOpen.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
-		Image downC = new Image("assets/Pacman/downClosed.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+		Image downC = new Image("assets/Pacman/downClose.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		Image downO = new Image("assets/Pacman/downOpen.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		
 		Image blink = new Image("assets/misc/empty.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);

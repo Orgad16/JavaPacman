@@ -522,11 +522,23 @@ public class GameViewController extends RootController implements JoystickManage
     public void setTimerLabel() {
 
         String time = String.valueOf(timer.getTimeRemaining());
-        char mins = time.charAt(0);
-        char tensSecs = time.charAt(1);
-        char onesSecs = time.charAt(2);
-        time = "0" + mins + ":" + tensSecs + onesSecs;
-        timerLabel.setText(time);
+        System.out.println(time);
+        int mins;
+        int tensSecs;
+        String newTime;
+
+        mins = timer.getTimeRemaining() / 60;
+        newTime = "0" + String.valueOf(mins) + ":";
+
+        tensSecs = timer.getTimeRemaining() - mins*60;
+
+        if (tensSecs < 10) {
+            newTime += "0" + String.valueOf(tensSecs);
+        } else {
+            newTime += String.valueOf(tensSecs);
+        }
+
+        timerLabel.setText(newTime);
 
     }
 

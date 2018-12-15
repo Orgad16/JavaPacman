@@ -30,7 +30,7 @@ public class Pellet extends GameObject {
 	
 	public void setImage() {
 		
-		image = new Image("assets/tempPellet.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+		image = new Image("assets/pellet_normal.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		this.type = GameObject.TYPE.PELLET;
 	}
 	
