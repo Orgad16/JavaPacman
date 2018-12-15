@@ -59,6 +59,7 @@ public class MapSelectionViewController extends RootController implements Joysti
                     GameViewController gameViewController = new GameViewController();
 
                     MainApp.getInstance().pushViewController(gameViewController,true);
+
                     break;
                 case TWO:
                     //go back

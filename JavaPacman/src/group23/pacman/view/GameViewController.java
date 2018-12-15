@@ -141,23 +141,23 @@ public class GameViewController {
 		background_map.setImage(new Image(backgroundImage));
 		
 		/* Create a controller through which the user may play the game */
-		gameStateController = new GameStateController(this,game);
+		//gameStateController = new GameStateController(this,game);
 		
-		int numberOfPlayers = game.getPlayers();
-		
-		switch (numberOfPlayers) {
-		
-			case 1:
-				gameStateController.listenSinglePlayer();
-				break;
-			case 2:
-				gameStateController.listenTwoPlayer();
-				break;
-			default:
-				gameStateController.listenSinglePlayer();
-				break;
-			
-		}
+//		int numberOfPlayers = game.getPlayers();
+//
+//		switch (numberOfPlayers) {
+//
+//			case 1:
+//				gameStateController.listenSinglePlayer();
+//				break;
+//			case 2:
+//				gameStateController.listenTwoPlayer();
+//				break;
+//			default:
+//				gameStateController.listenSinglePlayer();
+//				break;
+//
+//		}
 		
 	}
 	
