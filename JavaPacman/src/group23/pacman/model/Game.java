@@ -146,7 +146,7 @@ public class Game {
 		Random rnd = new Random();
 		for (int i=4; i<7; i++) {
 		    Pair<Integer,Integer> loc = locations.get(rnd.nextInt(locations.size()));
-            System.out.println(loc);
+
 			// type field should by between 2 and 4 -> set to i-2
 			// answer field should be between 0 and 2 -> set to i-4
 			TemporaryGhost temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET() ,loc.getValue() * TILE_SIZE + Y_OFFSET, board, i-2, i, q, i-4);
@@ -305,6 +305,7 @@ public class Game {
 				// collide with silver pellet
 				if (object.getType() == GameObject.TYPE.SILVER_PELLET) {
 					pacman.getWhip().addCharges();
+					score += 50;
 				}
 
 				// collide with pellet
@@ -316,6 +317,7 @@ public class Game {
 
 				// collide with question pellet
 				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
+
 					setUpTempGhosts((QuestionPellet) object);
 				}
 
