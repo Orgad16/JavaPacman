@@ -70,7 +70,7 @@ public class GameStateController {
 			if (game.getPacman().getLives() == 0) {
 
 				pacmanLives = game.getPacman().getLives();
-				gameViewController.showLivesLeft();
+				gameViewController.showLivesLeft(pacmanLives);
 				gameViewController.stopGame();
 				gameOver = true;
 				gameViewController.showGameEnd();
@@ -80,16 +80,14 @@ public class GameStateController {
 			/* Otherwise, just show number of lives to the screen */
 			else {
 
-				gameViewController.showLivesLeft();
 				pacmanLives = game.getPacman().getLives();
+				gameViewController.showLivesLeft(pacmanLives);
 				gameViewController.startCountdown();
 			}
 		}
-
 		else if (game.levelCleared()) {
 			levelCleared = true;
 			gameViewController.showGameEnd();
-
 		}
 
 	}

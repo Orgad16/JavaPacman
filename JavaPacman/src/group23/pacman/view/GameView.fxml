@@ -16,7 +16,8 @@
       <ImageView fx:id="digit_hunds" fitHeight="50.0" fitWidth="50.0" layoutX="1170.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../bin/assets/numbers/0.png" />
-         </image></ImageView>
+         </image>
+      </ImageView>
       <ImageView fx:id="digit_tens" fitHeight="50.0" fitWidth="50.0" layoutX="1200.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../bin/assets/numbers/0.png" />

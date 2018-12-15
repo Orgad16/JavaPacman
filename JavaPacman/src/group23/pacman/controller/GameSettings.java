@@ -80,8 +80,8 @@ public class GameSettings {
         return playerNames;
     }
 
-    public void setPlayerNames(List<String> playerNames) {
-        this.playerNames = playerNames;
+    public void addPlayerName(String playerName) {
+        this.playerNames.add(playerName);
     }
 
     public boolean isSoundEnabled() {

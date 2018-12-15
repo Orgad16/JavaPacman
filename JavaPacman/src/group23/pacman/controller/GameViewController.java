@@ -27,6 +27,7 @@ import group23.pacman.controller.GameStateController;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created By Tony on 13/12/2018
@@ -46,7 +47,13 @@ public class GameViewController extends RootController implements JoystickManage
 
     // Life
     @FXML
-    private Label lifeLabel;
+    private ImageView lifeImage;
+
+    @FXML
+    private ImageView lifeImage1;
+
+    @FXML
+    private ImageView lifeImage2;
 
     // Timer
     @FXML
@@ -107,6 +114,16 @@ public class GameViewController extends RootController implements JoystickManage
         int numberOfPlayers = GameSettings.instance.getNumbrOfPlayers();
         int selectedMap = GameSettings.instance.getMap();
         Board.canvasWidth = (int) maze_canvas.getWidth();
+
+        List<String> players = GameSettings.instance.getPlayerNames();
+        int currentPlayer = 0;
+
+        if (numberOfPlayers == 1) {
+            String playerName = players.get(0);
+            playerNameLabel.setText(playerName);
+        }
+
+        showLivesLeft(3);
 
         Media toggle = new Media(new File("bin/assets/sfx/toggle.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(toggle);
@@ -216,6 +233,8 @@ public class GameViewController extends RootController implements JoystickManage
 
     private void draw(GraphicsContext graphicsContext) {
 
+        updateScore();
+
         gameStateController.getGame().getPacman().draw(graphicsContext);
 
 		/* Draws other objects (pellets) */
@@ -244,25 +263,32 @@ public class GameViewController extends RootController implements JoystickManage
     }
 
     /* Draws to the screen how many lives the player has left */
-    public void showLivesLeft() {
+    public void showLivesLeft(int number) {
 
-        for (int i = gameStateController.getGame().getPacman().getLives(); i < 3; i++) {
-            setLivesImage("assets/misc/empty.png", i);
+        // reset the lives of the pacman
+        String img = "assets/misc/empty.png";
+        for (int i=0; i<3; i++) {
+            setLivesImage(img, i);
+        }
+
+        // adding the current number of lives left for pacman
+        String img1 = "assets/Pacman/leftOpen.png";
+        for (int i = 0; i < number; i++) {
+            setLivesImage(img1, i);
         }
     }
 
-    /* Helper function for showLivesLeft() */
-    public void setLivesImage(String image, int number) {
+    public void setLivesImage(String img, int number) {
 
         switch (number) {
             case 0 :
-                lifeLabel.setText("0");
+                lifeImage2.setImage(new Image(img));
                 break;
             case 1 :
-                lifeLabel.setText("1");
+                lifeImage1.setImage(new Image(img));
                 break;
             case 2 :
-                lifeLabel.setText("2");
+                lifeImage.setImage(new Image(img));
                 break;
         }
     }
@@ -372,6 +398,8 @@ public class GameViewController extends RootController implements JoystickManage
                     int lives = gameStateController.getGame().getPacman().getLives();
                     int score = gameStateController.getGame().getIntScore();
                     //mainApp.showResults(time,lives,score,gameStateController.getGame().getMap());
+
+                    //TODO: add method in MainApp to show the time, lives and score result
                 }
             }
         }.start();
@@ -455,6 +483,8 @@ public class GameViewController extends RootController implements JoystickManage
 
         time = System.currentTimeMillis();
 
+
+
 		/* Animation timer to update frames */
         animationLoop = new AnimationTimer() {
             public void handle(long now) {
@@ -482,10 +512,26 @@ public class GameViewController extends RootController implements JoystickManage
         if (System.currentTimeMillis() - time >= 1000) {
             if (!timerPaused) {
                 timer.countDown(1);
-                //setTimerImage();
+                setTimerLabel();
             }
             time = System.currentTimeMillis();
         }
 
+    }
+
+    public void setTimerLabel() {
+
+        String time = String.valueOf(timer.getTimeRemaining());
+        char mins = time.charAt(0);
+        char tensSecs = time.charAt(1);
+        char onesSecs = time.charAt(2);
+        time = "0" + mins + ":" + tensSecs + onesSecs;
+        timerLabel.setText(time);
+
+    }
+
+    /* Updates the images of score digits to reflect user's score */
+    private void updateScore() {
+		scoreLabel.setText(String.valueOf(game.getIntScore()));
     }
 }

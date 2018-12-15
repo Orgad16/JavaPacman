@@ -74,9 +74,9 @@ public class NameInputViewController extends RootController implements JoystickM
 
 
         // reset all player names
-        if(playerIndex == 0){
-            GameSettings.instance.getPlayerNames().clear();
-        }
+//        if(playerIndex == 0){
+//            GameSettings.instance.getPlayerNames().clear();
+//        }
 
     }
 
@@ -121,13 +121,14 @@ public class NameInputViewController extends RootController implements JoystickM
                         //go to next
                         if(playerIndex + 1 == GameSettings.instance.getNumbrOfPlayers()){
                             // go to map selection
+                            GameSettings.instance.addPlayerName(currentName.toString());
                             MainApp.getInstance().pushViewController(
                                     new MapSelectionViewController(),
                                     true
                             );
                         }else {
                             // go to next player name
-                            GameSettings.instance.getPlayerNames().add(currentName.toString());
+                            GameSettings.instance.addPlayerName(currentName.toString());
                             MainApp.getInstance().pushViewController(
                                     new NameInputViewController(playerIndex + 1),
                                     true
