@@ -7,10 +7,12 @@ import group23.pacman.controller.RootController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -37,6 +39,10 @@ public class MainApp extends Application{
 		return (int) gameWindow.getScene().getHeight();
 	}
 
+	public Stage getGameWindow() {
+		return gameWindow;
+	}
+
 	/**
 	 * The navigation stack.
 	 * Do not insert to this stack manually. you'll regret it.
@@ -47,6 +53,11 @@ public class MainApp extends Application{
 	 * - insertViewController
 	 */
 	private Vector<UIViewController> navigationStack = new Vector<>();
+
+
+	public void pushViewController(UIViewController controller){
+		pushViewController(controller,true);
+	}
 
 	/**
 	 * Append new view controller to the stack
@@ -78,6 +89,12 @@ public class MainApp extends Application{
 		if (olderController != null && olderController instanceof RootController){
 			((RootController)olderController).didEnterBackground();
 		}
+		controller.view.requestFocus();
+	}
+
+
+	public void popViewController(){
+		popViewController(true);
 	}
 
 	/**
@@ -110,6 +127,9 @@ public class MainApp extends Application{
 		if (toRemove != null && toRemove instanceof RootController){
 			((RootController)toRemove).didEnterBackground();
 		}
+
+		controller.view.requestFocus();
+		controller.view.setOnMouseClicked(null);
 	}
 
 	/**
@@ -164,10 +184,10 @@ public class MainApp extends Application{
 		JoystickManager
 				.shared
 				.register(
-						KeyCode.I, //up
-						KeyCode.K, //down
-						KeyCode.J, //left
-						KeyCode.L, //right
+						KeyCode.UP, //up
+						KeyCode.DOWN, //down
+						KeyCode.LEFT, //left
+						KeyCode.RIGHT, //right
 						KeyCode.ENTER, //one
 						KeyCode.SHIFT // two
 				);
@@ -183,6 +203,9 @@ public class MainApp extends Application{
 						KeyCode.Z,
 						KeyCode.X
 				);
+
+		primaryScene.setOnKeyPressed(JoystickManager.shared);
+
 	}
 
 	public static void main(String[] args) {

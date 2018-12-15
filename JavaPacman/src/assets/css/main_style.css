@@ -42,3 +42,121 @@
     -fx-border-width: 2px;
     -fx-border-radius: 10px;
 }
+
+.table-view{
+   -fx-background-color: transparent;
+   -fx-border-radius: 0 0 0 0;
+   -fx-background-radius: 0 0 0 0;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+}
+
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: '8BIT WONDER Nominal';
+    -fx-font-size: 25px;
+    -fx-padding: 10;
+    -fx-font-weight: normal;
+
+}
+
+
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: '8BIT WONDER Nominal';
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+}
+
+/*
+.table-view .column-header-background  {
+    -fx-text-fill: white;
+    -fx-font-family: '8BIT WONDER Nominal';
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+}
+*/
+
+/*
+.table-view .scroll-bar .increment-button,
+.table-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 0 10 0 0;
+
+}
+*/
+
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black, 90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.table-view .scroll-bar .increment-arrow,
+.table-view .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-font-family: '8BIT WONDER Nominal';
+    -fx-font-size: 14px;
+    -fx-alignment:center;
+}
+
+.table-row-cell{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:odd{
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+    -fx-border-width: 0px;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}

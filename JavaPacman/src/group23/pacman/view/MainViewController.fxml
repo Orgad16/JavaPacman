@@ -15,9 +15,9 @@
       </ImageView>
 
         <VBox alignment="CENTER" maxHeight="100" maxWidth="150" spacing="16.0">
-            <ToggleButton fx:id="playBtn" styleClass="button-retro" text="PLAY" />
+            <ToggleButton fx:id="playBtn" styleClass="button-retro" text="PLAY"  />
             <ToggleButton fx:id="settingsBtn" styleClass="button-retro" text="OPTIONS" />
-            <ToggleButton fx:id="leaderboardBtn" styleClass="button-retro" text="LEADERBOARD" />
+            <ToggleButton fx:id="leaderboardBtn" styleClass="button-retro" text="LEADERBOARD"  />
         </VBox>
     </VBox>
 

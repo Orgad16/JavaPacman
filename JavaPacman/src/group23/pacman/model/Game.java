@@ -1,6 +1,7 @@
 package group23.pacman.model;
 
 import group23.pacman.model.Pacman.STATE;
+import group23.pacman.system.ScoreSetting;
 import group23.pacman.system.SysData;
 import javafx.util.Pair;
 

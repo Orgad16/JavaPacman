@@ -1,6 +1,11 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.model.Board;
+import group23.pacman.model.Game;
+import group23.pacman.model.GameObject;
+import group23.pacman.model.TemporaryGhost;
+import group23.pacman.MainApp;
 import group23.pacman.model.*;
 import group23.pacman.view.DialogView;
 import javafx.animation.AnimationTimer;
@@ -15,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import ui.UIView;
+import javafx.scene.image.ImageView;
 import group23.pacman.controller.GameStateController;
 
 
@@ -51,6 +57,10 @@ public class GameViewController extends RootController implements JoystickManage
 
     @FXML
     private UIView overlay;
+    
+
+
+    private Game game;
 
 
     private Game game;
@@ -135,6 +145,20 @@ public class GameViewController extends RootController implements JoystickManage
 //        overlay.getChildren().add(dialogView);
 //        overlay.setVisible(false);
 
+        ToggleButton cancelButton = new ToggleButton();
+        cancelButton.getStyleClass().add("button-retro");
+        cancelButton.setText("Cancel");
+        cancelButton.setSelected(true);
+
+        HBox box = new HBox();
+        box.setSpacing(20);
+        box.getChildren().addAll(quitButton,cancelButton);
+
+        dialogView.contentView.getChildren().add(box);
+
+        overlay.getChildren().add(dialogView);
+        overlay.setVisible(false);
+
         //-----------------------------
 
 
@@ -149,11 +173,17 @@ public class GameViewController extends RootController implements JoystickManage
         GraphicsContext mzGC = maze_canvas.getGraphicsContext2D();
         ArrayList<GameObject> objects = game.getOtherGameObjects();
         for (GameObject object : objects) {
+            //if (object.getType() == GameObject.TYPE.WALL) {
+            object.draw(gcWall);
+            //}
             if (object.getType() == GameObject.TYPE.WALL)
                 object.draw(mzGC);
         }
         // draw all other objects on game canvas
 
+        // need to update the game first
+        //game.update();
+        draw(mzBg);
         //TODO: init game state controller
         //TODO: add functions to handle the game state update() function§
         //gameStateController.update();
@@ -167,7 +197,6 @@ public class GameViewController extends RootController implements JoystickManage
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
 
         // register controller to joystick manager
         JoystickManager

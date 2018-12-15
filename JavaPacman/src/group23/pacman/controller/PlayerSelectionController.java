@@ -16,8 +16,6 @@ public class PlayerSelectionController extends RootController implements Joystic
     @FXML
     private ToggleButton players_2;
 
-    private int current_index = 0;
-
     private UINavigationAdapter<ToggleButton> navigationAdapter = new UINavigationAdapter<>();
 
     private static final String JOYSTICK_LISTENER_ID = "PlayerSelectionController";
@@ -30,7 +28,6 @@ public class PlayerSelectionController extends RootController implements Joystic
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
 
         // register controller to joystick manager
         JoystickManager
@@ -59,7 +56,7 @@ public class PlayerSelectionController extends RootController implements Joystic
                     break;
                 case ONE:
                     // select
-                    GameSettings.instance.setNumbrOfPlayers(current_index + 1);
+                    GameSettings.instance.setNumbrOfPlayers(navigationAdapter.getY() + 1);
                     NameInputViewController controller = new NameInputViewController(0);
                     MainApp.getInstance().pushViewController(controller,true);
                     break;

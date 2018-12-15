@@ -4,9 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import group23.pacman.model.Question;
+import group23.pacman.model.Score;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SysData {
 
@@ -173,6 +175,7 @@ public class SysData {
 
 
     }
+
 }
 
 // json file example for game records:
@@ -181,12 +184,16 @@ public class SysData {
 //         {
 //         "id": "1",
 //         "name": "",
-//         "score": "1234"
+//         "score": "1234",
+//         "time":"1:24",
+//          "date":"22222222"/*timeStemp*/
 //         },
 //         {
 //         "id": "2",
 //         "name": "tony",
-//         "score": "123"
+//         "score": "123",
+//         "time":"1:24"
+//         "date":"22222222"
 //         }
 //         ]
 //         }

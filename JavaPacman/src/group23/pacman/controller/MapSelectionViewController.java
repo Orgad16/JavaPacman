@@ -32,7 +32,6 @@ public class MapSelectionViewController extends RootController implements Joysti
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
         JoystickManager.shared.subscribe(JOYSTICK_LISTENER_ID,this);
     }
 
