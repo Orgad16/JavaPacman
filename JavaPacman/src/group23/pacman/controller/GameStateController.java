@@ -4,6 +4,7 @@ import group23.pacman.MainApp;
 import group23.pacman.model.Game;
 import group23.pacman.model.Pacman.STATE;
 import group23.pacman.controller.GameViewController;
+import group23.pacman.model.Timer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -14,9 +15,6 @@ import javafx.scene.input.KeyEvent;
  */
 
 public class GameStateController {
-	
-	/* Scene used to add key listener */
-	private Scene scene;
 	
 	/* Manipulate the game object */
 	private Game game;
@@ -31,6 +29,8 @@ public class GameStateController {
 	private boolean gameOver;
 	private boolean levelCleared;
 	private boolean escapePressed;
+
+	private Timer timer;
 	
 	/* Public constructor */
 	public GameStateController(GameViewController gameViewController,Game game) {
@@ -69,12 +69,14 @@ public class GameStateController {
 			/* If all lives lost, stop the game */
 			if (game.getPacman().getLives() == 0) {
 
+				//TODO: mark done
+
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
 				gameViewController.stopGame();
 				gameOver = true;
 				gameViewController.showGameEnd();
-
+				gameViewController.handleSwitch(true, false);
 			}
 
 			/* Otherwise, just show number of lives to the screen */
@@ -86,8 +88,11 @@ public class GameStateController {
 			}
 		}
 		else if (game.levelCleared()) {
+			//TODO: mark done
+
 			levelCleared = true;
 			gameViewController.showGameEnd();
+			gameViewController.handleSwitch(true, false);
 		}
 
 	}
@@ -97,10 +102,12 @@ public class GameStateController {
 	private void checkTimer() {
 		
 		/* If player ran out of time, end the game */
-		if (gameViewController.getTimer().timedOut()) {
+		if (timer.timedOut()) {
 
+			// TODO: mark time out - remove setting the lives of pacman to 0 - call handle switch
 			gameOver = true;
-			game.getPacman().setLives(0);
+//			game.getPacman().setLives(0);
+			gameViewController.handleSwitch(false, true);
 		}
 		
 	}
@@ -128,6 +135,12 @@ public class GameStateController {
 		return this.escapePressed;
 	}
 
-	
+	public Timer getTimer() {
+		return this.timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
 
 }

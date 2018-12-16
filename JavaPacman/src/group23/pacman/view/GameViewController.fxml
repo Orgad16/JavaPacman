@@ -29,7 +29,7 @@
                     <ImageView fx:id="lifeImage1" fitHeight="50.0" fitWidth="50.0"/>
                     <ImageView fx:id="lifeImage2" fitHeight="50.0" fitWidth="50.0"/>
                 </HBox>
-                <Label fx:id="timerLabel" styleClass="label-retro" style="-fx-font-size: 40px;" text="02:00"/>
+                <Label fx:id="timerLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
                 <Label fx:id="playerNameLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
             </VBox>
         </HBox>

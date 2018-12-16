@@ -538,5 +538,9 @@ public class Game {
 		return score;
 	}
 
+	public Timer getTimer() {
+		return this.timer;
+	}
+
 
 }

@@ -69,8 +69,15 @@ public class GameViewController extends RootController implements JoystickManage
 
     @FXML
     private UIView overlay;
-    
 
+
+    final static int initialMultiTimer = 5;
+
+
+    private int currentPlayerIndex = 0;
+    private GameStateController[] allGameStates = {null, null};
+    private Game[] allGames = {null, null};
+    private boolean[] playersStatus = {true, true};
 
     private Game game;
 
@@ -95,7 +102,7 @@ public class GameViewController extends RootController implements JoystickManage
     private long time = 0;
 
     /* Used to manipulate time for showing to screen */
-    private Timer timer;
+//    private Timer timer;
 
     /* Determines if the countdown timer is timed out, i.e game has started */
     private boolean countingDown;
@@ -122,11 +129,24 @@ public class GameViewController extends RootController implements JoystickManage
         Board.canvasWidth = (int) maze_canvas.getWidth();
 
         List<String> players = GameSettings.instance.getPlayerNames();
-        int currentPlayer = 0;
+        int currentPlayer = currentPlayerIndex;
 
         if (numberOfPlayers == 1) {
             String playerName = players.get(0);
             playerNameLabel.setText(playerName);
+            game = new Game(selectedMap, numberOfPlayers, 0, 0);
+            gameStateController = new GameStateController(this, game);
+            gameStateController.setTimer(new Timer(120));
+
+        } else {
+
+            allGames[0] = new Game(selectedMap, 1, 0, 0);
+            allGames[1] = new Game(selectedMap, 1, 0,0);
+            allGameStates[0] = new GameStateController(this, allGames[0]);
+            allGameStates[1] = new GameStateController(this, allGames[1]);
+            game = allGames[currentPlayer];
+            gameStateController = allGameStates[currentPlayer];
+            gameStateController.setTimer(new Timer(initialMultiTimer));
         }
 
         showLivesLeft(3);
@@ -136,12 +156,7 @@ public class GameViewController extends RootController implements JoystickManage
         mediaPlayer.setVolume(0.3);
 
         // init timer
-        timer = new Timer(120);
-
-        // init game with map and number of players
-        game = new Game(selectedMap, numberOfPlayers, 0, 0);
-        gameStateController = new GameStateController(this, game);
-
+//        timer = new Timer(120);
 
         // create reference
         graphicsContext = game_canvas.getGraphicsContext2D();
@@ -439,11 +454,6 @@ public class GameViewController extends RootController implements JoystickManage
         return (!this.running);
     }
 
-    public Timer getTimer() {
-
-        return this.timer;
-    }
-
     public void toggleState() {
 
 		/* Can only toggle if not counting down and exit confirmation is not dispalyed */
@@ -530,13 +540,13 @@ public class GameViewController extends RootController implements JoystickManage
                 if (holdTimer.timedOut()) {
                     this.stop();
 					/* Calculate bonuses */
-                    int time = timer.getTimeRemaining();
+                    int time = gameStateController.getTimer().getTimeRemaining();
                     int lives = gameStateController.getGame().getPacman().getLives();
                     int score = gameStateController.getGame().getIntScore();
                     //mainApp.showResults(time,lives,score,gameStateController.getGame().getMap());
 
                     //TODO: add method in MainApp to show the time, lives and score result
-                    showResultGame(time, lives, score);
+                    //showResultGame(time, lives, score);
                 }
             }
         }.start();
@@ -620,8 +630,6 @@ public class GameViewController extends RootController implements JoystickManage
 
         time = System.currentTimeMillis();
 
-
-
 		/* Animation timer to update frames */
         animationLoop = new AnimationTimer() {
             public void handle(long now) {
@@ -648,17 +656,17 @@ public class GameViewController extends RootController implements JoystickManage
 
         if (System.currentTimeMillis() - time >= 1000) {
             if (!timerPaused) {
-                timer.countDown(1);
-                setTimerLabel();
+                gameStateController.getTimer().countDown(1);
+                setTimerLabel(gameStateController.getTimer().getTimeRemaining());
             }
             time = System.currentTimeMillis();
         }
 
     }
 
-    public void setTimerLabel() {
+    public void setTimerLabel(int timer) {
 
-        String newTime = getStringFormatedTimer(timer.getTimeRemaining());
+        String newTime = getStringFormatedTimer(timer);
 
         timerLabel.setText(newTime);
 
@@ -700,14 +708,16 @@ public class GameViewController extends RootController implements JoystickManage
             dialogView.titleLabel.setText("LEVEL FAILED");
         }
 
-        showLevelResults(time, score, dialogView);
+        VBox vBox = showLevelResults(time, score);
+
+        dialogView.contentView.getChildren().add(vBox);
 
         overlay.getChildren().add(dialogView);
         overlay.setVisible(true);
     }
 
     // show the game result after winning the level
-    public void showLevelResults(int time, int score, DialogView dialogView) {
+    public VBox showLevelResults(int time, int score) {
 
 
         // constants for spacing and styles
@@ -811,7 +821,92 @@ public class GameViewController extends RootController implements JoystickManage
         currentDialogAdapter.addRow(okBtn);
         currentDialogAdapter.move_right().setSelected(true);
 
-        dialogView.contentView.getChildren().add(containerVbox);
+//        dialogView.contentView.getChildren().add(containerVbox);
+
+        return containerVbox;
+
+    }
+
+
+
+    public ToggleButton retroButtonFactory(String text) {
+        ToggleButton btn = new ToggleButton(text);
+        btn.getStyleClass().add("button-retro");
+        return btn;
+    }
+
+    public Label retroLabelFactory(String text, int fontSize, String fontColor) {
+        Label label = new Label(text);
+        label.setStyle("-fx-font-size:" + fontSize + "px;");
+        if (fontColor != null) {
+            label.setStyle("-fx-text-fill:" + fontColor + ";");
+        }
+        return label;
+    }
+
+    public void handleSwitch(boolean isDone, boolean timeOut) {
+
+        // check number of players in game settings
+        int numberOfPlayers = GameSettings.instance.getNumbrOfPlayers();
+
+        if (numberOfPlayers == 1) { return; }
+
+        // if the player cleared or failed the level
+        if (isDone) {
+            //change the status of the player to false -> will not switch back to it
+            playersStatus[currentPlayerIndex] = false;
+            if (!playersStatus[getOtherPlayer()]) {
+
+                // return because the other player is dead/done -> go the leaderboard
+                showScoreBoard();
+                return;
+            }
+            currentPlayerIndex = getOtherPlayer();
+        }
+
+        // if the timer (of 40 secs) ran out
+        if (timeOut) {
+            if (playersStatus[getOtherPlayer()]) {
+                currentPlayerIndex = getOtherPlayer();
+            } else {
+                // the other player is done/dead and the timer ran out -> go to leaderboard
+                showScoreBoard();
+                return;
+            }
+        }
+        switchPlayer();
+
+    }
+
+    public void switchPlayer() {
+//        pauseGame();
+        this.running = false;
+        game = allGames[currentPlayerIndex];
+        gameStateController = allGameStates[currentPlayerIndex];
+        gameStateController.setTimer(new Timer(initialMultiTimer));
+        updateScore();
+        updateTimer();
+        updatePlayerName();
+        startCountdown();
+        startGame();
+    }
+
+    public void updatePlayerName() {
+        String name = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
+        playerNameLabel.setText(name);
+    }
+
+    public int getOtherPlayer() {
+        if (currentPlayerIndex == 1)
+            return 0;
+        else
+            return 1;
+    }
+
+    public void showScoreBoard() {
+
+        // TODO: show score board of both players
+        DialogView dialogView = new DialogView();
 
     }
 
