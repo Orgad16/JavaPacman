@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import ui.UIView;
 import javafx.scene.image.ImageView;
@@ -27,7 +28,9 @@ import group23.pacman.controller.GameStateController;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -212,7 +215,8 @@ public class GameViewController extends RootController implements JoystickManage
                     if (!countingDown() && !gamePaused())
                         game.getPacman().whip();
 
-                    if(gamePaused() && currentDialogAdapter != null && !duringQuestion) {
+                    if ((gamePaused() && currentDialogAdapter != null && !duringQuestion) ||
+                            ((game.levelCleared() || game.getPacman().getLives() == 0))) {
                         int index = currentDialogAdapter.getY();
                         if(index == 0) {
                             // exit game
@@ -532,6 +536,7 @@ public class GameViewController extends RootController implements JoystickManage
                     //mainApp.showResults(time,lives,score,gameStateController.getGame().getMap());
 
                     //TODO: add method in MainApp to show the time, lives and score result
+                    showResultGame(time, lives, score);
                 }
             }
         }.start();
@@ -653,23 +658,28 @@ public class GameViewController extends RootController implements JoystickManage
 
     public void setTimerLabel() {
 
+        String newTime = getStringFormatedTimer(timer.getTimeRemaining());
+
+        timerLabel.setText(newTime);
+
+    }
+
+    public String getStringFormatedTimer(int timer) {
         int mins;
         int tensSecs;
         String newTime;
 
-        mins = timer.getTimeRemaining() / 60;
+        mins = timer / 60;
         newTime = "0" + String.valueOf(mins) + ":";
 
-        tensSecs = timer.getTimeRemaining() - mins*60;
+        tensSecs = timer - mins*60;
 
         if (tensSecs < 10) {
             newTime += "0" + String.valueOf(tensSecs);
         } else {
             newTime += String.valueOf(tensSecs);
         }
-
-        timerLabel.setText(newTime);
-
+        return newTime;
     }
 
     /* Updates the images of score digits to reflect user's score */
@@ -677,7 +687,133 @@ public class GameViewController extends RootController implements JoystickManage
 		scoreLabel.setText(String.valueOf(game.getIntScore()));
     }
 
-    private void showQuestion() {
+    public void showResultGame(int time, int lives, int score) {
+
+        // init a dialog view for the result game status
+        DialogView dialogView = new DialogView();
+
+        // handle when the pacman won or lose the level
+        if (lives == 0) {
+            score += 100;
+            dialogView.titleLabel.setText("LEVEL CLEARED");
+        } else {
+            dialogView.titleLabel.setText("LEVEL FAILED");
+        }
+
+        showLevelResults(time, score, dialogView);
+
+        overlay.getChildren().add(dialogView);
+        overlay.setVisible(true);
+    }
+
+    // show the game result after winning the level
+    public void showLevelResults(int time, int score, DialogView dialogView) {
+
+
+        // constants for spacing and styles
+        int hBoxSpacing = 35;
+        int vBoxSpacing = 20;
+
+        // container for the hBoxs and the ok button
+        VBox containerVbox = new VBox();
+        containerVbox.setAlignment(Pos.CENTER);
+        containerVbox.setSpacing(25);
+
+        // constructing the dialog view
+        HBox hBox = new HBox();
+        hBox.setSpacing(hBoxSpacing);
+        hBox.setAlignment(Pos.CENTER);
+
+        // construct the name column with hBox
+        VBox nameVbox = new VBox();
+        nameVbox.setSpacing(vBoxSpacing);
+        nameVbox.setAlignment(Pos.CENTER_LEFT);
+
+        // constant label for the name column
+        Label constNameLabel = new Label("NAME");
+        Label playerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(0));
+
+        // setting some styles to labels
+        playerNameLabel.getStyleClass().add("label-retro");
+        playerNameLabel.setStyle("-fx-font-size: 20px");
+        //playerNameLabel.setStyle("-fx-text-fill: red");
+        constNameLabel.getStyleClass().add("label-retro");
+        constNameLabel.setStyle("-fx-font-size: 18px");
+        //constNameLabel.setStyle("-fx-text-fill: red");
+
+        // adding the labels to the hBox
+        nameVbox.getChildren().addAll(constNameLabel, playerNameLabel);
+
+        // construct the score column with hBox
+        VBox scoreVbox = new VBox();
+        scoreVbox.setSpacing(vBoxSpacing);
+        scoreVbox.setAlignment(Pos.CENTER_LEFT);
+
+        Label constScoreLabel = new Label("SCORE");
+        Label playerScoreLabel = new Label(String.valueOf(score));
+
+        // setting some styles to labels
+        playerScoreLabel.getStyleClass().add("label-retro");
+        playerScoreLabel.setStyle("-fx-font-size: 20px");
+        constScoreLabel.getStyleClass().add("label-retro");
+        constScoreLabel.setStyle("-fx-font-size: 18px");
+
+        // constant label for the score column
+        scoreVbox.getChildren().addAll(constScoreLabel, playerScoreLabel);
+
+        // construct the time column with hBox
+        VBox timeVbox = new VBox();
+        timeVbox.setSpacing(vBoxSpacing);
+        timeVbox.setAlignment(Pos.CENTER_LEFT);
+
+        Label constTimeLabel = new Label("TIME");
+        Label playerTimeLabel = new Label(getStringFormatedTimer(time));
+
+        // setting some styles to labels
+        constTimeLabel.getStyleClass().add("label-retro");
+        constTimeLabel.setStyle("-fx-font-size: 20px");
+        playerTimeLabel.getStyleClass().add("label-retro");
+        playerTimeLabel.setStyle("-fx-font-size: 18px");
+
+        // constant label for the time column
+        timeVbox.getChildren().addAll(constTimeLabel, playerTimeLabel);
+
+        // construct the map column with hBox
+        VBox dateVbox = new VBox();
+        dateVbox.setSpacing(vBoxSpacing);
+        dateVbox.setAlignment(Pos.CENTER_LEFT);
+
+        Label constDateLabel = new Label("DATE");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Label playerDateLabel = new Label(format.format(new Date()));
+
+        // setting some styles to labels
+        constDateLabel.getStyleClass().add("label-retro");
+        constDateLabel.setStyle("-fx-font-size: 20px");
+        playerDateLabel.getStyleClass().add("label-retro");
+        playerDateLabel.setStyle("-fx-font-size: 18px");
+
+        // constant label for the map column
+        dateVbox.getChildren().addAll(constDateLabel, playerDateLabel);
+
+        // adding the hBoxs to the vBox container
+        hBox.getChildren().addAll(nameVbox, scoreVbox, timeVbox, dateVbox);
+
+        // create an ok button to continue
+        ToggleButton okBtn = new ToggleButton("MENU");
+        okBtn.getStyleClass().add("button-retro");
+        okBtn.setAlignment(Pos.CENTER);
+
+        containerVbox.getChildren().addAll(hBox, okBtn);
+
+        // setup navigation adapter
+        currentDialogAdapter = new UINavigationAdapter<>();
+        currentDialogAdapter.addRow(okBtn);
+        currentDialogAdapter.move_right().setSelected(true);
+
+        dialogView.contentView.getChildren().add(containerVbox);
 
     }
+
+
 }
