@@ -713,6 +713,18 @@ public class GameViewController extends RootController implements JoystickManage
 
         VBox vBox = showLevelResults(time, score);
 
+        // create an ok button to continue
+        ToggleButton okBtn = new ToggleButton("MENU");
+        okBtn.getStyleClass().add("button-retro");
+        okBtn.setAlignment(Pos.CENTER);
+
+        // setup navigation adapter
+        currentDialogAdapter = new UINavigationAdapter<>();
+        currentDialogAdapter.addRow(okBtn);
+        currentDialogAdapter.move_right().setSelected(true);
+
+        vBox.getChildren().add(okBtn);
+
         dialogView.contentView.getChildren().add(vBox);
 
         overlay.getChildren().add(dialogView);
@@ -744,7 +756,7 @@ public class GameViewController extends RootController implements JoystickManage
 
         // constant label for the name column
         Label constNameLabel = new Label("NAME");
-        Label playerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(0));
+        Label playerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(currentPlayerIndex));
 
         // setting some styles to labels
         playerNameLabel.getStyleClass().add("label-retro");
@@ -812,17 +824,7 @@ public class GameViewController extends RootController implements JoystickManage
         // adding the hBoxs to the vBox container
         hBox.getChildren().addAll(nameVbox, scoreVbox, timeVbox, dateVbox);
 
-        // create an ok button to continue
-        ToggleButton okBtn = new ToggleButton("MENU");
-        okBtn.getStyleClass().add("button-retro");
-        okBtn.setAlignment(Pos.CENTER);
-
-        containerVbox.getChildren().addAll(hBox, okBtn);
-
-        // setup navigation adapter
-        currentDialogAdapter = new UINavigationAdapter<>();
-        currentDialogAdapter.addRow(okBtn);
-        currentDialogAdapter.move_right().setSelected(true);
+        containerVbox.getChildren().addAll(hBox);
 
 //        dialogView.contentView.getChildren().add(containerVbox);
 
@@ -913,6 +915,59 @@ public class GameViewController extends RootController implements JoystickManage
         // TODO: show score board of both players
         DialogView dialogView = new DialogView();
 
+        VBox container = new VBox();
+        container.setAlignment(Pos.CENTER);
+        container.setSpacing(20);
+
+        VBox firstPlayerVbox = showLevelResults(allGames[currentPlayerIndex].getTimer().getTimeRemaining(), allGames[currentPlayerIndex].getIntScore());
+
+        currentPlayerIndex = getOtherPlayer();
+        // constant label for the name column
+        Label playerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(currentPlayerIndex));
+        Label playerScoreLabel = new Label(String.valueOf(allGames[currentPlayerIndex].getIntScore()));
+        Label playerTimeLabel = new Label(getStringFormatedTimer(allGames[currentPlayerIndex].getTimer().getTimeRemaining()));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Label playerDateLabel = new Label(format.format(new Date()));
+
+        HBox namePlayerVbox = new HBox();
+        //namePlayerVbox.setSpacing(35);
+
+        playerNameLabel.getStyleClass().add("label-retro");
+        playerNameLabel.setStyle("-fx-font-size: 18px");
+        namePlayerVbox.getChildren().add(playerNameLabel);
+
+        HBox scorePlayerVbox = new HBox();
+        //scorePlayerVbox.setSpacing(35);
+        scorePlayerVbox.setAlignment(Pos.CENTER);
+        playerScoreLabel.getStyleClass().add("label-retro");
+        playerScoreLabel.setStyle("-fx-font-size: 18px");
+        namePlayerVbox.getChildren().add(playerScoreLabel);
+
+        HBox timePlayerVbox = new HBox();
+        //timePlayerVbox.setSpacing(35);
+        timePlayerVbox.setAlignment(Pos.CENTER);
+        playerTimeLabel.getStyleClass().add("label-retro");
+        playerTimeLabel.setStyle("-fx-font-size: 18px");
+        timePlayerVbox.getChildren().add(playerTimeLabel);
+
+        HBox datePlayerVbox = new HBox();
+        //datePlayerVbox.setSpacing(35);
+        datePlayerVbox.setAlignment(Pos.CENTER);
+        playerDateLabel.getStyleClass().add("label-retro");
+        playerDateLabel.setStyle("-fx-font-size: 18px");
+        timePlayerVbox.getChildren().add(playerDateLabel);
+
+        firstPlayerVbox.getChildren().addAll(namePlayerVbox, scorePlayerVbox, timePlayerVbox, datePlayerVbox);
+
+        container.getChildren().addAll(firstPlayerVbox);
+
+        dialogView.contentView.getChildren().addAll(container);
+
+        overlay.getChildren().add(dialogView);
+        overlay.setVisible(true);
+
+        currentPlayerIndex = getOtherPlayer();
     }
 
 
