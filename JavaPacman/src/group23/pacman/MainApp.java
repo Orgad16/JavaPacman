@@ -29,6 +29,10 @@ public class MainApp extends Application{
 		return instance;
 	}
 
+	public void exit(){
+		gameWindow.close();
+	}
+
 	/* The window for showing the game/application */
 	private Stage gameWindow;
 
@@ -163,8 +167,8 @@ public class MainApp extends Application{
 		primaryScene.setFill(Color.BLACK);
 		gameWindow.setScene(primaryScene);
 		gameWindow.show();
-//		gameWindow.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-//		gameWindow.setFullScreen(true);
+		gameWindow.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		gameWindow.setFullScreen(true);
 
 		IntroController introController = new IntroController();
 		change_root(introController.view);

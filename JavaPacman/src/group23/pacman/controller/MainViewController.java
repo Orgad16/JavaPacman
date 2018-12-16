@@ -29,6 +29,9 @@ public class MainViewController extends RootController implements JoystickManage
     @FXML
     private ToggleButton leaderboardBtn;
 
+    @FXML
+    private ToggleButton exitBtn;
+
     /**
      * navigation handler.
      */
@@ -42,6 +45,7 @@ public class MainViewController extends RootController implements JoystickManage
         navigationAdapter.addRow(playBtn);
         navigationAdapter.addRow(settingsBtn);
         navigationAdapter.addRow(leaderboardBtn);
+        navigationAdapter.addRow(exitBtn);
 
         // highlight default
         navigationAdapter.current().setSelected(true);
@@ -98,6 +102,9 @@ public class MainViewController extends RootController implements JoystickManage
                 // leaderboards
                 LeaderboardViewController leaderboardViewController = new LeaderboardViewController();
                 MainApp.getInstance().pushViewController(leaderboardViewController);
+                break;
+            case 3:
+                MainApp.getInstance().exit();
                 break;
         }
     }

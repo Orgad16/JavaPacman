@@ -18,6 +18,7 @@
             <ToggleButton fx:id="playBtn" styleClass="button-retro" text="PLAY"  />
             <ToggleButton fx:id="settingsBtn" styleClass="button-retro" text="OPTIONS" />
             <ToggleButton fx:id="leaderboardBtn" styleClass="button-retro" text="LEADERBOARD"  />
+            <ToggleButton fx:id="exitBtn" styleClass="button-retro" text="EXIT"  />
         </VBox>
     </VBox>
 

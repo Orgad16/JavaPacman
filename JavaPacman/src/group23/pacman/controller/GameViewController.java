@@ -71,13 +71,14 @@ public class GameViewController extends RootController implements JoystickManage
     private UIView overlay;
 
 
-    final static int initialMultiTimer = 5;
+    private final static int initialMultiTimer = 15;
 
 
     private int currentPlayerIndex = 0;
     private GameStateController[] allGameStates = {null, null};
     private Game[] allGames = {null, null};
     private boolean[] playersStatus = {true, true};
+    private String[] nameLabelColor = {"-fx-text-fill: #e74c3c;","-fx-text-fill: #3498db;"};
 
     private Game game;
 
@@ -174,9 +175,11 @@ public class GameViewController extends RootController implements JoystickManage
 
         draw(graphicsContext);
 
-        startCountdown();
+        startCountdown("Starting game in");
 
         startGame();
+
+        updatePlayerName();
     }
 
     @Override
@@ -558,7 +561,7 @@ public class GameViewController extends RootController implements JoystickManage
         mediaPlayer.play();
     }
 
-    public void startCountdown() {
+    public void startCountdown(String message) {
 
         countingDown = true;
         timerPaused = false;
@@ -573,7 +576,7 @@ public class GameViewController extends RootController implements JoystickManage
 
         //show overlay with count down dialog
         DialogView dialogView = new DialogView();
-        dialogView.titleLabel.setText("GAME STARTING IN");
+        dialogView.titleLabel.setText(message);
         dialogView.descriptionLabel.setText("3");
 
         // add to overlay
@@ -837,10 +840,7 @@ public class GameViewController extends RootController implements JoystickManage
 
     public Label retroLabelFactory(String text, int fontSize, String fontColor) {
         Label label = new Label(text);
-        label.setStyle("-fx-font-size:" + fontSize + "px;");
-        if (fontColor != null) {
-            label.setStyle("-fx-text-fill:" + fontColor + ";");
-        }
+        label.setStyle("-fx-font-size:" + fontSize + "px;" + (fontColor == null ? "" : "-fx-text-fill:" + fontColor + ";"));
         return label;
     }
 
@@ -862,6 +862,9 @@ public class GameViewController extends RootController implements JoystickManage
                 return;
             }
             currentPlayerIndex = getOtherPlayer();
+
+            // hide timer because it is meaningless with only one player alive.
+            timerLabel.setVisible(false);
         }
 
         // if the timer (of 40 secs) ran out
@@ -879,21 +882,23 @@ public class GameViewController extends RootController implements JoystickManage
     }
 
     public void switchPlayer() {
-//        pauseGame();
-        this.running = false;
+        animationLoop.stop();
         game = allGames[currentPlayerIndex];
         gameStateController = allGameStates[currentPlayerIndex];
         gameStateController.setTimer(new Timer(initialMultiTimer));
         updateScore();
+        showLivesLeft(game.getPacman().getLives());
         updateTimer();
         updatePlayerName();
-        startCountdown();
-        startGame();
+        String playerName = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
+        startCountdown(playerName + " game is starting in");
+        animationLoop.start();
     }
 
     public void updatePlayerName() {
         String name = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
         playerNameLabel.setText(name);
+        playerNameLabel.setStyle(nameLabelColor[currentPlayerIndex] + "-fx-font-size: 40px;");
     }
 
     public int getOtherPlayer() {

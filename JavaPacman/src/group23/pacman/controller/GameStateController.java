@@ -84,7 +84,7 @@ public class GameStateController {
 
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
-				gameViewController.startCountdown();
+				gameViewController.startCountdown("Respawning in");
 			}
 		}
 		else if (game.levelCleared()) {
