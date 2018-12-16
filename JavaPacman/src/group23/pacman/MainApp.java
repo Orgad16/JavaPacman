@@ -100,7 +100,9 @@ public class MainApp extends Application{
 		controller.view.requestFocus();
 	}
 
-
+	/**
+	 * Use this method to remove the most recent view controller from the navigation stack.
+	 */
 	public void popViewController(){
 		popViewController(true);
 	}
