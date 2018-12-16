@@ -24,6 +24,7 @@ public class BoardTest { //
     public void setUp() throws Exception {
         tester = new Board();
         rand = new Random();
+
     }
 
     @Test
@@ -35,10 +36,18 @@ public class BoardTest { //
         assertFalse("X: "+x+" Y: "+y+" is:",tester.isNode(x,y));
     }
 
+    @Test
+    public void isValidPos() {
+        int positionX= rand.nextInt();
+        int positionY= rand.nextInt();
+
+        assertFalse("position" +positionX+ "," +positionY+ "is:", tester.isValidPos(positionX,positionY));
+
+    }
+
     @After
     public void tearDown() throws Exception {
         tester = null;
         rand = null;
     }
-
 }
