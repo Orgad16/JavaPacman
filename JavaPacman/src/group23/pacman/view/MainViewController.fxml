@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <VBox alignment="CENTER" spacing="100.0">
+      <ImageView fx:id="logo" fitHeight="150.0"  pickOnBounds="true" preserveRatio="true">
+          <image>
+              <Image url="@../../../assets/misc/Pac_man_logo_by_ringostarr39-d5z4y44.png" />
+          </image>
+      </ImageView>
+
+        <VBox alignment="CENTER" maxHeight="100" maxWidth="150" spacing="16.0">
+            <ToggleButton fx:id="playBtn" styleClass="button-retro" text="PLAY"  />
+            <ToggleButton fx:id="settingsBtn" styleClass="button-retro" text="OPTIONS" />
+            <ToggleButton fx:id="leaderboardBtn" styleClass="button-retro" text="LEADERBOARD"  />
+            <ToggleButton fx:id="exitBtn" styleClass="button-retro" text="EXIT"  />
+        </VBox>
+    </VBox>
+
+</UIView>

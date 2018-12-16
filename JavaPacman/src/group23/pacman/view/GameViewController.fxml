@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import ui.UIView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <AnchorPane>
+        <HBox spacing="30" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <StackPane>
+
+                <!--Maze Canvas: contains walls and background-->
+                <Canvas fx:id="maze_canvas" width="1366" height="768" />
+
+                <!--Objects Canvas: pellets, pacman, ghosts-->
+                <Canvas fx:id="game_canvas" width="1366" height="768"/>
+
+            </StackPane>
+            <VBox HBox.hgrow="ALWAYS" spacing="100" minWidth="200" alignment="CENTER">
+                <Label fx:id="scoreLabel" styleClass="label-retro" style="-fx-font-size: 40px;" text="0"/>
+                <HBox alignment="CENTER">
+                    <ImageView fx:id="lifeImage" fitHeight="50.0" fitWidth="50.0"/>
+                    <ImageView fx:id="lifeImage1" fitHeight="50.0" fitWidth="50.0"/>
+                    <ImageView fx:id="lifeImage2" fitHeight="50.0" fitWidth="50.0"/>
+                </HBox>
+                <Label fx:id="timerLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
+                <Label fx:id="playerNameLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
+            </VBox>
+        </HBox>
+
+        <UIView visible="false"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0"
+                fx:id="overlay"
+                style="-fx-background-color: rgba(0, 0, 0, 0.80)"/>
+    </AnchorPane>
+
+
+</UIView>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<?import javafx.scene.control.Label?>
+<UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <VBox alignment="CENTER" spacing="100.0">
+        <Label fx:id="title_label" styleClass="label-retro" style="-fx-font-size: 40px;" text="SELECT PLAYER NAME"/>
+        <VBox alignment="CENTER" spacing="16.0">
+            <Label fx:id="nameLabel" styleClass="label-retro" style="-fx-font-size: 20px;" text="NAME: "/>
+
+            <HBox  fx:id="letters1" alignment="CENTER" spacing="8.0">
+
+            </HBox>
+            <HBox  fx:id="letters2" alignment="CENTER" spacing="8.0">
+
+            </HBox>
+            <HBox alignment="CENTER" spacing="8.0">
+                <ToggleButton fx:id="back" styleClass="button-retro" text="BACK" />
+                <ToggleButton fx:id="next" styleClass="button-retro" text="NEXT" />
+            </HBox>
+
+        </VBox>
+    </VBox>
+
+</UIView>
