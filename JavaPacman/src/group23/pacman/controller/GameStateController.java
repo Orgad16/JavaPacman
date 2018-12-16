@@ -68,9 +68,6 @@ public class GameStateController {
 
 			/* If all lives lost, stop the game */
 			if (game.getPacman().getLives() == 0) {
-
-				//TODO: mark done
-
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
 				gameViewController.stopGame();
@@ -88,8 +85,6 @@ public class GameStateController {
 			}
 		}
 		else if (game.levelCleared()) {
-			//TODO: mark done
-
 			levelCleared = true;
 			gameViewController.showGameEnd();
 			gameViewController.handleSwitch(true, false);
@@ -103,10 +98,7 @@ public class GameStateController {
 		
 		/* If player ran out of time, end the game */
 		if (timer.timedOut()) {
-
-			// TODO: mark time out - remove setting the lives of pacman to 0 - call handle switch
 			gameOver = true;
-//			game.getPacman().setLives(0);
 			gameViewController.handleSwitch(false, true);
 		}
 		
