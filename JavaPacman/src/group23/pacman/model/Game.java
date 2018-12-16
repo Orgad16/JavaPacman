@@ -216,8 +216,15 @@ public class Game {
 		updateTempGhostsOnBoard();
 		gasZone.update();
         poisonPellet.update(emptySpaces);
+        removePelletFromEmptySpaces(poisonPellet);
         questionPellet.update(emptySpaces);
+		removePelletFromEmptySpaces(questionPellet);
 		//TODO: remove the gasZone
+	}
+
+
+	private void removePelletFromEmptySpaces(GameObject object) {
+		emptySpaces.remove(object);
 	}
 
 	public List<Pair<Integer,Integer>>  movementLocations(){
