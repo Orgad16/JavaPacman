@@ -226,7 +226,7 @@ public class GameViewController extends RootController implements JoystickManage
                         }
                     }
 
-                    if (duringQuestion) {
+                    if (duringQuestion && !this.running) {
                         resumeGame();
                     }
 
@@ -258,98 +258,106 @@ public class GameViewController extends RootController implements JoystickManage
         gameStateController.getGame().getGhost2().draw(graphicsContext);
         gameStateController.getGame().getGhost3().draw(graphicsContext);
 
-        setUpTempGhosts();
-
-    }
-
-
-    public void setUpTempGhosts() {
         ArrayList<TemporaryGhost> tempGhosts = gameStateController.getGame().getTempGhost();
 
+        // checking if we encountered a question pellet
         if (tempGhosts.size() > 0) {
 
-            duringQuestion = true;
+            // setting up the question view
+            if (!overlay.isVisible() && !duringQuestion)
+                setUpQuestionView(tempGhosts.get(0).getQuestion());
 
-            // add to overlay the question dialog
-            Question q = tempGhosts.get(0).getQuestion();
-
-            // creating the dialog for the question
-            DialogView dialogView = new DialogView();
-            dialogView.titleLabel.setText("Question");
-            dialogView.descriptionLabel.setText(q.getQuestionID());
-
-            // vbox to hold the ghosts and the answers
-            VBox vBox = new VBox();
-            vBox.setSpacing(20);
-            vBox.setAlignment(Pos.CENTER);
-
-            // hbox to hold the ghosts
-            HBox ghostsBox = new HBox();
-            ghostsBox.setAlignment(Pos.CENTER);
-            ghostsBox.setSpacing(250.0);
-
-            // hbox to hold the answerd
-            HBox answersBox = new HBox();
-            answersBox.setSpacing(10);
-
-            // three buttons for the answers
-            ToggleButton answer1 = new ToggleButton();
-            answer1.getStyleClass().add("button-retro");
-            ToggleButton answer2 = new ToggleButton();
-            answer2.getStyleClass().add("button-retro");
-            ToggleButton answer3 = new ToggleButton();
-            answer3.getStyleClass().add("button-retro");
-
-            // the answers for the question
-            ArrayList<String> answers = tempGhosts.get(0).getQuestion().getAnswers();
-            int index = 4;
-            int btnIndex = 1;
-            for (String answer : answers) {
-
-                // set the image of the ghost
-                ImageView ghost = new ImageView(new Image("assets/Ghost/ghost" + index + "Down1.png"));
-                ghost.setFitHeight(50.0);
-                ghost.setFitWidth(50.0);
-                ghostsBox.getChildren().add(ghost);
-
-                // set the button with the answer
-                switch (btnIndex) {
-                    case 1:
-                        answer1.setText(answer);
-                        break;
-                    case 2:
-                        answer2.setText(answer);
-                        break;
-                    case 3:
-                        answer3.setText(answer);
-                        break;
-                }
-                index++;
-                btnIndex++;
-            }
-
-            answersBox.getChildren().addAll(answer1, answer2, answer3);
-
-            // add the hboxs to the vBox container
-            vBox.getChildren().addAll(ghostsBox, answersBox);
-
-            dialogView.contentView.getChildren().add(vBox);
-
-            currentDialogAdapter = new UINavigationAdapter<>();
-            currentDialogAdapter.addRow(answer1, answer2, answer3);
-            currentDialogAdapter.move_right().setSelected(true);
-
-            overlay.getChildren().add(dialogView);
-            overlay.setVisible(true);
-
-            // this line will stop the game
-            this.running = false;
-
+            // setting up the temp ghosts
             for (TemporaryGhost tempGhost : tempGhosts) {
                 tempGhost.draw(graphicsContext);
             }
         }
+        else {
+            duringQuestion = false;
+        }
     }
+
+
+    public void setUpQuestionView(Question q) {
+
+        // creating the dialog for the question
+        DialogView dialogView = new DialogView();
+        dialogView.titleLabel.setText("Question");
+        dialogView.descriptionLabel.setText(q.getQuestionID());
+
+        // vbox to hold the ghosts and the answers
+        VBox vBox = new VBox();
+        vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
+
+        // hbox to hold the ghosts
+        HBox ghostsBox = new HBox();
+        ghostsBox.setAlignment(Pos.CENTER);
+        ghostsBox.setSpacing(250.0);
+
+        // hbox to hold the answerd
+        HBox answersBox = new HBox();
+        answersBox.setSpacing(10);
+
+        // three buttons for the answers
+        ToggleButton answer1 = new ToggleButton();
+        answer1.getStyleClass().add("button-retro");
+        ToggleButton answer2 = new ToggleButton();
+        answer2.getStyleClass().add("button-retro");
+        ToggleButton answer3 = new ToggleButton();
+        answer3.getStyleClass().add("button-retro");
+
+        // the answers for the question
+        ArrayList<String> answers = q.getAnswers();
+        int index = 4;
+        int btnIndex = 1;
+        for (String answer : answers) {
+
+            // set the image of the ghost
+            ImageView ghost = new ImageView(new Image("assets/Ghost/ghost" + index + "Down1.png"));
+            ghost.setFitHeight(50.0);
+            ghost.setFitWidth(50.0);
+            ghostsBox.getChildren().add(ghost);
+
+            // set the button with the answer
+            switch (btnIndex) {
+                case 1:
+                    answer1.setText(answer);
+                    break;
+                case 2:
+                    answer2.setText(answer);
+                    break;
+                case 3:
+                    answer3.setText(answer);
+                    break;
+            }
+            index++;
+            btnIndex++;
+        }
+
+        answersBox.getChildren().addAll(answer1, answer2, answer3);
+
+        // add the hboxs to the vBox container
+        vBox.getChildren().addAll(ghostsBox, answersBox);
+
+        dialogView.contentView.getChildren().add(vBox);
+
+        currentDialogAdapter = new UINavigationAdapter<>();
+        currentDialogAdapter.addRow(answer1, answer2, answer3);
+        currentDialogAdapter.move_right().setSelected(true);
+
+        overlay.getChildren().add(dialogView);
+        overlay.setVisible(true);
+
+
+        // to exit the question view with a key
+        duringQuestion = true;
+
+        this.running = false;
+
+    }
+
+
 
     public void stopTimer(boolean pauseTimer) {
 
