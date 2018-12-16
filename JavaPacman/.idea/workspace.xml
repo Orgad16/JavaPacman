@@ -2,29 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="20019165-d1b7-4601-986f-f8a664e0bb7c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Down1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Down2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Left1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Left2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Right1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Right2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Up1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/GasZone/ghost1Up2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/tempPellet.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/tempPoisonPellet.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/tempQuestionPellet.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/tempSpecialPellet.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Down1.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Down1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Down2.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Down2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Left1.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Left1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Left2.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Left2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Right1.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Right1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Right2.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Right2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Up1.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Up1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/Ghost/ghost1Up2.png" afterPath="$PROJECT_DIR$/src/assets/Ghost/ghost1Up2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/jsonFiles/questions.json" afterPath="$PROJECT_DIR$/src/assets/jsonFiles/questions.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/model/Game.java" afterPath="$PROJECT_DIR$/src/group23/pacman/model/Game.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -94,21 +74,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameViewController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameViewController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="371" column="0" lean-forward="true" selection-start-line="371" selection-start-column="0" selection-end-line="371" selection-end-column="0" />
+            <state relative-caret-position="-597">
+              <caret line="309" column="18" lean-forward="false" selection-start-line="309" selection-start-column="18" selection-end-line="309" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15127#15946#0" expanded="true" />
-                <element signature="e#15945#15946#0" expanded="true" />
-                <element signature="e#16828#18392#0" expanded="true" />
-                <element signature="e#18391#18392#0" expanded="true" />
-                <element signature="e#18552#19130#0" expanded="true" />
-                <element signature="e#19129#19130#0" expanded="true" />
-                <element signature="e#20003#20004#0" expanded="true" />
-                <element signature="e#20067#20068#0" expanded="true" />
+                <element signature="e#15128#15947#0" expanded="true" />
+                <element signature="e#15946#15947#0" expanded="true" />
+                <element signature="e#16829#18393#0" expanded="true" />
+                <element signature="e#18392#18393#0" expanded="true" />
+                <element signature="e#18553#19131#0" expanded="true" />
+                <element signature="e#19130#19131#0" expanded="true" />
+                <element signature="e#20004#20005#0" expanded="true" />
+                <element signature="e#20068#20069#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,11 +126,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="questions.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="questions.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assets/jsonFiles/questions.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="17" lean-forward="false" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+            <state relative-caret-position="465">
+              <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -266,8 +246,8 @@
         <option value="$PROJECT_DIR$/src/group23/pacman/model/PoisonPellet.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/model/Pacman.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/model/Game.java" />
-        <option value="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" />
         <option value="$PROJECT_DIR$/src/assets/jsonFiles/questions.json" />
+        <option value="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" />
       </list>
     </option>
   </component>
@@ -1191,29 +1171,29 @@ locations</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/assets/jsonFiles/questions.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="371" column="0" lean-forward="true" selection-start-line="371" selection-start-column="0" selection-end-line="371" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#15127#15946#0" expanded="true" />
-            <element signature="e#15945#15946#0" expanded="true" />
-            <element signature="e#16828#18392#0" expanded="true" />
-            <element signature="e#18391#18392#0" expanded="true" />
-            <element signature="e#18552#19130#0" expanded="true" />
-            <element signature="e#19129#19130#0" expanded="true" />
-            <element signature="e#20003#20004#0" expanded="true" />
-            <element signature="e#20067#20068#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="465">
+          <caret line="31" column="16" lean-forward="false" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/jsonFiles/questions.json">
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="17" lean-forward="false" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
-          <folding />
+        <state relative-caret-position="-597">
+          <caret line="309" column="18" lean-forward="false" selection-start-line="309" selection-start-column="18" selection-end-line="309" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#15128#15947#0" expanded="true" />
+            <element signature="e#15946#15947#0" expanded="true" />
+            <element signature="e#16829#18393#0" expanded="true" />
+            <element signature="e#18392#18393#0" expanded="true" />
+            <element signature="e#18553#19131#0" expanded="true" />
+            <element signature="e#19130#19131#0" expanded="true" />
+            <element signature="e#20004#20005#0" expanded="true" />
+            <element signature="e#20068#20069#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

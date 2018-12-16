@@ -307,7 +307,7 @@ public class GameViewController extends RootController implements JoystickManage
 
         HBox fourthHbox = new HBox();
         fourthHbox.setAlignment(Pos.CENTER_LEFT);
-        thirdHbox.setSpacing(20);
+        fourthHbox.setSpacing(20);
 
         // three buttons for the answers
         Label answer1 = new Label();
