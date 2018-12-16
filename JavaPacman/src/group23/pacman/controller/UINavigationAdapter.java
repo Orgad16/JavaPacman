@@ -39,23 +39,43 @@ public class UINavigationAdapter<T> {
     private int x;
     private int y;
 
+    /**
+     * @return the current row.
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * @return the current column.
+     */
     public int getY() {
         return y;
     }
 
-    public void addRow(T... data){
-        Vector<T> items = new Vector<>(Arrays.asList(data));
+    /**
+     * Adds a new row to the navigation adapter.
+     *
+     * @param firstElement The first element in the row.
+     * @param otherElements any other elements
+     */
+    public void addRow(T firstElement, T... otherElements){
+        Vector<T> items = new Vector<>(otherElements.length + 1);
+        items.add(firstElement);
+        items.addAll(Arrays.asList(otherElements));
         dataGrid.add(items);
     }
 
+    /**
+     * @return returns the current object being pointed to.
+     */
     public T current(){
         return dataGrid.get(x).get(y);
     }
 
+    /**
+     * @return moves one row down and returns the object pointed to.
+     */
     public T move_down(){
         x += 1;
 
@@ -72,6 +92,9 @@ public class UINavigationAdapter<T> {
         return current();
     }
 
+    /**
+     * @return moves one row up and returns the object pointed to.
+     */
     public T move_up(){
         x -= 1;
 
@@ -88,6 +111,9 @@ public class UINavigationAdapter<T> {
         return current();
     }
 
+    /**
+     * @return moves one column to the left and returns the object pointed to.
+     */
     public T move_left(){
         y -= 1;
         if (y == -1){
@@ -97,6 +123,9 @@ public class UINavigationAdapter<T> {
         return current();
     }
 
+    /**
+     * @return moves one column to the right and returns the object pointed to.
+     */
     public T move_right(){
         y += 1;
         if (y == dataGrid.get(x).size()){
