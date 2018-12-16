@@ -33,7 +33,7 @@ public class QuestionPellet extends RandomPellet {
     @Override
     public void setImage() {
 
-        image = new Image("assets/pellet_question.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+        image = new Image("assets/pellet_question.png",SPRITE_WIDTH,SPRITE_HEIGHT,true,true);
         this.type = TYPE.QUESTION_PELLET;
     }
 
