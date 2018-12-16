@@ -352,7 +352,7 @@ public class Game {
 
 				// collide with question pellet
 				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
-
+					changeAIBehaviour();
 					setUpTempGhosts((QuestionPellet) object);
 				}
 
