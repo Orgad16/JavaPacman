@@ -30,7 +30,7 @@ public class Game {
 	private Ghost ghost3;
 	//private Ghost ghost4;
 
-	ArrayList<TemporaryGhost> temporaryGhosts = new ArrayList<>(3);
+	ArrayList<TemporaryGhost> temporaryGhosts = new ArrayList<>(4);
 
 	//TODO: add temporary ghost
 	
@@ -144,12 +144,17 @@ public class Game {
         }
 
 		Random rnd = new Random();
-		for (int i=4; i<7; i++) {
+		for (int i=4; i<4 + q.getAnswers().size(); i++) {
 		    Pair<Integer,Integer> loc = locations.get(rnd.nextInt(locations.size()));
 
 			// type field should by between 2 and 4 -> set to i-2
-			// answer field should be between 0 and 2 -> set to i-4
-			TemporaryGhost temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET() ,loc.getValue() * TILE_SIZE + Y_OFFSET, board, i-2, i, q, i-4);
+			// answer field should be between 0 and 3 -> set to i-4
+			TemporaryGhost temp_ghost;
+			if (i < 7) {
+				temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET(), loc.getValue() * TILE_SIZE + Y_OFFSET, board, i - 2, i, q, i - 4);
+			} else {
+				temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET(), loc.getValue() * TILE_SIZE + Y_OFFSET, board, 4, i, q, i - 4);
+			}
 			characters.add(temp_ghost);
 			temporaryGhosts.add(temp_ghost);
 		}
@@ -277,11 +282,34 @@ public class Game {
 
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
+					int question_level = ((TemporaryGhost) character).getQuestion().getLevel();
 					if (((TemporaryGhost) character).isRightGhost()) {
 						//TODO: adjust the score based on the level of the question
-						score += 250;
+
+						switch (question_level) {
+							case 1:
+								score += 100;
+								break;
+							case 2:
+								score += 200;
+								break;
+							case 3:
+								score += 500;
+								break;
+						}
 					}
 					else {
+						switch (question_level) {
+							case 1:
+								score -= 250;
+								break;
+							case 2:
+								score -= 100;
+								break;
+							case 3:
+								score -= 50;
+								break;
+						}
 						pacman.playDeathAnim();
 					}
 					characters.removeAll(temporaryGhosts);

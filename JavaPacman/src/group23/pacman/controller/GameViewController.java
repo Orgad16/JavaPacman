@@ -287,25 +287,48 @@ public class GameViewController extends RootController implements JoystickManage
 
         // vbox to hold the ghosts and the answers
         VBox vBox = new VBox();
-        vBox.setSpacing(20);
+        vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
 
-        // hbox to hold the ghosts
-        HBox ghostsBox = new HBox();
-        ghostsBox.setAlignment(Pos.CENTER);
-        ghostsBox.setSpacing(250.0);
+        // hbox to hold the first answer with the ghost assigned to it
+        HBox firstHbox = new HBox();
+        firstHbox.setAlignment(Pos.CENTER_LEFT);
+        firstHbox.setSpacing(20);
 
-        // hbox to hold the answerd
-        HBox answersBox = new HBox();
-        answersBox.setSpacing(10);
+        // hbox to hold the second answer with the ghost assigned to it
+        HBox secondHbox = new HBox();
+        secondHbox.setAlignment(Pos.CENTER_LEFT);
+        secondHbox.setSpacing(20);
+
+        // hbox to hold the third answer with the ghost assigned to it
+        HBox thirdHbox = new HBox();
+        thirdHbox.setAlignment(Pos.CENTER_LEFT);
+        thirdHbox.setSpacing(20);
+
+        HBox fourthHbox = new HBox();
+        fourthHbox.setAlignment(Pos.CENTER_LEFT);
+        thirdHbox.setSpacing(20);
 
         // three buttons for the answers
-        ToggleButton answer1 = new ToggleButton();
-        answer1.getStyleClass().add("button-retro");
-        ToggleButton answer2 = new ToggleButton();
-        answer2.getStyleClass().add("button-retro");
-        ToggleButton answer3 = new ToggleButton();
-        answer3.getStyleClass().add("button-retro");
+        Label answer1 = new Label();
+        answer1.getStyleClass().add("label-retro");
+        answer1.setStyle("-fx-font-size: 18px");
+
+        Label answer2 = new Label();
+        answer2.getStyleClass().add("label-retro");
+        answer2.setStyle("-fx-font-size: 18px");
+
+        Label answer3 = new Label();
+        answer3.getStyleClass().add("label-retro");
+        answer3.setStyle("-fx-font-size: 18px");
+
+        Label answer4 = new Label();
+        answer4.getStyleClass().add("label-retro");
+        answer4.setStyle("-fx-font-size: 18px");
+
+        ToggleButton okBtn = new ToggleButton("Start Chasing");
+        okBtn.getStyleClass().add("button-retro");
+        okBtn.setAlignment(Pos.CENTER);
 
         // the answers for the question
         ArrayList<String> answers = q.getAnswers();
@@ -314,36 +337,43 @@ public class GameViewController extends RootController implements JoystickManage
         for (String answer : answers) {
 
             // set the image of the ghost
-            ImageView ghost = new ImageView(new Image("assets/Ghost/ghost" + index + "Down1.png"));
+            ImageView ghost = new ImageView(new Image("assets/Ghost/ghost" + index + "Right1.png"));
             ghost.setFitHeight(50.0);
             ghost.setFitWidth(50.0);
-            ghostsBox.getChildren().add(ghost);
 
             // set the button with the answer
             switch (btnIndex) {
                 case 1:
                     answer1.setText(answer);
+                    firstHbox.getChildren().addAll(ghost, answer1);
+                    vBox.getChildren().add(firstHbox);
                     break;
                 case 2:
                     answer2.setText(answer);
+                    secondHbox.getChildren().addAll(ghost, answer2);
+                    vBox.getChildren().add(secondHbox);
                     break;
                 case 3:
                     answer3.setText(answer);
+                    thirdHbox.getChildren().addAll(ghost, answer3);
+                    vBox.getChildren().add(thirdHbox);
                     break;
+                case 4:
+                    answer4.setText(answer);
+                    fourthHbox.getChildren().addAll(ghost, answer4);
+                    vBox.getChildren().add(fourthHbox);
             }
             index++;
             btnIndex++;
         }
 
-        answersBox.getChildren().addAll(answer1, answer2, answer3);
-
         // add the hboxs to the vBox container
-        vBox.getChildren().addAll(ghostsBox, answersBox);
+        vBox.getChildren().addAll(okBtn);
 
         dialogView.contentView.getChildren().add(vBox);
 
         currentDialogAdapter = new UINavigationAdapter<>();
-        currentDialogAdapter.addRow(answer1, answer2, answer3);
+        currentDialogAdapter.addRow(okBtn);
         currentDialogAdapter.move_right().setSelected(true);
 
         overlay.getChildren().add(dialogView);
