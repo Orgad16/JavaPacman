@@ -11,6 +11,63 @@ import java.util.Vector;
 
 /**
  * Created By Tony on 12/12/2018
+ *
+ * The sole purpose of this class is to manage the input from the physical joystick controllers we have.
+ * The joysticks are constructed of a simple joystick stick which can move up,down,left,right, as well as two buttons.
+ *
+ * In other words, each joystick can input only one of the following keys: up,down,left,right,one,two (6 inputs).
+ *
+ * The JoystickManager class, allows us, the developers, to register a joystick that is mapped to normal keyboard keys,
+ * and then have the ability to listen to it's input in a wrapping callback interface.
+ *
+ *
+ * For Example:
+ *
+ * Let's assume we have mapped the joystick we have to the following keyboard keys such that:
+ *
+ * Stick UP -> Arrow Key UP
+ * Stick DOWN -> Arrow Key DOWN
+ * Stick LEFT -> Arrow Key LEFT
+ * Stick RIGHT -> Arrow Key RIGHT
+ * Button ONE -> Enter
+ * Button TWO -> SHIFT
+ *
+ * We assume that this is the key-binding that was set-up for the joystick through 3rd party software.
+ *
+ * In order to have that joystick registered within the application we have to call the register method like so:
+ *
+ * <pre>
+ *     {@code
+ *      JoystickManager.shared.register(KeyCode.UP,
+ *                                      KeyCode.DOWN,
+ *                                      KeyCode.LEFT,
+ *                                      KeyCode.RIGHT,
+ *                                      KeyCode.ENTER,
+ *     }                                KeyCode.SHIFT);
+ * </pre>
+ *
+ * This method would return us a joystick id, which is unique to that specific joystick.
+ *
+ * We can then start listening to the events after we register the singleton instance as a handler:
+ *
+ * <pre>
+ *     {@code
+ *       primaryScene.setOnKeyPressed(JoystickManager.shared);
+ *     }
+ * </pre>
+ *
+ * Where @code{primaryScene} is our primary scene used in JavaFX.
+ *
+ * Finally, to start receiving events use the @code{subscribe} method:
+ *
+ * <pre>
+ *     {@code
+ *          JoystickManager.shared.subscribe(identifier, (joystickId, selectedKey) -> {
+ *              //do something with the selected key
+ *          });
+ *     }
+ * </pre>
+ *
  */
 public final class JoystickManager implements EventHandler<KeyEvent>{
 

@@ -66,6 +66,11 @@ public class UINavigationAdapter<T> {
         dataGrid.add(items);
     }
 
+    public void addRow(T[] otherElements){
+        Vector<T> items = new Vector<>(Arrays.asList(otherElements));
+        dataGrid.add(items);
+    }
+
     /**
      * @return returns the current object being pointed to.
      */
