@@ -542,5 +542,9 @@ public class Game {
 		return this.timer;
 	}
 
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 
 }

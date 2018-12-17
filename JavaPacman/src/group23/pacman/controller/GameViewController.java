@@ -87,9 +87,6 @@ public class GameViewController extends RootController implements JoystickManage
     private long holdTime;
     private long countDownTime;
 
-    /* Reference to the main app */
-    private MainApp mainApp;
-
     /* Paint to canvas */
     private GraphicsContext graphicsContext;
 
@@ -177,9 +174,10 @@ public class GameViewController extends RootController implements JoystickManage
 
         startCountdown("Starting game in");
 
+        updatePlayerName();
+
         startGame();
 
-        updatePlayerName();
     }
 
     @Override
@@ -542,14 +540,8 @@ public class GameViewController extends RootController implements JoystickManage
                 }
                 if (holdTimer.timedOut()) {
                     this.stop();
-					/* Calculate bonuses */
-                    int time = gameStateController.getTimer().getTimeRemaining();
-                    int lives = gameStateController.getGame().getPacman().getLives();
-                    int score = gameStateController.getGame().getIntScore();
-                    //mainApp.showResults(time,lives,score,gameStateController.getGame().getMap());
 
-                    //TODO: add method in MainApp to show the time, lives and score result
-                    //showResultGame(time, lives, score);
+                    showResultGame();
                 }
             }
         }.start();
@@ -698,24 +690,65 @@ public class GameViewController extends RootController implements JoystickManage
 		scoreLabel.setText(String.valueOf(game.getIntScore()));
     }
 
-    public void showResultGame(int time, int lives, int score) {
+    public void finalUpdate() {
+
+        graphicsContext.clearRect(0, 0, 1366, 768);
+        allGameStates[0].update();
+        //allGameStates[1].update();
+        draw(graphicsContext);
+    }
+
+    public void showResultGame() {
+
+        //finalUpdate();
 
         // init a dialog view for the result game status
         DialogView dialogView = new DialogView();
 
+        VBox containerVbox = VboxFactory(Pos.CENTER);
+        HBox hBox = null;
+
         // handle when the pacman won or lose the level
-        if (lives == 0) {
-            score += 100;
-            dialogView.titleLabel.setText("LEVEL CLEARED");
+
+        if (GameSettings.instance.getNumbrOfPlayers() > 1) {
+            // handle multiplayer
+            if (game.levelCleared() || (allGames[getOtherPlayer()] != null && allGames[getOtherPlayer()].levelCleared())) {
+                // level is cleared
+                game.setScore(game.getIntScore() + 100);
+                dialogView.titleLabel.setText("LEVEL CLEARED");
+                dialogView.titleLabel.setStyle("-fx-text-size:40; -fx-text-fill:green;");
+
+                // checking which player one and print
+                if (game.getIntScore() > allGames[getOtherPlayer()].getIntScore())
+                    dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(currentPlayerIndex) + " Won!");
+                else
+                    dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(getOtherPlayer()) + " Won!");
+            } else {
+                // failed level
+
+                // case there is no winner -> level failed
+                dialogView.titleLabel.setText("LEVEL FAILED");
+                dialogView.titleLabel.setStyle("-fx-text-size:40; -fx-text-fill:red;");
+                dialogView.descriptionLabel.setText(" ");
+
+            }
         } else {
-            dialogView.titleLabel.setText("LEVEL FAILED");
+            // handle one player
+            if (game.levelCleared()) {
+                // game level cleared
+
+
+            } else {
+                // failed level
+            }
         }
 
-        VBox vBox = showLevelResults(time, score);
+
+        // getting the game results for single and multiplayer
+        hBox = showLevelResults();
 
         // create an ok button to continue
-        ToggleButton okBtn = new ToggleButton("MENU");
-        okBtn.getStyleClass().add("button-retro");
+        ToggleButton okBtn = retroButtonFactory("MENU");
         okBtn.setAlignment(Pos.CENTER);
 
         // setup navigation adapter
@@ -723,115 +756,99 @@ public class GameViewController extends RootController implements JoystickManage
         currentDialogAdapter.addRow(okBtn);
         currentDialogAdapter.move_right().setSelected(true);
 
-        vBox.getChildren().add(okBtn);
+        // adding all element to the container
+        containerVbox.getChildren().addAll(hBox, okBtn);
 
-        dialogView.contentView.getChildren().add(vBox);
+        // adding the container into the dialog
+        dialogView.contentView.getChildren().add(containerVbox);
 
+        // show and set the overlay that cover the map
         overlay.getChildren().add(dialogView);
         overlay.setVisible(true);
     }
 
+
     // show the game result after winning the level
-    public VBox showLevelResults(int time, int score) {
+    public HBox showLevelResults() {
 
+        HBox containerHbox = HboxFactory(Pos.CENTER);
 
-        // constants for spacing and styles
-        int hBoxSpacing = 35;
-        int vBoxSpacing = 20;
-
-        // container for the hBoxs and the ok button
-        VBox containerVbox = new VBox();
-        containerVbox.setAlignment(Pos.CENTER);
-        containerVbox.setSpacing(25);
-
-        // constructing the dialog view
-        HBox hBox = new HBox();
-        hBox.setSpacing(hBoxSpacing);
-        hBox.setAlignment(Pos.CENTER);
-
-        // construct the name column with hBox
-        VBox nameVbox = new VBox();
-        nameVbox.setSpacing(vBoxSpacing);
-        nameVbox.setAlignment(Pos.CENTER_LEFT);
-
-        // constant label for the name column
+        // -------------------------------------------------------------------
+        // construct the first column
+        // -------------------------------------------------------------------
+        VBox firstColumnContainer = VboxFactory(Pos.CENTER);
         Label constNameLabel = new Label("NAME");
-        Label playerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(currentPlayerIndex));
+        Label firstPlayerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(currentPlayerIndex));
 
-        // setting some styles to labels
-        playerNameLabel.getStyleClass().add("label-retro");
-        playerNameLabel.setStyle("-fx-font-size: 20px");
-        //playerNameLabel.setStyle("-fx-text-fill: red");
-        constNameLabel.getStyleClass().add("label-retro");
-        constNameLabel.setStyle("-fx-font-size: 18px");
-        //constNameLabel.setStyle("-fx-text-fill: red");
+        // check if we have multiplayer scoreboard
+        if (GameSettings.instance.getNumbrOfPlayers() > 1) {
 
-        // adding the labels to the hBox
-        nameVbox.getChildren().addAll(constNameLabel, playerNameLabel);
+            // setting the container with the other player
+            Label secondPlayerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(getOtherPlayer()));
+            firstColumnContainer = insertElementsIntoConstainer(firstColumnContainer, constNameLabel, firstPlayerNameLabel, secondPlayerNameLabel);
+        } else {
 
-        // construct the score column with hBox
-        VBox scoreVbox = new VBox();
-        scoreVbox.setSpacing(vBoxSpacing);
-        scoreVbox.setAlignment(Pos.CENTER_LEFT);
+            // only one player is playing
+            firstColumnContainer = insertElementsIntoConstainer(firstColumnContainer, constNameLabel, firstPlayerNameLabel);
+        }
+        containerHbox.getChildren().add(firstColumnContainer);
 
+
+        // -------------------------------------------------------------------
+        // construct the second column
+        // -------------------------------------------------------------------
+        VBox secondColumnContainer = VboxFactory(Pos.CENTER);
         Label constScoreLabel = new Label("SCORE");
-        Label playerScoreLabel = new Label(String.valueOf(score));
+        constScoreLabel.setTextFill(Color.YELLOW);
+        Label firstPlayerScoreLabel = new Label(String.valueOf(game.getIntScore()));
+        if (GameSettings.instance.getNumbrOfPlayers() > 1) {
+            Label secondplayerScoreLabel = new Label(String.valueOf(allGames[getOtherPlayer()].getIntScore()));
+            secondColumnContainer = insertElementsIntoConstainer(secondColumnContainer, constScoreLabel, firstPlayerScoreLabel, secondplayerScoreLabel);
+        } else{
+            secondColumnContainer = insertElementsIntoConstainer(secondColumnContainer, constScoreLabel, firstPlayerScoreLabel);
+        }
+        containerHbox.getChildren().add(secondColumnContainer);
 
-        // setting some styles to labels
-        playerScoreLabel.getStyleClass().add("label-retro");
-        playerScoreLabel.setStyle("-fx-font-size: 20px");
-        constScoreLabel.getStyleClass().add("label-retro");
-        constScoreLabel.setStyle("-fx-font-size: 18px");
 
-        // constant label for the score column
-        scoreVbox.getChildren().addAll(constScoreLabel, playerScoreLabel);
-
-        // construct the time column with hBox
-        VBox timeVbox = new VBox();
-        timeVbox.setSpacing(vBoxSpacing);
-        timeVbox.setAlignment(Pos.CENTER_LEFT);
-
+        // -------------------------------------------------------------------
+        // construct the third column
+        // -------------------------------------------------------------------
+        VBox thirdColumnContainer = VboxFactory(Pos.CENTER);
         Label constTimeLabel = new Label("TIME");
-        Label playerTimeLabel = new Label(getStringFormatedTimer(time));
+        constTimeLabel.setTextFill(Color.YELLOW);
+        Label firstPlayerTimeLabel = new Label(getStringFormatedTimer(game.getTimer().getTimeRemaining()));
+        if (GameSettings.instance.getNumbrOfPlayers() > 1) {
+            Label secondplayerTimeLabel = new Label(getStringFormatedTimer(allGames[getOtherPlayer()].getTimer().getTimeRemaining()));
+            thirdColumnContainer = insertElementsIntoConstainer(thirdColumnContainer, constTimeLabel, firstPlayerTimeLabel, secondplayerTimeLabel);
+        } else {
+            thirdColumnContainer = insertElementsIntoConstainer(thirdColumnContainer, constTimeLabel, firstPlayerTimeLabel);
+        }
+        containerHbox.getChildren().add(thirdColumnContainer);
 
-        // setting some styles to labels
-        constTimeLabel.getStyleClass().add("label-retro");
-        constTimeLabel.setStyle("-fx-font-size: 20px");
-        playerTimeLabel.getStyleClass().add("label-retro");
-        playerTimeLabel.setStyle("-fx-font-size: 18px");
 
-        // constant label for the time column
-        timeVbox.getChildren().addAll(constTimeLabel, playerTimeLabel);
-
-        // construct the map column with hBox
-        VBox dateVbox = new VBox();
-        dateVbox.setSpacing(vBoxSpacing);
-        dateVbox.setAlignment(Pos.CENTER_LEFT);
-
-        Label constDateLabel = new Label("DATE");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Label playerDateLabel = new Label(format.format(new Date()));
-
-        // setting some styles to labels
-        constDateLabel.getStyleClass().add("label-retro");
-        constDateLabel.setStyle("-fx-font-size: 20px");
-        playerDateLabel.getStyleClass().add("label-retro");
-        playerDateLabel.setStyle("-fx-font-size: 18px");
-
-        // constant label for the map column
-        dateVbox.getChildren().addAll(constDateLabel, playerDateLabel);
-
-        // adding the hBoxs to the vBox container
-        hBox.getChildren().addAll(nameVbox, scoreVbox, timeVbox, dateVbox);
-
-        containerVbox.getChildren().addAll(hBox);
-
-//        dialogView.contentView.getChildren().add(containerVbox);
-
-        return containerVbox;
+        return containerHbox;
 
     }
 
+    public VBox insertElementsIntoConstainer(VBox Vcontainer, Label...labels) {
+
+        int index = 0;
+        for (Label label : labels) {
+            if (index == 0) {
+                label.setStyle("-fx-font-size: 20px; -fx-text-fill:yellow;");
+            } else {
+                label.setStyle("-fx-font-size: 18px;");
+            }
+            label.getStyleClass().add("label-retro");
+            index++;
+        }
+
+        for (Label label : labels) {
+            Vcontainer.getChildren().add(label);
+        }
+
+        return Vcontainer;
+    }
 
 
     public ToggleButton retroButtonFactory(String text) {
@@ -844,6 +861,20 @@ public class GameViewController extends RootController implements JoystickManage
         Label label = new Label(text);
         label.setStyle("-fx-font-size:" + fontSize + "px;" + (fontColor == null ? "" : "-fx-text-fill:" + fontColor + ";"));
         return label;
+    }
+
+    public VBox VboxFactory(Pos position) {
+        VBox vBox = new VBox();
+        vBox.setSpacing(20);
+        vBox.setAlignment(position);
+        return vBox;
+    }
+
+    public HBox HboxFactory(Pos position) {
+        HBox hBox = new HBox();
+        hBox.setSpacing(35);
+        hBox.setAlignment(position);
+        return hBox;
     }
 
     public void handleSwitch(boolean isDone, boolean timeOut) {
@@ -860,7 +891,7 @@ public class GameViewController extends RootController implements JoystickManage
             if (!playersStatus[getOtherPlayer()]) {
 
                 // return because the other player is dead/done -> go the leaderboard
-                showScoreBoard();
+                showResultGame();
                 return;
             }
             currentPlayerIndex = getOtherPlayer();
@@ -875,7 +906,7 @@ public class GameViewController extends RootController implements JoystickManage
                 currentPlayerIndex = getOtherPlayer();
             } else {
                 // the other player is done/dead and the timer ran out -> go to leaderboard
-                showScoreBoard();
+                showResultGame();
                 return;
             }
         }
@@ -910,65 +941,6 @@ public class GameViewController extends RootController implements JoystickManage
             return 1;
     }
 
-    public void showScoreBoard() {
-
-        // TODO: show score board of both players
-        DialogView dialogView = new DialogView();
-
-        VBox container = new VBox();
-        container.setAlignment(Pos.CENTER);
-        container.setSpacing(20);
-
-        VBox firstPlayerVbox = showLevelResults(allGames[currentPlayerIndex].getTimer().getTimeRemaining(), allGames[currentPlayerIndex].getIntScore());
-
-        currentPlayerIndex = getOtherPlayer();
-        // constant label for the name column
-        Label playerNameLabel = new Label(GameSettings.instance.getPlayerNames().get(currentPlayerIndex));
-        Label playerScoreLabel = new Label(String.valueOf(allGames[currentPlayerIndex].getIntScore()));
-        Label playerTimeLabel = new Label(getStringFormatedTimer(allGames[currentPlayerIndex].getTimer().getTimeRemaining()));
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Label playerDateLabel = new Label(format.format(new Date()));
-
-        HBox namePlayerVbox = new HBox();
-        //namePlayerVbox.setSpacing(35);
-
-        playerNameLabel.getStyleClass().add("label-retro");
-        playerNameLabel.setStyle("-fx-font-size: 18px");
-        namePlayerVbox.getChildren().add(playerNameLabel);
-
-        HBox scorePlayerVbox = new HBox();
-        //scorePlayerVbox.setSpacing(35);
-        scorePlayerVbox.setAlignment(Pos.CENTER);
-        playerScoreLabel.getStyleClass().add("label-retro");
-        playerScoreLabel.setStyle("-fx-font-size: 18px");
-        namePlayerVbox.getChildren().add(playerScoreLabel);
-
-        HBox timePlayerVbox = new HBox();
-        //timePlayerVbox.setSpacing(35);
-        timePlayerVbox.setAlignment(Pos.CENTER);
-        playerTimeLabel.getStyleClass().add("label-retro");
-        playerTimeLabel.setStyle("-fx-font-size: 18px");
-        timePlayerVbox.getChildren().add(playerTimeLabel);
-
-        HBox datePlayerVbox = new HBox();
-        //datePlayerVbox.setSpacing(35);
-        datePlayerVbox.setAlignment(Pos.CENTER);
-        playerDateLabel.getStyleClass().add("label-retro");
-        playerDateLabel.setStyle("-fx-font-size: 18px");
-        timePlayerVbox.getChildren().add(playerDateLabel);
-
-        firstPlayerVbox.getChildren().addAll(namePlayerVbox, scorePlayerVbox, timePlayerVbox, datePlayerVbox);
-
-        container.getChildren().addAll(firstPlayerVbox);
-
-        dialogView.contentView.getChildren().addAll(container);
-
-        overlay.getChildren().add(dialogView);
-        overlay.setVisible(true);
-
-        currentPlayerIndex = getOtherPlayer();
-    }
 
 
 }
