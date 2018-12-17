@@ -114,7 +114,7 @@ public class GameViewController extends RootController implements JoystickManage
 
     private boolean timerPaused;
 
-    private boolean duringQuestion = false;
+    public static boolean duringQuestion = false;
 
     // adapter used for joystick navigation
     UINavigationAdapter<ToggleButton> currentDialogAdapter = null;
@@ -279,25 +279,30 @@ public class GameViewController extends RootController implements JoystickManage
         gameStateController.getGame().getGhost3().draw(graphicsContext);
 
         gameStateController.getGame().getPoisonPellet().draw(graphicsContext);
-        gameStateController.getGame().getQuestionPellet().draw(graphicsContext);
 
         ArrayList<TemporaryGhost> tempGhosts = gameStateController.getGame().getTempGhost();
+        if (!duringQuestion) {
+            // handle not during question situation
 
-        // checking if we encountered a question pellet
-        if (tempGhosts.size() > 0) {
+            // draw the pellets
+            gameStateController.getGame().getQuestionPellet().draw(graphicsContext);
 
-            // setting up the question view
-            if (!overlay.isVisible() && !duringQuestion)
+            // set up question view with the ghosts
+            if (tempGhosts.size() > 0)
                 setUpQuestionView(tempGhosts.get(0).getQuestion());
 
-            // setting up the temp ghosts
+        } else {
+            // handle during question situation
             for (TemporaryGhost tempGhost : tempGhosts) {
                 tempGhost.draw(graphicsContext);
             }
         }
-        else {
+
+        if (tempGhosts.size() == 0) {
             duringQuestion = false;
         }
+
+
     }
 
 

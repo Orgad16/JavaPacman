@@ -1,5 +1,7 @@
 package group23.pacman.model;
 
+import group23.pacman.controller.GameStateController;
+import group23.pacman.controller.GameViewController;
 import group23.pacman.model.Pacman.STATE;
 import group23.pacman.system.ScoreSetting;
 import group23.pacman.system.SysData;
@@ -218,9 +220,11 @@ public class Game {
         poisonPellet.update(emptySpaces);
         objects.add(poisonPellet);
         removePelletFromEmptySpaces(poisonPellet);
-        questionPellet.update(emptySpaces);
-        objects.add(questionPellet);
-		removePelletFromEmptySpaces(questionPellet);
+        if (!GameViewController.duringQuestion) {
+			questionPellet.update(emptySpaces);
+			objects.add(questionPellet);
+			removePelletFromEmptySpaces(questionPellet);
+		}
 		//TODO: remove the gasZone
 	}
 
