@@ -220,6 +220,8 @@ public class Game {
         poisonPellet.update(emptySpaces);
         objects.add(poisonPellet);
         removePelletFromEmptySpaces(poisonPellet);
+
+        // when we are chasing temp ghosts we will not see question pellets
         if (!GameViewController.duringQuestion) {
 			questionPellet.update(emptySpaces);
 			objects.add(questionPellet);
@@ -324,6 +326,8 @@ public class Game {
 								break;
 						}
 						pacman.playDeathAnim();
+
+						// no longer chasing temp ghosts so we can see question pellets
 						GameViewController.duringQuestion = false;
 					}
 					characters.removeAll(temporaryGhosts);

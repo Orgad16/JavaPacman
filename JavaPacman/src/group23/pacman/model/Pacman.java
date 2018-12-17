@@ -94,7 +94,7 @@ public class Pacman extends GameObject implements MovingCharacter {
 		this.vector = 'S';
 		this.queuedDirection = 'S';
 
-		
+
 	}
 
 	

@@ -138,10 +138,13 @@ public class GameViewController extends RootController implements JoystickManage
 
         } else {
 
+            // init games and game state controllers for the players
             allGames[0] = new Game(selectedMap, 1, 0, 0);
             allGames[1] = new Game(selectedMap, 1, 0,0);
             allGameStates[0] = new GameStateController(this, allGames[0]);
             allGameStates[1] = new GameStateController(this, allGames[1]);
+
+            // assign the current player to be the first one to play
             game = allGames[currentPlayer];
             gameStateController = allGameStates[currentPlayer];
             gameStateController.setTimer(new Timer(initialMultiTimer));
@@ -170,12 +173,16 @@ public class GameViewController extends RootController implements JoystickManage
 
         gameStateController.update();
 
+        // draw the characters and the objects of the game
         draw(graphicsContext);
 
+        // showing countdown for the player to get ready
         startCountdown("Starting game in");
 
+        // updating the name label of the current player
         updatePlayerName();
 
+        // starting the game
         startGame();
 
     }
@@ -246,6 +253,7 @@ public class GameViewController extends RootController implements JoystickManage
                         }
                     }
 
+                    // if the question view is shown and we hit play -> resume game
                     if (duringQuestion && !this.running) {
                         resumeGame();
                     }
@@ -300,6 +308,7 @@ public class GameViewController extends RootController implements JoystickManage
             }
         }
 
+        // if there are no temp ghosts -> we ran into temp ghost -> not answering question
         if (tempGhosts.size() == 0) {
             duringQuestion = false;
         }
@@ -413,6 +422,7 @@ public class GameViewController extends RootController implements JoystickManage
         // to exit the question view with a key
         duringQuestion = true;
 
+        // stoping the game
         this.running = false;
 
     }
@@ -465,22 +475,9 @@ public class GameViewController extends RootController implements JoystickManage
         return (!this.running);
     }
 
-    public void toggleState() {
-
-		/* Can only toggle if not counting down and exit confirmation is not dispalyed */
-        if (!countingDown && !gameStateController.escapePressed()) {
-			/* When trying to pause,draw pause panel*/
-            if (this.running == true) {
-                pauseGame();
-            }
-            else {
-                resumeGame();
-            }
-        }
-    }
-
     public void pauseGame() {
 
+        // creating a dialog box and enter exit question and confirm
         DialogView dialogView = new DialogView();
         dialogView.titleLabel.setText("Pause");
         dialogView.descriptionLabel.setText("Exit game?");
@@ -502,6 +499,7 @@ public class GameViewController extends RootController implements JoystickManage
         currentDialogAdapter.addRow(exitBtn,resumeBtn);
         currentDialogAdapter.move_right().setSelected(true);
 
+        // add to overlay the dialog and show
         overlay.getChildren().add(dialogView);
         overlay.setVisible(true);
 
@@ -919,16 +917,30 @@ public class GameViewController extends RootController implements JoystickManage
     }
 
     public void switchPlayer() {
+
+        // stoping the current game
         animationLoop.stop();
         game = allGames[currentPlayerIndex];
         gameStateController = allGameStates[currentPlayerIndex];
         gameStateController.setTimer(new Timer(initialMultiTimer));
+
+        // updating the score
         updateScore();
+
+        // updating player's life
         showLivesLeft(game.getPacman().getLives());
+
+        // update new timer
         updateTimer();
+
+        // update player's name
         updatePlayerName();
+
+        // setting the countdown with the current player
         String playerName = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
         startCountdown(playerName + " game is starting in");
+
+        // starting the game
         animationLoop.start();
     }
 
