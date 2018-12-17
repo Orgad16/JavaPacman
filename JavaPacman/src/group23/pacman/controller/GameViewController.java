@@ -716,7 +716,7 @@ public class GameViewController extends RootController implements JoystickManage
                 // level is cleared
                 game.setScore(game.getIntScore() + 100);
                 dialogView.titleLabel.setText("LEVEL CLEARED");
-                dialogView.titleLabel.setStyle("-fx-text-size:40; -fx-text-fill:green;");
+                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:green;");
 
                 // checking which player one and print
                 if (game.getIntScore() > allGames[getOtherPlayer()].getIntScore())
@@ -725,10 +725,8 @@ public class GameViewController extends RootController implements JoystickManage
                     dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(getOtherPlayer()) + " Won!");
             } else {
                 // failed level
-
-                // case there is no winner -> level failed
                 dialogView.titleLabel.setText("LEVEL FAILED");
-                dialogView.titleLabel.setStyle("-fx-text-size:40; -fx-text-fill:red;");
+                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:red;");
                 dialogView.descriptionLabel.setText(" ");
 
             }
@@ -736,10 +734,18 @@ public class GameViewController extends RootController implements JoystickManage
             // handle one player
             if (game.levelCleared()) {
                 // game level cleared
+                game.setScore(game.getIntScore() + 100);
+                dialogView.titleLabel.setText("LEVEL CLEARED");
+                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:green;");
 
+                dialogView.descriptionLabel.setText("WON THE LEVEL!");
 
             } else {
                 // failed level
+
+                dialogView.titleLabel.setText("LEVEL FAILED");
+                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:red;");
+                dialogView.descriptionLabel.setText(" ");
             }
         }
 
@@ -877,12 +883,12 @@ public class GameViewController extends RootController implements JoystickManage
         return hBox;
     }
 
-    public void handleSwitch(boolean isDone, boolean timeOut) {
+    public int handleSwitch(boolean isDone, boolean timeOut) {
 
         // check number of players in game settings
         int numberOfPlayers = GameSettings.instance.getNumbrOfPlayers();
 
-        if (numberOfPlayers == 1) { return; }
+        if (numberOfPlayers == 1) { return 1; }
 
         // if the player cleared or failed the level
         if (isDone) {
@@ -892,7 +898,7 @@ public class GameViewController extends RootController implements JoystickManage
 
                 // return because the other player is dead/done -> go the leaderboard
                 showResultGame();
-                return;
+                return 2;
             }
             currentPlayerIndex = getOtherPlayer();
 
@@ -901,16 +907,13 @@ public class GameViewController extends RootController implements JoystickManage
         }
 
         // if the timer (of 40 secs) ran out
-        if (timeOut) {
-            if (playersStatus[getOtherPlayer()]) {
+        if (timeOut)
+            if (playersStatus[getOtherPlayer()])
                 currentPlayerIndex = getOtherPlayer();
-            } else {
-                // the other player is done/dead and the timer ran out -> go to leaderboard
-                showResultGame();
-                return;
-            }
-        }
+
         switchPlayer();
+
+        return 2;
 
     }
 

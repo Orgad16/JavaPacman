@@ -72,8 +72,9 @@ public class GameStateController {
 				gameViewController.showLivesLeft(pacmanLives);
 				gameViewController.stopGame();
 				gameOver = true;
-				gameViewController.handleSwitch(true, false);
-				gameViewController.showGameEnd();
+				int case1 = gameViewController.handleSwitch(true, false);
+				if (case1 == 1)
+					gameViewController.showGameEnd();
 			}
 
 			/* Otherwise, just show number of lives to the screen */
@@ -86,8 +87,9 @@ public class GameStateController {
 		}
 		else if (game.levelCleared()) {
 			levelCleared = true;
-			gameViewController.handleSwitch(true, false);
-			gameViewController.showGameEnd();
+			int case2 = gameViewController.handleSwitch(true, false);
+			if (case2 == 1)
+				gameViewController.showGameEnd();
 		}
 
 	}
