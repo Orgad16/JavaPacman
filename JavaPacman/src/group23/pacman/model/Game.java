@@ -216,8 +216,10 @@ public class Game {
 		updateTempGhostsOnBoard();
 		gasZone.update();
         poisonPellet.update(emptySpaces);
+        objects.add(poisonPellet);
         removePelletFromEmptySpaces(poisonPellet);
         questionPellet.update(emptySpaces);
+        objects.add(questionPellet);
 		removePelletFromEmptySpaces(questionPellet);
 		//TODO: remove the gasZone
 	}
@@ -354,6 +356,7 @@ public class Game {
 				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
 					changeAIBehaviour();
 					setUpTempGhosts((QuestionPellet) object);
+					questionPellet.stopDrawing();
 				}
 
 				// collide with poison pellet
@@ -546,5 +549,7 @@ public class Game {
 		this.score = score;
 	}
 
-
+	public QuestionPellet getQuestionPellet() {
+		return questionPellet;
+	}
 }

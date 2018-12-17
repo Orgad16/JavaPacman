@@ -253,7 +253,7 @@ public class GameViewController extends RootController implements JoystickManage
                     break;
                 case TWO:
                     // pause game
-                    if (running)
+                    if (running && game.getPacman().getState() != Pacman.STATE.DEATH_ANIMATION && game.getPacman().getState() != Pacman.STATE.DEAD)
                         pauseGame();
                     break;
             }
@@ -277,6 +277,9 @@ public class GameViewController extends RootController implements JoystickManage
         gameStateController.getGame().getGhost().draw(graphicsContext);
         gameStateController.getGame().getGhost2().draw(graphicsContext);
         gameStateController.getGame().getGhost3().draw(graphicsContext);
+
+        gameStateController.getGame().getPoisonPellet().draw(graphicsContext);
+        gameStateController.getGame().getQuestionPellet().draw(graphicsContext);
 
         ArrayList<TemporaryGhost> tempGhosts = gameStateController.getGame().getTempGhost();
 
@@ -690,17 +693,8 @@ public class GameViewController extends RootController implements JoystickManage
 		scoreLabel.setText(String.valueOf(game.getIntScore()));
     }
 
-    public void finalUpdate() {
-
-        graphicsContext.clearRect(0, 0, 1366, 768);
-        allGameStates[0].update();
-        //allGameStates[1].update();
-        draw(graphicsContext);
-    }
 
     public void showResultGame() {
-
-        //finalUpdate();
 
         // init a dialog view for the result game status
         DialogView dialogView = new DialogView();
@@ -716,7 +710,7 @@ public class GameViewController extends RootController implements JoystickManage
                 // level is cleared
                 game.setScore(game.getIntScore() + 100);
                 dialogView.titleLabel.setText("LEVEL CLEARED");
-                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:green;");
+                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:green;");
 
                 // checking which player one and print
                 if (game.getIntScore() > allGames[getOtherPlayer()].getIntScore())
@@ -726,7 +720,7 @@ public class GameViewController extends RootController implements JoystickManage
             } else {
                 // failed level
                 dialogView.titleLabel.setText("LEVEL FAILED");
-                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:red;");
+                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:red;");
                 dialogView.descriptionLabel.setText(" ");
 
             }
@@ -736,7 +730,7 @@ public class GameViewController extends RootController implements JoystickManage
                 // game level cleared
                 game.setScore(game.getIntScore() + 100);
                 dialogView.titleLabel.setText("LEVEL CLEARED");
-                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:green;");
+                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:green;");
 
                 dialogView.descriptionLabel.setText("WON THE LEVEL!");
 
@@ -744,7 +738,7 @@ public class GameViewController extends RootController implements JoystickManage
                 // failed level
 
                 dialogView.titleLabel.setText("LEVEL FAILED");
-                dialogView.titleLabel.setStyle("-fx-text-size:40px; -fx-text-fill:red;");
+                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:red;");
                 dialogView.descriptionLabel.setText(" ");
             }
         }

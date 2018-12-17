@@ -38,7 +38,7 @@ public class QuestionPellet extends RandomPellet {
     }
 
     public Question getQuestion() {
-        return questions.remove(new Random().nextInt(questions.size()));
+        return questions.get(new Random().nextInt(questions.size()));
     }
 
 

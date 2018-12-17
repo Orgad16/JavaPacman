@@ -156,6 +156,7 @@ public class Pacman extends GameObject implements MovingCharacter {
     	
     	this.whip.endAnim();
     	this.state = STATE.DEATH_ANIMATION;
+
     	
     }
 

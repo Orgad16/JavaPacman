@@ -4,13 +4,19 @@ import javafx.scene.image.Image;
 
 public class PoisonPellet extends RandomPellet {
 
+
+
     public PoisonPellet(int x, int y) {
         super(x, y);
     }
 
     @Override
     public boolean shouldShowPellet(Timer timer) {
-        return timer.getTimeRemaining()%10 == 0  && timer.getTimeRemaining() != 120;
+        System.out.println(timer.getTimeRemaining());
+        boolean boo = timer.getTimeRemaining() != 120;
+        System.out.println(boo);
+        return boo;
+
     }
 
     @Override
@@ -27,6 +33,8 @@ public class PoisonPellet extends RandomPellet {
     public void setImage() {
         image = new Image("assets/pellet_poison.png", SPRITE_WIDTH, SPRITE_HEIGHT, true, true);
     }
+
+
 }
 
 

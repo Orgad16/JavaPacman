@@ -11,6 +11,10 @@ import java.util.Random;
  */
 public abstract class RandomPellet extends Pellet{
 
+    public static int X_OFFSET(){
+        return (Board.canvasWidth - (75 * 10)) / 2;
+    }
+
     private Random rand;
 
     /* Timer */
@@ -50,25 +54,38 @@ public abstract class RandomPellet extends Pellet{
     public void update(ArrayList<GameObject> emptySpaces) {
 
         /* Every 15 seconds, a gas zone will appear in a random area of the map */
-        if (shouldShowPellet(spawnTimer) && !drawCandy ){
+        // giving the pacman 8 second to clear some candies before placing poison and question candies
+        if (spawnTimer.getTimeRemaining() < 118 && spawnTimer.getTimeRemaining()%5 == 0 && !drawCandy){
+            System.out.println(spawnTimer.getTimeRemaining());
+            System.out.println(drawCandy);
             /*Random coordinates for poison candy*/
             if (emptySpaces.isEmpty()) return;
 
             int rnd = rand.nextInt(emptySpaces.size());
-            int newX = (int) emptySpaces.get(rnd).hitBox.getX();
-            int newY = (int) emptySpaces.get(rnd).hitBox.getY();
 
-            x = (newX );
-            y = (newY );
+            hitBox = emptySpaces.get(rnd).hitBox;
+
+            int newX = (int) hitBox.getX();
+            int newY = (int) hitBox.getY();
+
+            x = (newX);
+            y = (newY);
+
+            System.out.println("x" + x);
+            System.out.println("y" + y);
 
             // update hitbox
-            hitBox = emptySpaces.get(rnd).hitBox;
+
+            System.out.println("hit x" + hitBox.getX());
+            System.out.println("hit y" + hitBox.getY());
+//            hitBox.setX(x);
+//            hitBox.setY(y);
             drawCandy=true;
             /* Gas zone lasts for 8 seconds */
             objectTime = spawnTimer.getTimeRemaining() - appearForSeconds();
 
-        }
-        if (drawCandy) {
+
+        } else if (drawCandy) {
             if (spawnTimer.getTimeRemaining() <= objectTime) {
                 stopDrawing();
             }
@@ -90,7 +107,9 @@ public abstract class RandomPellet extends Pellet{
                 spawnTimer.countDown(1);
                 time = System.currentTimeMillis();
             }
+            //time = System.currentTimeMillis();
         }
     }
+
 
 }
