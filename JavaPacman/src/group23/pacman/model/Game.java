@@ -324,6 +324,7 @@ public class Game {
 								break;
 						}
 						pacman.playDeathAnim();
+						GameViewController.duringQuestion = false;
 					}
 					characters.removeAll(temporaryGhosts);
 					temporaryGhosts.removeAll(temporaryGhosts);
