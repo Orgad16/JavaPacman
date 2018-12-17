@@ -822,9 +822,9 @@ public class GameViewController extends RootController implements JoystickManage
         VBox thirdColumnContainer = VboxFactory(Pos.CENTER);
         Label constTimeLabel = new Label("TIME");
         constTimeLabel.setTextFill(Color.YELLOW);
-        Label firstPlayerTimeLabel = new Label(getStringFormatedTimer(game.getTimer().getTimeRemaining()));
+        Label firstPlayerTimeLabel = new Label(getStringFormatedTimer(120-gameStateController.getTimer().getTimeRemaining()));
         if (GameSettings.instance.getNumbrOfPlayers() > 1) {
-            Label secondplayerTimeLabel = new Label(getStringFormatedTimer(allGames[getOtherPlayer()].getTimer().getTimeRemaining()));
+            Label secondplayerTimeLabel = new Label(getStringFormatedTimer(allGameStates[getOtherPlayer()].getTimer().getTimeRemaining()));
             thirdColumnContainer = insertElementsIntoConstainer(thirdColumnContainer, constTimeLabel, firstPlayerTimeLabel, secondplayerTimeLabel);
         } else {
             thirdColumnContainer = insertElementsIntoConstainer(thirdColumnContainer, constTimeLabel, firstPlayerTimeLabel);

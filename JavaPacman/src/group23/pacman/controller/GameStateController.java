@@ -70,6 +70,10 @@ public class GameStateController {
 			if (game.getPacman().getLives() == 0) {
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
+
+				int score = game.getIntScore();
+				int time = game.getTimer().getTimeRemaining();
+
 				gameViewController.stopGame();
 				gameOver = true;
 				int case1 = gameViewController.handleSwitch(true, false);
