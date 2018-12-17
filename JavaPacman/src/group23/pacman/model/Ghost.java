@@ -78,7 +78,10 @@ public class Ghost extends GameObject implements MovingCharacter {
 			case 6:
 				this.ghost = "ghost6";
 				break;
-			default :
+			case 7 :
+				this.ghost = "ghost7";
+				break;
+			default:
 				this.ghost = "ghost1";
 				break;
 		}

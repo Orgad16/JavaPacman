@@ -5,11 +5,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import ui.UIView?>
+<?import javafx.geometry.Insets?>
 <UIView fx:id="root" prefHeight="400" prefWidth="600" stylesheets="@../../../assets/css/main_style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
 
     <AnchorPane>
         <HBox spacing="30" alignment="CENTER" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-            <StackPane>
+            <StackPane HBox.hgrow="ALWAYS">
 
                 <!--Maze Canvas: contains walls and background-->
                 <Canvas fx:id="maze_canvas" width="768" height="768" />
@@ -18,7 +19,10 @@
                 <Canvas fx:id="game_canvas" width="768" height="768"/>
 
             </StackPane>
-            <VBox HBox.hgrow="ALWAYS" spacing="100" alignment="CENTER">
+            <VBox spacing="100" alignment="CENTER" maxWidth="350">
+                <padding>
+                    <Insets right="100"/>
+                </padding>
                 <Label fx:id="scoreLabel" styleClass="label-retro" style="-fx-font-size: 40px;" text="0"/>
                 <HBox alignment="CENTER">
                     <ImageView fx:id="lifeImage" fitHeight="50.0" fitWidth="50.0"/>
