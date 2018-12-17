@@ -285,7 +285,9 @@ public class GameViewController extends RootController implements JoystickManage
             // handle not during question situation
 
             // draw the pellets
-            gameStateController.getGame().getQuestionPellet().draw(graphicsContext);
+            if (tempGhosts.size() == 0) {
+                gameStateController.getGame().getQuestionPellet().draw(graphicsContext);
+            }
 
             // set up question view with the ghosts
             if (tempGhosts.size() > 0)

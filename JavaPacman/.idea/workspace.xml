@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="20019165-d1b7-4601-986f-f8a664e0bb7c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/model/Game.java" afterPath="$PROJECT_DIR$/src/group23/pacman/model/Game.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -119,8 +118,8 @@
       <file leaf-file-name="GameViewController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="291" column="67" lean-forward="true" selection-start-line="291" selection-start-column="67" selection-end-line="291" selection-end-column="67" />
+            <state relative-caret-position="229">
+              <caret line="289" column="13" lean-forward="false" selection-start-line="289" selection-start-column="13" selection-end-line="289" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -1176,8 +1175,8 @@ locations</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="291" column="67" lean-forward="true" selection-start-line="291" selection-start-column="67" selection-end-line="291" selection-end-column="67" />
+        <state relative-caret-position="229">
+          <caret line="289" column="13" lean-forward="false" selection-start-line="289" selection-start-column="13" selection-end-line="289" selection-end-column="13" />
           <folding />
         </state>
       </provider>
