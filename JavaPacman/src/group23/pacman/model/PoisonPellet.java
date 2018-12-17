@@ -12,9 +12,7 @@ public class PoisonPellet extends RandomPellet {
 
     @Override
     public boolean shouldShowPellet(Timer timer) {
-        System.out.println(timer.getTimeRemaining());
         boolean boo = timer.getTimeRemaining()%10 == 0 && timer.getTimeRemaining() != 120;
-        System.out.println(boo);
         return boo;
 
     }
