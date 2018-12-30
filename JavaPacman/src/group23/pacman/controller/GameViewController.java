@@ -116,6 +116,8 @@ public class GameViewController extends RootController implements JoystickManage
 
     public static boolean duringQuestion = false;
 
+    private boolean isPauseGameBtnClicked = false;
+
     // adapter used for joystick navigation
     UINavigationAdapter<ToggleButton> currentDialogAdapter = null;
 
@@ -253,16 +255,35 @@ public class GameViewController extends RootController implements JoystickManage
                         }
                     }
 
-                    // if the question view is shown and we hit play -> resume game
-                    if (duringQuestion && !this.running) {
-                        resumeGame();
+                    if (duringQuestion) {
+                        if (isPauseGameBtnClicked) {
+                            int index = currentDialogAdapter.getY();
+                            System.out.println(index);
+                            if(index == 0) {
+                                // exit game
+                                int pops = MainApp.getInstance().getNavigationStackSize();
+                                for (int i = 0; i < pops - 1; i++) {
+                                    MainApp.getInstance().popViewController( i == pops - 2);
+                                }
+                            } else {
+                                // resume
+                                resumeGame();
+                            }
+                            isPauseGameBtnClicked = false;
+                        }
+                        else {
+                            resumeGame();
+                        }
                     }
+
 
                     break;
                 case TWO:
                     // pause game
-                    if (running && game.getPacman().getState() != Pacman.STATE.DEATH_ANIMATION && game.getPacman().getState() != Pacman.STATE.DEAD)
+                    if (running && game.getPacman().getState() != Pacman.STATE.DEATH_ANIMATION && game.getPacman().getState() != Pacman.STATE.DEAD) {
+                        isPauseGameBtnClicked = true;
                         pauseGame();
+                    }
                     break;
             }
         }
