@@ -144,11 +144,11 @@ public class Ghost extends GameObject implements MovingCharacter {
 	public void updateDeathTimer() {
 		
 		if (!timerStarted) {
-			timer = new Timer(3);
+			timer = new Timer(6);
 			deathTime = System.currentTimeMillis();
 			timerStarted = true;
 		}
-		
+		else {
 		/* Count down 1 second */
 			if (System.currentTimeMillis() - deathTime >= 1000) {
 				timer.countDown(1);
@@ -160,6 +160,7 @@ public class Ghost extends GameObject implements MovingCharacter {
 				spawnGhost();
 				this.timerStarted = false;
 			}
+		}
 	}
 	
 	public void spawnGhost() {

@@ -208,25 +208,38 @@ public class Game {
 	/* When updating the game state, we need to check for collisions before updating moving characters
 	 * due to the nature of how we implemented the MovingCharacter interface */
 	public void update( ) {
-		
+
 		checkCollisions();
+
 		pacman.update();
+
 		changeAIBehaviour();
+
 		ghost.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost2.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
+
 		updateTempGhostsOnBoard();
-		gasZone.update();
-		if (emptySpaces.size() > 10 ) {
+
+		if (emptySpaces.size() > 10) {
 			poisonPellet.update(emptySpaces);
-			objects.add(poisonPellet);
-			removePelletFromEmptySpaces(poisonPellet);
+			if (poisonPellet.hitBox.getX() != 0.0 && poisonPellet.hitBox.getY() != 0.0) {
+				objects.add(poisonPellet);
+				removePelletFromEmptySpaces(poisonPellet);
+			} else {
+				poisonPellet.stopDrawing();
+			}
+
 		}
         // when we are chasing temp ghosts we will not see question pellets
         if (!GameViewController.duringQuestion && emptySpaces.size() > 0) {
 			questionPellet.update(emptySpaces);
-			objects.add(questionPellet);
-			removePelletFromEmptySpaces(questionPellet);
+			if (questionPellet.hitBox.getY() != 0.0 && questionPellet.hitBox.getX() != 0.0) {
+				objects.add(questionPellet);
+				removePelletFromEmptySpaces(questionPellet);
+			} else {
+				questionPellet.stopDrawing();
+			}
 
 		}
 		//TODO: remove the gasZone
@@ -242,7 +255,7 @@ public class Game {
         int tempY = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
 
         // filter locations close to the pacman
-        return locations.stream().filter(o -> ( tempX + 3 < o.getKey() && tempY + 3 < o.getValue()) && (tempX != 0 && tempY != 0)).collect(Collectors.toList());
+        return locations.stream().filter(o -> ( tempX + 3 < o.getKey() && tempY + 3 < o.getValue())).collect(Collectors.toList());
     }
 
 
@@ -261,10 +274,14 @@ public class Game {
 					}
 				}
 				if (pacman.collidedWith((GameObject) character) && ((Ghost)character).getState() == Ghost.STATE.ALIVE) {
+					System.out.println("pacman touched perm ghost, " + ((Ghost) character).type);
+					ghost.setState(Ghost.STATE.DEAD);
+					ghost2.setState(Ghost.STATE.DEAD);
+					ghost3.setState(Ghost.STATE.DEAD);
 					pacman.playDeathAnim();
-					gasZone.stopDrawing();
 					return;
 				}
+				//((Ghost) character).setState(Ghost.STATE.DEAD);
 			}
 			/* Restricts the character from moving into the spawn point after it has left the spawn point */
 			if (character.getX() == 518 && character.getY() == 309) {
@@ -287,6 +304,7 @@ public class Game {
 
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
+					System.out.println("pacman touched temp ghost, " + ((TemporaryGhost) character).type);
 					int question_level = ((TemporaryGhost) character).getQuestion().getLevel();
 					if (((TemporaryGhost) character).isRightGhost()) {
 
@@ -315,18 +333,17 @@ public class Game {
 								break;
 						}
 						pacman.playDeathAnim();
-
-						// no longer chasing temp ghosts so we can see question pellets
-						GameViewController.duringQuestion = false;
 					}
-					questionPellet.setDrawCandy(true);
+
+					for (TemporaryGhost temporaryGhost : temporaryGhosts) {
+						temporaryGhost.setState(Ghost.STATE.DEAD);
+					}
+					// no longer chasing temp ghosts so we can see question pellets
+					GameViewController.duringQuestion = false;
 					characters.removeAll(temporaryGhosts);
 					temporaryGhosts.removeAll(temporaryGhosts);
 					return;
 				}
-
-
-					// TODO: do actions according to the collision
 			}
 			
 		}
@@ -353,15 +370,21 @@ public class Game {
 
 				// collide with question pellet
 				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
+					questionPellet.stopDrawing();
 					changeAIBehaviour();
 					setUpTempGhosts((QuestionPellet) object);
-					questionPellet.stopDrawing();
+					System.out.println("pacman touched question pellet, " + object.type);
 				}
 
 				// collide with poison pellet
 				if (object.getType() == GameObject.TYPE.POISON_PELLET) {
-					pacman.playDeathAnim();
+					System.out.println(object.hitBox.getX());
+					System.out.println(object.hitBox.getY());
 					poisonPellet.stopDrawing();
+					pacman.playDeathAnim();
+					System.out.println(object.hitBox.getX());
+					System.out.println(object.hitBox.getY());
+					System.out.println("pacman touched poison pellet, " + object.type);
 				}
 				emptySpaces.add(object);
 				objects.remove(object);
