@@ -217,19 +217,20 @@ public class Game {
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		updateTempGhostsOnBoard();
 		gasZone.update();
-        poisonPellet.update(emptySpaces);
-        objects.add(poisonPellet);
-        removePelletFromEmptySpaces(poisonPellet);
-
+		if (emptySpaces.size() > 10 ) {
+			poisonPellet.update(emptySpaces);
+			objects.add(poisonPellet);
+			removePelletFromEmptySpaces(poisonPellet);
+		}
         // when we are chasing temp ghosts we will not see question pellets
-        if (!GameViewController.duringQuestion) {
+        if (!GameViewController.duringQuestion && emptySpaces.size() > 0) {
 			questionPellet.update(emptySpaces);
 			objects.add(questionPellet);
 			removePelletFromEmptySpaces(questionPellet);
+
 		}
 		//TODO: remove the gasZone
 	}
-
 
 	private void removePelletFromEmptySpaces(GameObject object) {
 		emptySpaces.remove(object);
@@ -237,11 +238,11 @@ public class Game {
 
 	public List<Pair<Integer,Integer>>  movementLocations(){
         List<Pair<Integer,Integer>> locations = board.getOnlyTurns();
-        int x = (int) (pacman.getX() - X_OFFSET()) / TILE_SIZE;
-        int y = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
+        int tempX = (int) (pacman.getX() - X_OFFSET()) / TILE_SIZE;
+        int tempY = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
 
         // filter locations close to the pacman
-        return locations.stream().filter(o -> ( x + 3 < o.getKey() && y + 3 < o.getValue())).collect(Collectors.toList());
+        return locations.stream().filter(o -> ( tempX + 3 < o.getKey() && tempY + 3 < o.getValue()) && (tempX != 0 && tempY != 0)).collect(Collectors.toList());
     }
 
 
@@ -263,17 +264,6 @@ public class Game {
 					pacman.playDeathAnim();
 					gasZone.stopDrawing();
 					return;
-				}
-			}
-			
-			/* Checks for collision with the gasZone */
-			if (character.collidedWith(gasZone) && gasZone.getDrawGas()) {
-				if (character.getType() == GameObject.TYPE.GHOST) {
-				((Ghost) character).setState(Ghost.STATE.DEAD);
-				}
-				else {
-					pacman.playDeathAnim();
-					gasZone.stopDrawing();
 				}
 			}
 			/* Restricts the character from moving into the spawn point after it has left the spawn point */
@@ -299,7 +289,6 @@ public class Game {
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
 					int question_level = ((TemporaryGhost) character).getQuestion().getLevel();
 					if (((TemporaryGhost) character).isRightGhost()) {
-						//TODO: adjust the score based on the level of the question
 
 						switch (question_level) {
 							case 1:
@@ -330,6 +319,7 @@ public class Game {
 						// no longer chasing temp ghosts so we can see question pellets
 						GameViewController.duringQuestion = false;
 					}
+					questionPellet.setDrawCandy(true);
 					characters.removeAll(temporaryGhosts);
 					temporaryGhosts.removeAll(temporaryGhosts);
 					return;

@@ -14,11 +14,28 @@ public class JsonHandler {
     private Gson gson;
     private JsonObject content;
 
-    public JsonHandler(String path) throws IOException{
+    public JsonHandler(String path,boolean external, String defaultValueOnFail,boolean createIfNotExist) throws IOException{
         this.path = path;
         this.jsonParser = new JsonParser();
         this.gson = new Gson();
-        this.content = jsonParser.parse(new FileReader(this.path)).getAsJsonObject();
+        Reader reader = null;
+        try{
+            if(external){
+                reader = new FileReader(path);
+            }else {
+                InputStream stream = getClass().getResourceAsStream(path);
+                reader = new BufferedReader(new InputStreamReader(stream));
+            }
+        }catch (Exception e){
+            System.err.println("json not found, creating empty file");
+
+            if(createIfNotExist && external) {
+                saveDataInFile(defaultValueOnFail,path);
+            }
+        }
+        this.content = reader != null
+                ? jsonParser.parse(reader).getAsJsonObject()
+                : jsonParser.parse(defaultValueOnFail).getAsJsonObject();
     }
 
     public JsonObject getContent(){
@@ -136,6 +153,16 @@ public class JsonHandler {
         contentToUpdate.add(field, arrayToReplace);
         content = contentToUpdate;
         writeAll(content);
+    }
+
+    public void saveDataInFile(String data,String fileName) throws IOException {
+        File yourFile = new File(fileName);
+        yourFile.createNewFile();
+
+        FileOutputStream fos = new FileOutputStream(fileName);
+        DataOutputStream outStream = new DataOutputStream(new BufferedOutputStream(fos));
+        outStream.writeUTF(data);
+        outStream.close();
     }
 
 

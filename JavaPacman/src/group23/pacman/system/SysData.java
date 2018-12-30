@@ -28,11 +28,11 @@ public class SysData {
     private void initHandler(String pathTo) throws IOException {
         if (pathTo.equals("question")) {
             if (questionHandler == null)
-                questionHandler = new JsonHandler(questionPath);
+                questionHandler = new JsonHandler(questionPath,true,"{\"questions\" : []}",true);
         }
         else {
             if (recordsHandler == null)
-                recordsHandler = new JsonHandler(gameRecordsPath);
+                recordsHandler = new JsonHandler(gameRecordsPath,true, "{\"game_records\" : [] }",true);
         }
     }
 
@@ -109,7 +109,6 @@ public class SysData {
     /**
      * this function will remove the game score from the json file
      * @param gameId the game id
-     * @param conditionField the conditional field that we check against
      * @throws IOException
      */
     public void removeGameScore(String gameId) throws IOException{
@@ -138,11 +137,11 @@ public class SysData {
 
         // getting the questions as json array
         SysData sysData = new SysData();
-        JsonArray jsonList = null;
+        JsonArray jsonList = new JsonArray();
         try {
             jsonList = sysData.getQuestions();
         } catch (IOException e) {
-            e.printStackTrace();
+            qList = new ArrayList<>();
         }
 
         // loop over the json array and create a Question entity

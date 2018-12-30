@@ -53,11 +53,9 @@ public abstract class RandomPellet extends Pellet{
 
     public void update(ArrayList<GameObject> emptySpaces) {
 
-        /* Every 15 seconds, a gas zone will appear in a random area of the map */
         // giving the pacman 8 second to clear some candies before placing poison and question candies
-        if (spawnTimer.getTimeRemaining() < 118 && spawnTimer.getTimeRemaining()%5 == 0 && !drawCandy){
-            System.out.println(spawnTimer.getTimeRemaining());
-            System.out.println(drawCandy);
+        if (spawnTimer.getTimeRemaining() < 118 && spawnTimer.getTimeRemaining()%10 == 0 && !drawCandy){
+
             /*Random coordinates for poison candy*/
             if (emptySpaces.isEmpty()) return;
 
@@ -71,13 +69,7 @@ public abstract class RandomPellet extends Pellet{
             x = (newX);
             y = (newY);
 
-            System.out.println("x" + x);
-            System.out.println("y" + y);
-
             // update hitbox
-
-            System.out.println("hit x" + hitBox.getX());
-            System.out.println("hit y" + hitBox.getY());
 //            hitBox.setX(x);
 //            hitBox.setY(y);
             drawCandy=true;
@@ -109,6 +101,14 @@ public abstract class RandomPellet extends Pellet{
             }
             //time = System.currentTimeMillis();
         }
+    }
+
+    public boolean getDrawCandy() {
+        return drawCandy;
+    }
+
+    public void setDrawCandy(boolean boo) {
+        this.drawCandy = boo;
     }
 
 

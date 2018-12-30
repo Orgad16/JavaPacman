@@ -184,6 +184,8 @@ public class GameViewController extends RootController implements JoystickManage
         // updating the name label of the current player
         updatePlayerName();
 
+        updateTimer();
+
         // starting the game
         startGame();
 
@@ -243,12 +245,11 @@ public class GameViewController extends RootController implements JoystickManage
                     if ((gamePaused() && currentDialogAdapter != null && !duringQuestion) ||
                             ((game.levelCleared() || game.getPacman().getLives() == 0))) {
                         int index = currentDialogAdapter.getY();
+                        isPauseGameBtnClicked = false;
                         if(index == 0) {
                             // exit game
-                            int pops = MainApp.getInstance().getNavigationStackSize();
-                            for (int i = 0; i < pops - 1; i++) {
-                                MainApp.getInstance().popViewController( i == pops - 2);
-                            }
+                            popWindows();
+                            stopGame();
                         } else {
                             // resume
                             resumeGame();
@@ -257,19 +258,17 @@ public class GameViewController extends RootController implements JoystickManage
 
                     if (duringQuestion) {
                         if (isPauseGameBtnClicked) {
+                            isPauseGameBtnClicked = false;
                             int index = currentDialogAdapter.getY();
-                            System.out.println(index);
                             if(index == 0) {
                                 // exit game
-                                int pops = MainApp.getInstance().getNavigationStackSize();
-                                for (int i = 0; i < pops - 1; i++) {
-                                    MainApp.getInstance().popViewController( i == pops - 2);
-                                }
+                                popWindows();
+                                stopGame();
+
                             } else {
                                 // resume
                                 resumeGame();
                             }
-                            isPauseGameBtnClicked = false;
                         }
                         else {
                             resumeGame();
@@ -286,6 +285,13 @@ public class GameViewController extends RootController implements JoystickManage
                     }
                     break;
             }
+        }
+    }
+
+    private void popWindows() {
+        int pops = MainApp.getInstance().getNavigationStackSize();
+        for (int i = 0; i < pops - 1; i++) {
+            MainApp.getInstance().popViewController( i == pops - 2);
         }
     }
 
