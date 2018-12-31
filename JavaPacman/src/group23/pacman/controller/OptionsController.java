@@ -33,6 +33,7 @@ public class OptionsController extends RootController implements JoystickManager
 
         // highlight first button
         navigationAdapter.current().setSelected(true);
+        tongue_lbl.setText(!GameSettings.instance.isTonugeEnabled()? "ON": "OFF");
     }
 
     @Override
@@ -84,6 +85,9 @@ public class OptionsController extends RootController implements JoystickManager
                 MainApp.getInstance().getGameWindow().setFullScreen(!oldFSValue);
                 break;
             case 2:
+                boolean oldToungeValue = GameSettings.instance.isTonugeEnabled();
+                GameSettings.instance.setTonugeEnabled(!oldToungeValue);
+                tongue_lbl.setText(!oldToungeValue? "ON": "OFF");
                 break;
             case 3:
                 break;

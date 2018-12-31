@@ -185,7 +185,7 @@ public class GameViewController extends RootController implements JoystickManage
 
         // updating the name label of the current player
         updatePlayerName();
-
+        
         updateWhipLabel();
 
         updateTimer();
@@ -243,7 +243,7 @@ public class GameViewController extends RootController implements JoystickManage
                     break;
                 case ONE:
 
-                    if (!countingDown() && !gamePaused())
+                    if (!countingDown() && !gamePaused() && GameSettings.instance.isTonugeEnabled())
                         game.getPacman().whip();
 
                     if ((gamePaused() && currentDialogAdapter != null && !duringQuestion) ||
@@ -304,7 +304,7 @@ public class GameViewController extends RootController implements JoystickManage
         updateScore();
 
         updateWhipLabel();
-        
+
         gameStateController.getGame().getPacman().draw(graphicsContext);
 
 		/* Draws other objects (pellets) */
@@ -499,8 +499,12 @@ public class GameViewController extends RootController implements JoystickManage
     }
 
     public void updateWhipLabel() {
-        whipLabel.setText(String.valueOf(game.getPacman().getWhip().getCharges()));
-        whipLabel.setStyle(nameLabelColor[currentPlayerIndex] + "-fx-font-size: 40px;");
+        if (GameSettings.instance.isTonugeEnabled()) {
+            whipLabel.setText(String.valueOf(game.getPacman().getWhip().getCharges()));
+            whipLabel.setStyle(nameLabelColor[currentPlayerIndex] + "-fx-font-size: 40px;");
+        } else {
+            whipLabel.setVisible(false);
+        }
     }
 
     public boolean countingDown() {
