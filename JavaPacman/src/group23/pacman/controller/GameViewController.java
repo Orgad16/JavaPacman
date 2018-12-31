@@ -768,8 +768,16 @@ public class GameViewController extends RootController implements JoystickManage
                 else
                     dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(getOtherPlayer()) + " Won!");
 
+                //boolean
+                // TODO: check which player won and add function to call game.saveGame() with the correct player
+                // TODO: check if the player cleared the level
+                // TODO: check id the other player cleared
+                // TODO: if only one of them won call game.saveGame() with that plyaer
+                // TODO: if both of them cleared the level -> check if which one has the higher points
+                // TODO: call the function game.saveGame() with the correct player
+                Score score = new Score(GameSettings.instance.getPlayerNames().get(currentPlayerIndex), allGames[currentPlayerIndex].getIntScore(), 120 - allGames[currentPlayerIndex].getTimer().getTimeRemaining(), new Date().getTime());
                 // saving the game into the json file
-                saveGame();
+                saveGame(score);
 
             } else {
                 // failed level
@@ -787,7 +795,8 @@ public class GameViewController extends RootController implements JoystickManage
                 dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:green;");
 
                 dialogView.descriptionLabel.setText("WON THE LEVEL!");
-
+                Score score = new Score(GameSettings.instance.getPlayerNames().get(0), game.getIntScore(), 120 - game.getTimer().getTimeRemaining(), new Date().getTime());
+                saveGame(score);
             } else {
                 // failed level
 
@@ -822,8 +831,17 @@ public class GameViewController extends RootController implements JoystickManage
     }
 
 
-    public void saveGame() {
-        String playerName = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
+    public void saveGame(Score score) {
+//        String playerName = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
+        switch (GameSettings.instance.getNumbrOfPlayers()) {
+            case 1:
+                game.saveGameIntoJson(score);
+                break;
+            case 2:
+                allGames[currentPlayerIndex].saveGameIntoJson(score);
+                break;
+        }
+
 
     }
 
@@ -951,6 +969,7 @@ public class GameViewController extends RootController implements JoystickManage
 
                 // return because the other player is dead/done -> go the leaderboard
                 showResultGame();
+
                 return 2;
             }
             currentPlayerIndex = getOtherPlayer();

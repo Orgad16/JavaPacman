@@ -10,24 +10,32 @@ import java.util.ArrayList;
 
 public class ScoreSetting {
 
-    public void saveGame (Score scoreGame) throws IOException {
+    private Score score;
+    private ArrayList<Score> sList;
+
+    public ScoreSetting(Score score) {
+        this.score = score;
+    }
+
+    public void saveGame () throws IOException {
 
         JsonObject jsonObj = new JsonObject();
 
-        jsonObj.addProperty("name",scoreGame.getNickName());
+        jsonObj.addProperty("id",String.valueOf(getNumberOfScores() + 1));
 
-        jsonObj.addProperty("score",scoreGame.getScore());
+        jsonObj.addProperty("name", score.getNickName());
 
-        jsonObj.addProperty("time",scoreGame.getTimeGame());
+        jsonObj.addProperty("score",score.getScore());
 
-        jsonObj.addProperty("date",scoreGame.getGameDate());
+        jsonObj.addProperty("timer",score.getTimeGame());
+
+        jsonObj.addProperty("date",score.getGameDate());
 
         try {
             SysData.instance.addGameScore(jsonObj);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -37,8 +45,8 @@ public class ScoreSetting {
      * @return list of all time scoring playing the game
      */
 
-    public static ArrayList<Score> getAllScore(){
-        ArrayList<Score> sList = new ArrayList<>();
+    public ArrayList<Score> getAllScore(){
+        sList = new ArrayList<>();
         // getting the questions as json array
         SysData sysData = new SysData();
         JsonArray jsonList = null;
@@ -57,7 +65,7 @@ public class ScoreSetting {
             int gScore = element.getAsJsonObject().get("score").getAsInt();
 
             // getting the game time
-            int gTime= element.getAsJsonObject().get("time").getAsInt();
+            int gTime= element.getAsJsonObject().get("timer").getAsInt();
 
             //getting the game date
             long dateStamp= element.getAsJsonObject().get("date").getAsLong();
@@ -68,5 +76,14 @@ public class ScoreSetting {
         }
 
         return sList;
+    }
+
+    public ArrayList<Score> getsList() {
+        return sList;
+    }
+
+    public int getNumberOfScores() {
+        getAllScore();
+        return getsList().size();
     }
 }

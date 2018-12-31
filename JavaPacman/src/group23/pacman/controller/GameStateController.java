@@ -92,8 +92,9 @@ public class GameStateController {
 		else if (game.levelCleared()) {
 			levelCleared = true;
 			int case2 = gameViewController.handleSwitch(true, false);
-			if (case2 == 1)
+			if (case2 == 1) {
 				gameViewController.showGameEnd();
+			}
 		}
 
 	}

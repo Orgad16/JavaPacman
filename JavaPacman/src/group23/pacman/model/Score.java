@@ -4,6 +4,9 @@ import group23.pacman.model.Timer;
 
 public class Score {
 
+    /* id of the score*/
+    private String id;
+
     /*User's nickname in a game */
     private String nickName;
 
@@ -56,5 +59,9 @@ public class Score {
 
     public void setTimeGame(int timeGame) {
         this.timeGame = timeGame;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

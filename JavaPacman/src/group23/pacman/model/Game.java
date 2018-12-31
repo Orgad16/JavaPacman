@@ -1,5 +1,7 @@
 package group23.pacman.model;
 
+import com.google.gson.JsonObject;
+import group23.pacman.controller.GameSettings;
 import group23.pacman.controller.GameStateController;
 import group23.pacman.controller.GameViewController;
 import group23.pacman.model.Pacman.STATE;
@@ -7,6 +9,7 @@ import group23.pacman.system.ScoreSetting;
 import group23.pacman.system.SysData;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -201,10 +204,6 @@ public class Game {
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 
 		updateTempGhostsOnBoard();
-//		for (GameObject object : objects) {
-//			if (object.getType().toString().equals("QUESTION_PELLET") || object.getType().toString().equals("POISON_PELLET"))
-//				System.out.println(object.getType().toString());
-//		}
 
 		if (emptySpaces.size() > 10 && objects.contains(poisonPellet)) {
 			poisonPellet.update(emptySpaces);
@@ -218,7 +217,7 @@ public class Game {
 
 		}
         // when we are chasing temp ghosts we will not see question pellets
-        if (!getGameViewController().duringQuestion && objects.contains(questionPellet)) {
+        if (!getGameViewController().duringQuestion && objects.contains(questionPellet) && pelletsEaten > 25) {
 			questionPellet.update(emptySpaces);
 			if (questionPellet.hitBox.getY() != 0.0 && questionPellet.hitBox.getX() != 0.0) {
 				objects.add(questionPellet);
@@ -370,7 +369,7 @@ public class Game {
 					ghost2.setState(Ghost.STATE.DEAD);
 					ghost3.setState(Ghost.STATE.DEAD);
 					pacman.playDeathAnim();
-					System.out.println("pacman touched poison pellet, " + object.type);
+					//System.out.println("pacman touched poison pellet, " + object.type);
 				}
 				emptySpaces.add(object);
 				objects.remove(object);
@@ -378,17 +377,6 @@ public class Game {
 				break;
 			}
 		}
-	}
-
-	private int getNumberOfPoisonPellets(ArrayList<GameObject> objects) {
-		int counter = 0;
-		for (GameObject object : objects) {
-			if (object.type.toString().equals("POISON_PELLET")) {
-				//System.out.println(object);
-				counter = counter + 1;
-			}
-		}
-		return counter;
 	}
 
 	/* Checks if pacman has died and resets all moving objects*/
@@ -574,4 +562,20 @@ public class Game {
 	public GameViewController getGameViewController() {
 		return gameViewController;
 	}
+
+	public void saveGameIntoJson(Score score) {
+		ScoreSetting scoreSetting = new ScoreSetting(score);
+		try {
+			scoreSetting.saveGame();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
+
+//{
+//		"id": "1",
+//		"name": "tomer",
+//		"score": "200",
+//		"date": "12/08/2018"
+//		}
