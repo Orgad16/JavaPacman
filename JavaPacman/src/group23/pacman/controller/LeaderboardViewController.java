@@ -32,12 +32,13 @@ public class LeaderboardViewController extends RootController implements Joystic
             @Override
             public Collection<? extends Score> dataSource() {
                 //TODO hookup with valid data source
-                List<Score> fakeData = new ArrayList<>();
-                fakeData.add(new Score(0,"test1",4232,23,new Date().getTime()));
-                fakeData.add(new Score(0,"test4",672,52,new Date().getTime()));
-                fakeData.add(new Score(0,"test3",452,43,new Date().getTime()));
-                fakeData.add(new Score(0,"test2",234,23,new Date().getTime()));
-                return fakeData;
+//                List<Score> fakeData = new ArrayList<>();
+//                fakeData.add(new Score(0,"test1",4232,23,new Date().getTime()));
+//                fakeData.add(new Score(0,"test4",672,52,new Date().getTime()));
+//                fakeData.add(new Score(0,"test3",452,43,new Date().getTime()));
+//                fakeData.add(new Score(0,"test2",234,23,new Date().getTime()));
+//                return fakeData;
+                return new ArrayList<>();
             }
 
             @Override

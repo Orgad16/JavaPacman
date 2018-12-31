@@ -10,13 +10,9 @@ import java.util.ArrayList;
 
 public class ScoreSetting {
 
-
-
     public void saveGame (Score scoreGame) throws IOException {
 
         JsonObject jsonObj = new JsonObject();
-
-        jsonObj.addProperty("id",scoreGame.getId());
 
         jsonObj.addProperty("name",scoreGame.getNickName());
 
@@ -54,10 +50,6 @@ public class ScoreSetting {
         // loop over the json array and create a score entity
         for (JsonElement element : jsonList) {
 
-
-            // getting the the game id
-            int id = element.getAsJsonObject().get("id").getAsInt();
-
             // getting the nickname of the user in game
             String nickName = element.getAsJsonObject().get("name").getAsString();
 
@@ -70,11 +62,11 @@ public class ScoreSetting {
             //getting the game date
             long dateStamp= element.getAsJsonObject().get("date").getAsLong();
 
-            Score s= new Score(id,nickName,gScore,gTime,dateStamp);
+            Score s= new Score(nickName,gScore,gTime,dateStamp);
 
             sList.add(s);
         }
 
-            return sList;
+        return sList;
     }
 }

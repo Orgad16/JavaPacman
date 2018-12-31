@@ -116,7 +116,7 @@ public class GameViewController extends RootController implements JoystickManage
 
     private boolean timerPaused;
 
-    public static boolean duringQuestion = false;
+    public boolean duringQuestion = false;
 
     private boolean isPauseGameBtnClicked = false;
 
@@ -137,6 +137,7 @@ public class GameViewController extends RootController implements JoystickManage
             String playerName = players.get(0);
             playerNameLabel.setText(playerName);
             game = new Game(selectedMap, numberOfPlayers, 0, 0);
+            game.setGameViewController(this);
             gameStateController = new GameStateController(this, game);
             gameStateController.setTimer(new Timer(120));
 
@@ -144,7 +145,9 @@ public class GameViewController extends RootController implements JoystickManage
 
             // init games and game state controllers for the players
             allGames[0] = new Game(selectedMap, 1, 0, 0);
+            allGames[0].setGameViewController(this);
             allGames[1] = new Game(selectedMap, 1, 0,0);
+            allGames[1].setGameViewController(this);
             allGameStates[0] = new GameStateController(this, allGames[0]);
             allGameStates[1] = new GameStateController(this, allGames[1]);
 
@@ -764,6 +767,10 @@ public class GameViewController extends RootController implements JoystickManage
                     dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(currentPlayerIndex) + " Won!");
                 else
                     dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(getOtherPlayer()) + " Won!");
+
+                // saving the game into the json file
+                saveGame();
+
             } else {
                 // failed level
                 dialogView.titleLabel.setText("LEVEL FAILED");
@@ -814,6 +821,11 @@ public class GameViewController extends RootController implements JoystickManage
         overlay.setVisible(true);
     }
 
+
+    public void saveGame() {
+        String playerName = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
+
+    }
 
     // show the game result after winning the level
     public HBox showLevelResults() {
@@ -1002,6 +1014,7 @@ public class GameViewController extends RootController implements JoystickManage
             return 1;
     }
 
-
-
+    public void setDuringQuestion(boolean duringQuestion) {
+        this.duringQuestion = duringQuestion;
+    }
 }

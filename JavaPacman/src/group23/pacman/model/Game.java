@@ -79,6 +79,8 @@ public class Game {
 
 	private List<Question> questionList = SysData.instance.getQuestionsFromJson();
 
+	private GameViewController gameViewController;
+
 	public Game(int map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
 		this.map = map;
@@ -175,25 +177,10 @@ public class Game {
 		vector.add(2);
 		vector.add(3);
 		vector.add(4);
-		
-		/* Set up ghosts according to game mode */
-		if (numPlayers == 1) {
-			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 3,1);
-			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,2);
-			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,3);
-		}
-		
-		else if (numPlayers == 2) {
-			
-			/* Get and set player ghost choices then remove them from remaining choices */
-			vector.removeElement(player2Ghost);
-			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 0,player2Ghost);
-			
-			/* The AI's will now have the remaining ghost sprites not chosen by the players */
-			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,vector.elementAt(0));
-			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,vector.elementAt(1));
-			//ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,vector.elementAt(2));
-		}
+
+		ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 3,1);
+		ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,2);
+		ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,3);
 
 
 	}
@@ -231,7 +218,7 @@ public class Game {
 
 		}
         // when we are chasing temp ghosts we will not see question pellets
-        if (!GameViewController.duringQuestion && objects.contains(questionPellet)) {
+        if (!getGameViewController().duringQuestion && objects.contains(questionPellet)) {
 			questionPellet.update(emptySpaces);
 			if (questionPellet.hitBox.getY() != 0.0 && questionPellet.hitBox.getX() != 0.0) {
 				objects.add(questionPellet);
@@ -339,7 +326,7 @@ public class Game {
 						temporaryGhost.setState(Ghost.STATE.DEAD);
 					}
 					// no longer chasing temp ghosts so we can see question pellets
-					GameViewController.duringQuestion = false;
+					gameViewController.setDuringQuestion(false);
 					characters.removeAll(temporaryGhosts);
 					temporaryGhosts.removeAll(temporaryGhosts);
 					return;
@@ -578,5 +565,13 @@ public class Game {
 
 	public QuestionPellet getQuestionPellet() {
 		return questionPellet;
+	}
+
+	public void setGameViewController(GameViewController gameViewController) {
+		this.gameViewController = gameViewController;
+	}
+
+	public GameViewController getGameViewController() {
+		return gameViewController;
 	}
 }
