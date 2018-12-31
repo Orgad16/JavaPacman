@@ -54,9 +54,11 @@ public class Pacman extends GameObject implements MovingCharacter {
 	private int lives;
 	
 	private int blinksPlayed;
+
+	private int spawnX;
+	private int spawnY;
 	
-	
-	
+
 	public Pacman(int x,int y,Board board) {
 
 		setUpAnimations();
@@ -69,18 +71,19 @@ public class Pacman extends GameObject implements MovingCharacter {
 		
 		/* Set up sound effect for Pacman eating the pellet */
 		chompNoise = new Media(new File("bin/assets/sfx/chompNoise.wav").toURI().toString());
-		
 
+		this.spawnX = x;
+		this.spawnY = y;
 		/* Sets up the main character's hit-box */
 		hitBox = new Rectangle();
+		spawnPacman();
 		hitBox.setHeight(SPRITE_HEIGHT - OFFSET);
 		hitBox.setWidth(SPRITE_WIDTH - OFFSET);
-		hitBox.setX(x + OFFSET/2);
-		hitBox.setY(y + OFFSET/2);
+//		hitBox.setX(x + OFFSET/2);
+//		hitBox.setY(y + OFFSET/2);
 		
 		blinksPlayed = 0;
-		hasLeftSpawn = true;
-		
+
 		/* Set up main character's position */
 		this.x = x;
 		this.y = y;
@@ -91,13 +94,22 @@ public class Pacman extends GameObject implements MovingCharacter {
 		this.whip = new Whip(this);
 		
 		/* Character does not initially move*/
-		this.vector = 'S';
-		this.queuedDirection = 'S';
-
+		this.vector = 'R';
+		this.queuedDirection = 'R';
+		hasLeftSpawn = false;
 
 	}
 
-	
+
+	private void spawnPacman() {
+		this.x = spawnX;
+		this.y = spawnY;
+		this.hitBox.setX(x + OFFSET/2);
+		this.hitBox.setY(y + OFFSET/2);
+		this.state = Pacman.STATE.ALIVE;
+		this.hasLeftSpawn = false;
+	}
+
 	public void whip() {
 		
 		/* Can only consume charge after whip has finished previous animation and not dead*/
@@ -118,8 +130,6 @@ public class Pacman extends GameObject implements MovingCharacter {
 			whip.update(this.x,this.y);
 		}
 		
-		animationManager.update();
-		
 		if (this.state == STATE.DEATH_ANIMATION) {
 			if (animationManager.getFrameIndex() == 1) {
 				blinksPlayed++;
@@ -130,6 +140,9 @@ public class Pacman extends GameObject implements MovingCharacter {
 			this.state = STATE.DEAD;
 			lives--;
 		}
+		setDirection('R');
+		queueMovement('R');
+		animationManager.update();
 		playAnimation();
 	}
 
@@ -258,7 +271,7 @@ public class Pacman extends GameObject implements MovingCharacter {
 		this.hasLeftSpawn = true;
 		setDirection('S');
 		queueMovement('S');
-		animationManager.playAction(1);
+		//animationManager.playAction(1);
 		setState(Pacman.STATE.ALIVE);
 	}
 	

@@ -221,7 +221,7 @@ public class Game {
 
 		updateTempGhostsOnBoard();
 
-		if (emptySpaces.size() > 10) {
+		if (emptySpaces.size() > 10 && getNumberOfPoisonPellets(objects) == 1) {
 			poisonPellet.update(emptySpaces);
 			if (poisonPellet.hitBox.getX() != 0.0 && poisonPellet.hitBox.getY() != 0.0) {
 				objects.add(poisonPellet);
@@ -388,11 +388,22 @@ public class Game {
 				}
 				emptySpaces.add(object);
 				objects.remove(object);
+				System.out.println("there are number of poison pellets after: " + getNumberOfPoisonPellets(objects));
 				break;
 			}
 		}
 	}
-	
+
+	private int getNumberOfPoisonPellets(ArrayList<GameObject> objects) {
+		int counter = 0;
+		for (GameObject object : objects) {
+			if (object.type.toString().equals("POISON_PELLET")) {
+				System.out.println(object);
+				counter = counter + 1;
+			}
+		}
+		return counter;
+	}
 
 	/* Checks if pacman has died and resets all moving objects*/
 	public void checkState() {
