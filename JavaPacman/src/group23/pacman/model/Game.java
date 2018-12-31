@@ -304,7 +304,7 @@ public class Game {
 
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
-					System.out.println("pacman touched temp ghost, " + ((TemporaryGhost) character).type);
+					//System.out.println("pacman touched temp ghost, " + ((TemporaryGhost) character).type);
 					int question_level = ((TemporaryGhost) character).getQuestion().getLevel();
 					if (((TemporaryGhost) character).isRightGhost()) {
 
@@ -378,17 +378,17 @@ public class Game {
 
 				// collide with poison pellet
 				if (object.getType() == GameObject.TYPE.POISON_PELLET) {
-					System.out.println(object.hitBox.getX());
-					System.out.println(object.hitBox.getY());
+					//System.out.println(object.hitBox.getX());
+					//System.out.println(object.hitBox.getY());
 					poisonPellet.stopDrawing();
 					pacman.playDeathAnim();
-					System.out.println(object.hitBox.getX());
-					System.out.println(object.hitBox.getY());
-					System.out.println("pacman touched poison pellet, " + object.type);
+					//System.out.println(object.hitBox.getX());
+					//System.out.println(object.hitBox.getY());
+					//System.out.println("pacman touched poison pellet, " + object.type);
 				}
 				emptySpaces.add(object);
 				objects.remove(object);
-				System.out.println("there are number of poison pellets after: " + getNumberOfPoisonPellets(objects));
+				//System.out.println("there are number of poison pellets after: " + getNumberOfPoisonPellets(objects));
 				break;
 			}
 		}

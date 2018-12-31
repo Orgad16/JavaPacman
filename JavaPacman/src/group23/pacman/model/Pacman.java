@@ -140,8 +140,8 @@ public class Pacman extends GameObject implements MovingCharacter {
 			this.state = STATE.DEAD;
 			lives--;
 		}
-		setDirection('R');
-		queueMovement('R');
+//		setDirection('R');
+//		queueMovement('R');
 		animationManager.update();
 		playAnimation();
 	}

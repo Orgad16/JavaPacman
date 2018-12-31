@@ -70,6 +70,8 @@ public class GameViewController extends RootController implements JoystickManage
     @FXML
     private UIView overlay;
 
+    @FXML
+    private Label whipLabel;
 
     private final static int initialMultiTimer = 15;
 
@@ -183,6 +185,8 @@ public class GameViewController extends RootController implements JoystickManage
 
         // updating the name label of the current player
         updatePlayerName();
+
+        updateWhipLabel();
 
         updateTimer();
 
@@ -299,6 +303,8 @@ public class GameViewController extends RootController implements JoystickManage
 
         updateScore();
 
+        updateWhipLabel();
+        
         gameStateController.getGame().getPacman().draw(graphicsContext);
 
 		/* Draws other objects (pellets) */
@@ -490,6 +496,11 @@ public class GameViewController extends RootController implements JoystickManage
                 lifeImage.setImage(new Image(img));
                 break;
         }
+    }
+
+    public void updateWhipLabel() {
+        whipLabel.setText(String.valueOf(game.getPacman().getWhip().getCharges()));
+        whipLabel.setStyle(nameLabelColor[currentPlayerIndex] + "-fx-font-size: 40px;");
     }
 
     public boolean countingDown() {
@@ -959,6 +970,9 @@ public class GameViewController extends RootController implements JoystickManage
 
         // update new timer
         updateTimer();
+
+        // TODO: update whip label
+        updateWhipLabel();
 
         // update player's name
         updatePlayerName();

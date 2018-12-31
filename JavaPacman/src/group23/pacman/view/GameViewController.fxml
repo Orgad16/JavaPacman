@@ -31,6 +31,7 @@
                 </HBox>
                 <Label fx:id="timerLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
                 <Label fx:id="playerNameLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
+                <Label fx:id="whipLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
             </VBox>
         </HBox>
 
