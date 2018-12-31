@@ -59,9 +59,6 @@ public class Game {
 	/* Game has array list of moving objects */
 	private ArrayList<MovingCharacter> characters;
 	
-	/* Gas zone which spawns every 20 seconds */
-	private GasZone gasZone;
-	
 	/* Time */
 	private long scatterTime = 0;
 	
@@ -96,9 +93,6 @@ public class Game {
 		
 		/* Get reference to objects created on the board */
 		objects = board.getObjects();
-		
-		/* Create gas zone */
-		gasZone = new GasZone();
 		
 		/* Clear condition (number of pellets to eat) */
 		pellets = board.getTotalPellets();
@@ -220,8 +214,12 @@ public class Game {
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 
 		updateTempGhostsOnBoard();
-
-		if (emptySpaces.size() > 10 && getNumberOfPoisonPellets(objects) == 1) {
+//		for (GameObject object : objects) {
+//			if (object.getType().toString().equals("QUESTION_PELLET") || object.getType().toString().equals("POISON_PELLET"))
+//				System.out.println(object.getType().toString());
+//		}
+		System.out.println("\n\n\n");
+		if (emptySpaces.size() > 10) {
 			poisonPellet.update(emptySpaces);
 			if (poisonPellet.hitBox.getX() != 0.0 && poisonPellet.hitBox.getY() != 0.0) {
 				objects.add(poisonPellet);
@@ -274,7 +272,7 @@ public class Game {
 					}
 				}
 				if (pacman.collidedWith((GameObject) character) && ((Ghost)character).getState() == Ghost.STATE.ALIVE) {
-					System.out.println("pacman touched perm ghost, " + ((Ghost) character).type);
+					//System.out.println("pacman touched perm ghost, " + ((Ghost) character).type);
 					ghost.setState(Ghost.STATE.DEAD);
 					ghost2.setState(Ghost.STATE.DEAD);
 					ghost3.setState(Ghost.STATE.DEAD);
@@ -373,7 +371,7 @@ public class Game {
 					questionPellet.stopDrawing();
 					changeAIBehaviour();
 					setUpTempGhosts((QuestionPellet) object);
-					System.out.println("pacman touched question pellet, " + object.type);
+					//System.out.println("pacman touched question pellet, " + object.type);
 				}
 
 				// collide with poison pellet
@@ -384,7 +382,7 @@ public class Game {
 					pacman.playDeathAnim();
 					//System.out.println(object.hitBox.getX());
 					//System.out.println(object.hitBox.getY());
-					//System.out.println("pacman touched poison pellet, " + object.type);
+					System.out.println("pacman touched poison pellet, " + object.type);
 				}
 				emptySpaces.add(object);
 				objects.remove(object);
@@ -398,7 +396,7 @@ public class Game {
 		int counter = 0;
 		for (GameObject object : objects) {
 			if (object.type.toString().equals("POISON_PELLET")) {
-				System.out.println(object);
+				//System.out.println(object);
 				counter = counter + 1;
 			}
 		}
@@ -537,12 +535,7 @@ public class Game {
 		
 		return this.map;
 	}
-	
-	/* Public getter to reference map type */
-	public GasZone getGasZone() {
-		
-		return this.gasZone;
-	}	
+
 	
 	/* Public getter to reference game mode */
 	public int getPlayers() {

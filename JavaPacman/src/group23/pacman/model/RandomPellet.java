@@ -111,5 +111,8 @@ public abstract class RandomPellet extends Pellet{
         this.drawCandy = boo;
     }
 
+    public Timer getSpawnTimer() {
+        return this.spawnTimer;
+    }
 
 }

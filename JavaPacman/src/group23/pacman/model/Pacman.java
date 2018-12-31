@@ -269,8 +269,8 @@ public class Pacman extends GameObject implements MovingCharacter {
 		this.x = x;
 		this.y = y;
 		this.hasLeftSpawn = true;
-		setDirection('S');
-		queueMovement('S');
+		setDirection('R');
+		queueMovement('R');
 		//animationManager.playAction(1);
 		setState(Pacman.STATE.ALIVE);
 	}
