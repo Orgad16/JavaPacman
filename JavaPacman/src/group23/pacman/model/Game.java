@@ -218,25 +218,27 @@ public class Game {
 //			if (object.getType().toString().equals("QUESTION_PELLET") || object.getType().toString().equals("POISON_PELLET"))
 //				System.out.println(object.getType().toString());
 //		}
-		System.out.println("\n\n\n");
-		if (emptySpaces.size() > 10) {
+
+		if (emptySpaces.size() > 10 && objects.contains(poisonPellet)) {
 			poisonPellet.update(emptySpaces);
 			if (poisonPellet.hitBox.getX() != 0.0 && poisonPellet.hitBox.getY() != 0.0) {
 				objects.add(poisonPellet);
 				removePelletFromEmptySpaces(poisonPellet);
 			} else {
 				poisonPellet.stopDrawing();
+				objects.remove(poisonPellet);
 			}
 
 		}
         // when we are chasing temp ghosts we will not see question pellets
-        if (!GameViewController.duringQuestion && emptySpaces.size() > 0) {
+        if (!GameViewController.duringQuestion && objects.contains(questionPellet)) {
 			questionPellet.update(emptySpaces);
 			if (questionPellet.hitBox.getY() != 0.0 && questionPellet.hitBox.getX() != 0.0) {
 				objects.add(questionPellet);
 				removePelletFromEmptySpaces(questionPellet);
 			} else {
 				questionPellet.stopDrawing();
+				objects.remove(questionPellet);
 			}
 
 		}
@@ -376,12 +378,11 @@ public class Game {
 
 				// collide with poison pellet
 				if (object.getType() == GameObject.TYPE.POISON_PELLET) {
-					//System.out.println(object.hitBox.getX());
-					//System.out.println(object.hitBox.getY());
 					poisonPellet.stopDrawing();
+					ghost.setState(Ghost.STATE.DEAD);
+					ghost2.setState(Ghost.STATE.DEAD);
+					ghost3.setState(Ghost.STATE.DEAD);
 					pacman.playDeathAnim();
-					//System.out.println(object.hitBox.getX());
-					//System.out.println(object.hitBox.getY());
 					System.out.println("pacman touched poison pellet, " + object.type);
 				}
 				emptySpaces.add(object);
