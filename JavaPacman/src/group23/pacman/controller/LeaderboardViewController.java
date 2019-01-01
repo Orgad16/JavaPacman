@@ -41,11 +41,7 @@ public class LeaderboardViewController extends RootController implements Joystic
                 SysData sysData = new SysData();
                 try {
                     JsonArray array = sysData.getGameScores(10).getAsJsonArray();
-                    int index = 0;
                     for (JsonElement element : array) {
-
-                        // getting only the top 10 scores
-                        if (index > 10) { break; }
 
                         // getting the element as json object
                         JsonObject jsonObject = element.getAsJsonObject();
@@ -58,8 +54,6 @@ public class LeaderboardViewController extends RootController implements Joystic
 
                         // append the score to the list
                         data.add(new Score(name, game_score, timer, date));
-
-                        index ++;
 
                     }
                 } catch (IOException e) {

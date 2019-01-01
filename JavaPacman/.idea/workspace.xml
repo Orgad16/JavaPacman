@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="20019165-d1b7-4601-986f-f8a664e0bb7c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/LeaderboardViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/LeaderboardViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/system/ScoreSetting.java" afterPath="$PROJECT_DIR$/src/group23/pacman/system/ScoreSetting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/system/SysData.java" afterPath="$PROJECT_DIR$/src/group23/pacman/system/SysData.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -111,8 +109,8 @@
           <file leaf-file-name="LeaderboardViewController.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/LeaderboardViewController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-670">
-                  <caret line="45" column="0" lean-forward="true" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+                <state relative-caret-position="394">
+                  <caret line="55" column="75" lean-forward="false" selection-start-line="55" selection-start-column="75" selection-end-line="55" selection-end-column="75" />
                   <folding />
                 </state>
               </provider>
@@ -1253,8 +1251,8 @@ locations</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/LeaderboardViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-670">
-          <caret line="45" column="0" lean-forward="true" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state relative-caret-position="394">
+          <caret line="55" column="75" lean-forward="false" selection-start-line="55" selection-start-column="75" selection-end-line="55" selection-end-column="75" />
           <folding />
         </state>
       </provider>
