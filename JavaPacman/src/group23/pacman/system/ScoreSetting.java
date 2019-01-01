@@ -51,7 +51,7 @@ public class ScoreSetting {
         SysData sysData = new SysData();
         JsonArray jsonList = null;
         try {
-            jsonList = sysData.getGameScores();
+            jsonList = sysData.getGameScores(0);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -95,14 +95,30 @@ public class SysData {
 
     /**
      * this function will return the highest game scores
+     * @param number_of_records the number of records you want to get (0 -> all records)
      * @return JsonArray of game scores
      * @throws IOException
      */
-    public JsonArray getGameScores() throws IOException {
+    public JsonArray getGameScores(int numberOfRecords) throws IOException {
 
         initHandler("records");
+        JsonArray jsonToReturn = recordsHandler.getContent().get("game_records").getAsJsonArray();
+        if (numberOfRecords == 0) {
+            return jsonToReturn;
+        } else {
+            JsonArray array = new JsonArray(numberOfRecords);
+            int index = 0;
+            for (JsonElement element : jsonToReturn) {
+                // stopping after we reached the number of records required
+                if (index >= numberOfRecords) { break; }
 
-        return recordsHandler.getContent().get("game_records").getAsJsonArray();
+                // adding the elements to the returned array
+                array.add(element);
+
+                index ++;
+            }
+            return array;
+        }
     }
 
 

@@ -40,7 +40,7 @@ public class LeaderboardViewController extends RootController implements Joystic
                 List<Score> data = new ArrayList<>();
                 SysData sysData = new SysData();
                 try {
-                    JsonArray array = sysData.getGameScores().getAsJsonArray();
+                    JsonArray array = sysData.getGameScores(10).getAsJsonArray();
                     int index = 0;
                     for (JsonElement element : array) {
 
