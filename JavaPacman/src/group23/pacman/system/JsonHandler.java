@@ -69,7 +69,10 @@ public class JsonHandler {
         JsonArray array = tempContent.get(field).getAsJsonArray();
 
         // adding the new question to the array
-        array.add(objectToWrite);
+        if (!field.equals("game_records"))
+            array.add(objectToWrite);
+        else
+            array = insertGameScoreToList(array, objectToWrite);
 
         // update the json file
         updateJson(tempContent, array, field);
@@ -166,10 +169,43 @@ public class JsonHandler {
     }
 
 
-    // json file example for game records:
-    // {"game_records":[
-    //      {"id": 1,
-    //      "name": "",
-    //      "score": 1234},{...},{...}
-    // ]}
+    /*
+    Helper function for handling json files
+     */
+
+    public JsonArray insertGameScoreToList(JsonArray array, JsonObject objectToWrite) {
+
+        JsonArray newArray = new JsonArray();
+
+        // iterate over the list and insert the new object in the correct place
+        // correct place: score of the new object above someone in the array
+        boolean added = false;
+        for (JsonElement element : array) {
+            if (objectToWrite.get("score").getAsInt() > element.getAsJsonObject().get("score").getAsInt() && !added) {
+                newArray.add(objectToWrite);
+                newArray.add(element.getAsJsonObject());
+                added = true;
+            } else {
+                newArray.add(element.getAsJsonObject());
+            }
+        }
+
+        if (!added) {
+            newArray.add(objectToWrite);
+        }
+
+        return newArray;
+    }
+
+
+
 }
+
+
+
+// json file example for game records:
+// {"game_records":[
+//      {"id": 1,
+//      "name": "",
+//      "score": 1234},{...},{...}
+// ]}

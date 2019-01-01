@@ -14,14 +14,13 @@ public class Score {
     private int score;
 
     /* show time game duration*/
-    private int timeGame;
+    private String timeGame;
 
     /* show game date*/
-    private long gameDate;
+    private String gameDate;
 
 
-
-    public Score(String nickName, int score, int timeGame, long gameDate) {
+    public Score(String nickName, int score, String timeGame, String gameDate) {
         this.nickName = nickName;
         this.score = score;
         this.timeGame = timeGame;
@@ -33,11 +32,11 @@ public class Score {
         return nickName;
     }
 
-    public long getGameDate() {
+    public String getGameDate() {
         return gameDate;
     }
 
-    public void setGameDate(long gameDate) {
+    public void setGameDate(String gameDate) {
         this.gameDate = gameDate;
     }
 
@@ -53,11 +52,11 @@ public class Score {
         this.score = score;
     }
 
-    public int getTimeGame() {
+    public String getTimeGame() {
         return timeGame;
     }
 
-    public void setTimeGame(int timeGame) {
+    public void setTimeGame(String timeGame) {
         this.timeGame = timeGame;
     }
 

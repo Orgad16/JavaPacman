@@ -65,10 +65,10 @@ public class ScoreSetting {
             int gScore = element.getAsJsonObject().get("score").getAsInt();
 
             // getting the game time
-            int gTime= element.getAsJsonObject().get("timer").getAsInt();
+            String gTime= element.getAsJsonObject().get("timer").getAsString();
 
             //getting the game date
-            long dateStamp= element.getAsJsonObject().get("date").getAsLong();
+            String dateStamp= element.getAsJsonObject().get("date").getAsString();
 
             Score s= new Score(nickName,gScore,gTime,dateStamp);
 

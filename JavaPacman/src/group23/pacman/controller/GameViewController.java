@@ -746,6 +746,8 @@ public class GameViewController extends RootController implements JoystickManage
 
     public void showResultGame() {
 
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+
         // init a dialog view for the result game status
         DialogView dialogView = new DialogView();
 
@@ -754,36 +756,50 @@ public class GameViewController extends RootController implements JoystickManage
 
         // handle when the pacman won or lose the level
 
+        String dialogViewText = "LEVEL FAILED";
+        String dialogViewStyle = "-fx-font-size:40px; -fx-text-fill:red;";
+        String dialogViewDescription = " ";
+
         if (GameSettings.instance.getNumbrOfPlayers() > 1) {
+
             // handle multiplayer
             if (game.levelCleared() || (allGames[getOtherPlayer()] != null && allGames[getOtherPlayer()].levelCleared())) {
                 // level is cleared
-                game.setScore(game.getIntScore() + 100);
-                dialogView.titleLabel.setText("LEVEL CLEARED");
-                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:green;");
 
-                // checking which player one and print
-                if (game.getIntScore() > allGames[getOtherPlayer()].getIntScore())
-                    dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(currentPlayerIndex) + " Won!");
-                else
-                    dialogView.descriptionLabel.setText("Player " + GameSettings.instance.getPlayerNames().get(getOtherPlayer()) + " Won!");
+                // checking the other player if he cleared the lever or not
+                // if he didnt cleared it -> we know that the current player won and we will save his game
+                boolean checkOtherPlayerClearence = allGames[getOtherPlayer()] != null && allGames[getOtherPlayer()].levelCleared();
 
-                //boolean
-                // TODO: check which player won and add function to call game.saveGame() with the correct player
-                // TODO: check if the player cleared the level
-                // TODO: check id the other player cleared
-                // TODO: if only one of them won call game.saveGame() with that plyaer
-                // TODO: if both of them cleared the level -> check if which one has the higher points
-                // TODO: call the function game.saveGame() with the correct player
-                Score score = new Score(GameSettings.instance.getPlayerNames().get(currentPlayerIndex), allGames[currentPlayerIndex].getIntScore(), 120 - allGames[currentPlayerIndex].getTimer().getTimeRemaining(), new Date().getTime());
-                // saving the game into the json file
+                // saving the current player's game
+                if (!checkOtherPlayerClearence || game.getIntScore() >= allGames[getOtherPlayer()].getIntScore()) {
+
+                } else if (checkOtherPlayerClearence && game.levelCleared()){
+                    if (game.getIntScore() <= allGames[getOtherPlayer()].getIntScore())
+                        currentPlayerIndex = getOtherPlayer();
+                }
+
+                // set the game to winner player
+                game = allGames[currentPlayerIndex];
+
+                // set the gameStateController to winner player
+                gameStateController = allGameStates[currentPlayerIndex];
+
+                // getting the info we need to update the json file and the level score
+                String playerName = GameSettings.instance.getPlayerNames().get(currentPlayerIndex);
+                int game_score = game.getIntScore() + 100;
+                String game_timer = getStringFormatedTimer(120 - gameStateController.getTimer().getTimeRemaining());
+
+                // saving the game into json file
+                Score score = new Score(playerName, game_score, game_timer, format.format(new Date()));
                 saveGame(score);
 
-            } else {
-                // failed level
-                dialogView.titleLabel.setText("LEVEL FAILED");
-                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:red;");
-                dialogView.descriptionLabel.setText(" ");
+                // setting the dialog with the current info
+                game.setScore(game_score);
+                dialogViewText = "LEVEL CLEARED";
+                dialogViewStyle = "-fx-font-size:40px; -fx-text-fill:green;";
+
+                // checking which player one and print
+                dialogViewDescription = "Player " + playerName + " Won!";
 
             }
         } else {
@@ -791,21 +807,24 @@ public class GameViewController extends RootController implements JoystickManage
             if (game.levelCleared()) {
                 // game level cleared
                 game.setScore(game.getIntScore() + 100);
-                dialogView.titleLabel.setText("LEVEL CLEARED");
-                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:green;");
+                dialogViewText = "LEVEL CLEARED";
+                dialogViewStyle = "-fx-font-size:40px; -fx-text-fill:green;";
 
-                dialogView.descriptionLabel.setText("WON THE LEVEL!");
-                Score score = new Score(GameSettings.instance.getPlayerNames().get(0), game.getIntScore(), 120 - game.getTimer().getTimeRemaining(), new Date().getTime());
+                dialogView.descriptionLabel.setText("YOU WON THE LEVEL!");
+                Score score = new Score(GameSettings.instance.getPlayerNames().get(0), game.getIntScore(), getStringFormatedTimer(120 - gameStateController.getTimer().getTimeRemaining()), format.format(new Date()));
                 saveGame(score);
-            } else {
-                // failed level
-
-                dialogView.titleLabel.setText("LEVEL FAILED");
-                dialogView.titleLabel.setStyle("-fx-font-size:40px; -fx-text-fill:red;");
-                dialogView.descriptionLabel.setText(" ");
             }
+            // only for testing
+//            else {
+//                Score score = new Score(GameSettings.instance.getPlayerNames().get(0), game.getIntScore(), getStringFormatedTimer(120 - gameStateController.getTimer().getTimeRemaining()), format.format(new Date()));
+//                saveGame(score);
+//            }
         }
 
+
+        dialogView.titleLabel.setText(dialogViewText);
+        dialogView.titleLabel.setStyle(dialogViewStyle);
+        dialogView.descriptionLabel.setText(dialogViewDescription);
 
         // getting the game results for single and multiplayer
         hBox = showLevelResults();

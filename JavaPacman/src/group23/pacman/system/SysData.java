@@ -191,7 +191,7 @@ public class SysData {
 //         "id": "2",
 //         "name": "tony",
 //         "score": "123",
-//         "time":"1:24"
+//         "timer":"1:24"
 //         "date":"22222222"
 //         }
 //         ]

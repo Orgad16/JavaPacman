@@ -1,11 +1,16 @@
 package group23.pacman.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import group23.pacman.MainApp;
 import group23.pacman.model.Score;
+import group23.pacman.system.SysData;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import ui.UITableView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,13 +37,35 @@ public class LeaderboardViewController extends RootController implements Joystic
             @Override
             public Collection<? extends Score> dataSource() {
                 //TODO hookup with valid data source
-//                List<Score> fakeData = new ArrayList<>();
-//                fakeData.add(new Score(0,"test1",4232,23,new Date().getTime()));
-//                fakeData.add(new Score(0,"test4",672,52,new Date().getTime()));
-//                fakeData.add(new Score(0,"test3",452,43,new Date().getTime()));
-//                fakeData.add(new Score(0,"test2",234,23,new Date().getTime()));
-//                return fakeData;
-                return new ArrayList<>();
+                List<Score> data = new ArrayList<>();
+                SysData sysData = new SysData();
+                try {
+                    JsonArray array = sysData.getGameScores().getAsJsonArray();
+                    int index = 0;
+                    for (JsonElement element : array) {
+
+                        // getting only the top 10 scores
+                        if (index > 10) { break; }
+
+                        // getting the element as json object
+                        JsonObject jsonObject = element.getAsJsonObject();
+
+                        // getting the info from the specific record
+                        String name = jsonObject.get("name").getAsString();
+                        int game_score = jsonObject.get("score").getAsInt();
+                        String timer = jsonObject.get("timer").getAsString();
+                        String date = jsonObject.get("date").getAsString();
+
+                        // append the score to the list
+                        data.add(new Score(name, game_score, timer, date));
+
+                        index ++;
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return data;
             }
 
             @Override
