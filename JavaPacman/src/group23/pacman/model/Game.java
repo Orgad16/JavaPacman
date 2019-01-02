@@ -318,6 +318,9 @@ public class Game {
 								score -= 50;
 								break;
 						}
+						ghost.setState(Ghost.STATE.DEAD);
+						ghost2.setState(Ghost.STATE.DEAD);
+						ghost3.setState(Ghost.STATE.DEAD);
 						pacman.playDeathAnim();
 					}
 
