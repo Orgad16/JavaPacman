@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.Group?>
+<UIView fx:id="root" stylesheets="@../../../assets/css/main_style.css"
+        xmlns="http://javafx.com/javafx/8.0.121"
+        xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
+
+    <VBox alignment="CENTER" spacing="100.0">
+        <Label styleClass="label-retro" style="-fx-font-size: 40px;" text="Options"/>
+        <Group>
+            <VBox alignment="CENTER" maxHeight="100" spacing="16.0" >
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton fx:id="sound_btn" styleClass="button-retro" prefWidth="350" text="SOUND"/>
+                    <Label fx:id="sound_lbl" styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton fx:id="fs_btn" styleClass="button-retro" prefWidth="350" text="FULL SCREEN"/>
+                    <Label fx:id="fs_lbl" styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton fx:id="tongue_btn" styleClass="button-retro"  prefWidth="350" text="ALLOW TONGUE"/>
+                    <Label fx:id="tongue_lbl" styleClass="label-retro" style="-fx-font-size: 20px;" text="ON"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton fx:id="tutorial_btn" styleClass="button-retro" prefWidth="350" text="TUTORIAL"/>
+                </HBox>
+
+                <HBox spacing="30" alignment="CENTER_LEFT">
+                    <ToggleButton fx:id="questions_btn" styleClass="button-retro"  prefWidth="350"  text="MANAGE QUESTIONS"/>
+                </HBox>
+
+            </VBox>
+        </Group>
+
+    </VBox>
+
+</UIView>

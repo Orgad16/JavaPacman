@@ -13,7 +13,6 @@ public class MapSelectionViewController extends RootController implements Joysti
     private static final String JOYSTICK_LISTENER_ID = "MapSelectionViewController";
 
     // the maps objects
-
     @FXML private ToggleButton map_0;
     @FXML private ToggleButton map_1;
     @FXML private ToggleButton map_2;
@@ -32,7 +31,6 @@ public class MapSelectionViewController extends RootController implements Joysti
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
         JoystickManager.shared.subscribe(JOYSTICK_LISTENER_ID,this);
     }
 
@@ -45,6 +43,7 @@ public class MapSelectionViewController extends RootController implements Joysti
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         if(joystickId == 1) {
             switch (selectedKey){
+                /* NAVIGATION CONTROL*/
                 case LEFT:
                     adapter.current().setSelected(false);
                     adapter.move_left().setSelected(true);
@@ -56,13 +55,16 @@ public class MapSelectionViewController extends RootController implements Joysti
                 case ONE:
                     // map selected
                     GameSettings.instance.setMap(adapter.getY());
+
+                    // init controller
                     GameViewController gameViewController = new GameViewController();
 
-                    MainApp.getInstance().pushViewController(gameViewController,true);
+                    // push to navigation stack
+                    MainApp.getInstance().pushViewController(gameViewController);
                     break;
                 case TWO:
                     //go back
-                    MainApp.getInstance().popViewController(true);
+                    MainApp.getInstance().popViewController();
                     break;
             }
         }

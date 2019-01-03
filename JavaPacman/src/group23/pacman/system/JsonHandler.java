@@ -14,11 +14,28 @@ public class JsonHandler {
     private Gson gson;
     private JsonObject content;
 
-    public JsonHandler(String path) throws IOException{
+    public JsonHandler(String path,boolean external, String defaultValueOnFail,boolean createIfNotExist) throws IOException{
         this.path = path;
         this.jsonParser = new JsonParser();
         this.gson = new Gson();
-        this.content = jsonParser.parse(new FileReader(this.path)).getAsJsonObject();
+        Reader reader = null;
+        try{
+            if(external){
+                reader = new FileReader(path);
+            }else {
+                InputStream stream = getClass().getResourceAsStream(path);
+                reader = new BufferedReader(new InputStreamReader(stream));
+            }
+        }catch (Exception e){
+            System.err.println("json not found, creating empty file");
+
+            if(createIfNotExist && external) {
+                saveDataInFile(defaultValueOnFail,path);
+            }
+        }
+        this.content = reader != null
+                ? jsonParser.parse(reader).getAsJsonObject()
+                : jsonParser.parse(defaultValueOnFail).getAsJsonObject();
     }
 
     public JsonObject getContent(){
@@ -52,7 +69,10 @@ public class JsonHandler {
         JsonArray array = tempContent.get(field).getAsJsonArray();
 
         // adding the new question to the array
-        array.add(objectToWrite);
+        if (!field.equals("game_records"))
+            array.add(objectToWrite);
+        else
+            array = insertGameScoreToList(array, objectToWrite);
 
         // update the json file
         updateJson(tempContent, array, field);
@@ -138,11 +158,54 @@ public class JsonHandler {
         writeAll(content);
     }
 
+    public void saveDataInFile(String data,String fileName) throws IOException {
+        File yourFile = new File(fileName);
+        yourFile.createNewFile();
 
-    // json file example for game records:
-    // {"game_records":[
-    //      {"id": 1,
-    //      "name": "",
-    //      "score": 1234},{...},{...}
-    // ]}
+        FileOutputStream fos = new FileOutputStream(fileName);
+        DataOutputStream outStream = new DataOutputStream(new BufferedOutputStream(fos));
+        outStream.writeUTF(data);
+        outStream.close();
+    }
+
+
+    /*
+    Helper function for handling json files
+     */
+
+    public JsonArray insertGameScoreToList(JsonArray array, JsonObject objectToWrite) {
+
+        JsonArray newArray = new JsonArray();
+
+        // iterate over the list and insert the new object in the correct place
+        // correct place: score of the new object above someone in the array
+        boolean added = false;
+        for (JsonElement element : array) {
+            if (objectToWrite.get("score").getAsInt() > element.getAsJsonObject().get("score").getAsInt() && !added) {
+                newArray.add(objectToWrite);
+                newArray.add(element.getAsJsonObject());
+                added = true;
+            } else {
+                newArray.add(element.getAsJsonObject());
+            }
+        }
+
+        if (!added) {
+            newArray.add(objectToWrite);
+        }
+
+        return newArray;
+    }
+
+
+
 }
+
+
+
+// json file example for game records:
+// {"game_records":[
+//      {"id": 1,
+//      "name": "",
+//      "score": 1234},{...},{...}
+// ]}

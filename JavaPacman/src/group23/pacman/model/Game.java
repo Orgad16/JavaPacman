@@ -1,10 +1,15 @@
 package group23.pacman.model;
 
+import com.google.gson.JsonObject;
+import group23.pacman.controller.GameSettings;
+import group23.pacman.controller.GameStateController;
+import group23.pacman.controller.GameViewController;
 import group23.pacman.model.Pacman.STATE;
 import group23.pacman.system.ScoreSetting;
 import group23.pacman.system.SysData;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -30,7 +35,7 @@ public class Game {
 	private Ghost ghost3;
 	//private Ghost ghost4;
 
-	ArrayList<TemporaryGhost> temporaryGhosts = new ArrayList<>(3);
+	ArrayList<TemporaryGhost> temporaryGhosts = new ArrayList<>(4);
 
 	//TODO: add temporary ghost
 	
@@ -57,9 +62,6 @@ public class Game {
 	/* Game has array list of moving objects */
 	private ArrayList<MovingCharacter> characters;
 	
-	/* Gas zone which spawns every 20 seconds */
-	private GasZone gasZone;
-	
 	/* Time */
 	private long scatterTime = 0;
 	
@@ -80,7 +82,7 @@ public class Game {
 
 	private List<Question> questionList = SysData.instance.getQuestionsFromJson();
 
-	private List<Score> scoresList= ScoreSetting.getAllScore();
+	private GameViewController gameViewController;
 
 	public Game(int map,int numPlayers,int player2Ghost,int player3Ghost) {
 		
@@ -96,9 +98,6 @@ public class Game {
 		
 		/* Get reference to objects created on the board */
 		objects = board.getObjects();
-		
-		/* Create gas zone */
-		gasZone = new GasZone();
 		
 		/* Clear condition (number of pellets to eat) */
 		pellets = board.getTotalPellets();
@@ -139,13 +138,24 @@ public class Game {
 		//getting the question that the pacman ate
 		Question q = question.getQuestion();
         List<Pair<Integer,Integer>> locations = movementLocations();
+
+        if(locations.isEmpty()){
+            System.err.println("NO MOVEMENT LOCATIONS FOUND");
+            return;
+        }
+
 		Random rnd = new Random();
-		for (int i=4; i<7; i++) {
+		for (int i=4; i<4 + q.getAnswers().size(); i++) {
 		    Pair<Integer,Integer> loc = locations.get(rnd.nextInt(locations.size()));
-            System.out.println(loc);
+
 			// type field should by between 2 and 4 -> set to i-2
-			// answer field should be between 0 and 2 -> set to i-4
-			TemporaryGhost temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET() ,loc.getValue() * TILE_SIZE + Y_OFFSET, board, i-2, i, q, i-4);
+			// answer field should be between 0 and 3 -> set to i-4
+			TemporaryGhost temp_ghost;
+			if (i < 7) {
+				temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET(), loc.getValue() * TILE_SIZE + Y_OFFSET, board, i - 2, i, q, i - 4);
+			} else {
+				temp_ghost = new TemporaryGhost(loc.getKey() * TILE_SIZE + X_OFFSET(), loc.getValue() * TILE_SIZE + Y_OFFSET, board, 4, i, q, i - 4);
+			}
 			characters.add(temp_ghost);
 			temporaryGhosts.add(temp_ghost);
 		}
@@ -170,25 +180,10 @@ public class Game {
 		vector.add(2);
 		vector.add(3);
 		vector.add(4);
-		
-		/* Set up ghosts according to game mode */
-		if (numPlayers == 1) {
-			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 3,1);
-			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,2);
-			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,3);
-		}
-		
-		else if (numPlayers == 2) {
-			
-			/* Get and set player ghost choices then remove them from remaining choices */
-			vector.removeElement(player2Ghost);
-			ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 0,player2Ghost);
-			
-			/* The AI's will now have the remaining ghost sprites not chosen by the players */
-			ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,vector.elementAt(0));
-			ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,vector.elementAt(1));
-			//ghost4= new Ghost(board.getGhost()[0],board.getGhost()[1], board, 4,vector.elementAt(2));
-		}
+
+		ghost = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 3,1);
+		ghost2 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 2,2);
+		ghost3 = new Ghost(board.getGhost()[0],board.getGhost()[1], board, 1,3);
 
 
 	}
@@ -197,27 +192,56 @@ public class Game {
 	/* When updating the game state, we need to check for collisions before updating moving characters
 	 * due to the nature of how we implemented the MovingCharacter interface */
 	public void update( ) {
-		
+
 		checkCollisions();
+
 		pacman.update();
+
 		changeAIBehaviour();
+
 		ghost.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost2.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
 		ghost3.update((int)pacman.getX(), (int)pacman.getY(), pacman.getDirection());
+
 		updateTempGhostsOnBoard();
-		gasZone.update();
-        poisonPellet.update(emptySpaces);
-        questionPellet.update(emptySpaces);
+
+		if (emptySpaces.size() > 10 && objects.contains(poisonPellet)) {
+			poisonPellet.update(emptySpaces);
+			if (poisonPellet.hitBox.getX() != 0.0 && poisonPellet.hitBox.getY() != 0.0) {
+				objects.add(poisonPellet);
+				removePelletFromEmptySpaces(poisonPellet);
+			} else {
+				poisonPellet.stopDrawing();
+				objects.remove(poisonPellet);
+			}
+
+		}
+        // when we are chasing temp ghosts we will not see question pellets
+        if (!getGameViewController().duringQuestion && objects.contains(questionPellet) && pelletsEaten > 25) {
+			questionPellet.update(emptySpaces);
+			if (questionPellet.hitBox.getY() != 0.0 && questionPellet.hitBox.getX() != 0.0) {
+				objects.add(questionPellet);
+				removePelletFromEmptySpaces(questionPellet);
+			} else {
+				questionPellet.stopDrawing();
+				objects.remove(questionPellet);
+			}
+
+		}
 		//TODO: remove the gasZone
+	}
+
+	private void removePelletFromEmptySpaces(GameObject object) {
+		emptySpaces.remove(object);
 	}
 
 	public List<Pair<Integer,Integer>>  movementLocations(){
         List<Pair<Integer,Integer>> locations = board.getOnlyTurns();
-        int x = (int) (pacman.getX() - X_OFFSET()) / TILE_SIZE;
-        int y = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
+        int tempX = (int) (pacman.getX() - X_OFFSET()) / TILE_SIZE;
+        int tempY = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
 
         // filter locations close to the pacman
-        return locations.stream().filter(o -> ( x + 3 < o.getKey() && y + 3 < o.getValue())).collect(Collectors.toList());
+        return locations.stream().filter(o -> ( tempX + 3 < o.getKey() && tempY + 3 < o.getValue())).collect(Collectors.toList());
     }
 
 
@@ -236,21 +260,14 @@ public class Game {
 					}
 				}
 				if (pacman.collidedWith((GameObject) character) && ((Ghost)character).getState() == Ghost.STATE.ALIVE) {
+					//System.out.println("pacman touched perm ghost, " + ((Ghost) character).type);
+					ghost.setState(Ghost.STATE.DEAD);
+					ghost2.setState(Ghost.STATE.DEAD);
+					ghost3.setState(Ghost.STATE.DEAD);
 					pacman.playDeathAnim();
-					gasZone.stopDrawing();
 					return;
 				}
-			}
-			
-			/* Checks for collision with the gasZone */
-			if (character.collidedWith(gasZone) && gasZone.getDrawGas()) {
-				if (character.getType() == GameObject.TYPE.GHOST) {
-				((Ghost) character).setState(Ghost.STATE.DEAD);
-				}
-				else {
-					pacman.playDeathAnim();
-					gasZone.stopDrawing();
-				}
+				//((Ghost) character).setState(Ghost.STATE.DEAD);
 			}
 			/* Restricts the character from moving into the spawn point after it has left the spawn point */
 			if (character.getX() == 518 && character.getY() == 309) {
@@ -273,20 +290,46 @@ public class Game {
 
 			if (character.getType() == GameObject.TYPE.TEMP_GHOST) {
 				if (pacman.collidedWith((GameObject) character) && ((TemporaryGhost)character).getState() == TemporaryGhost.STATE.ALIVE) {
+					//System.out.println("pacman touched temp ghost, " + ((TemporaryGhost) character).type);
+					int question_level = ((TemporaryGhost) character).getQuestion().getLevel();
 					if (((TemporaryGhost) character).isRightGhost()) {
-						//TODO: adjust the score based on the level of the question
-						score += 250;
+
+						switch (question_level) {
+							case 1:
+								score += 100;
+								break;
+							case 2:
+								score += 200;
+								break;
+							case 3:
+								score += 500;
+								break;
+						}
 					}
 					else {
+						switch (question_level) {
+							case 1:
+								score -= 250;
+								break;
+							case 2:
+								score -= 100;
+								break;
+							case 3:
+								score -= 50;
+								break;
+						}
 						pacman.playDeathAnim();
 					}
+
+					for (TemporaryGhost temporaryGhost : temporaryGhosts) {
+						temporaryGhost.setState(Ghost.STATE.DEAD);
+					}
+					// no longer chasing temp ghosts so we can see question pellets
+					gameViewController.setDuringQuestion(false);
 					characters.removeAll(temporaryGhosts);
 					temporaryGhosts.removeAll(temporaryGhosts);
 					return;
 				}
-
-
-					// TODO: do actions according to the collision
 			}
 			
 		}
@@ -301,6 +344,7 @@ public class Game {
 				// collide with silver pellet
 				if (object.getType() == GameObject.TYPE.SILVER_PELLET) {
 					pacman.getWhip().addCharges();
+					score += 50;
 				}
 
 				// collide with pellet
@@ -312,21 +356,28 @@ public class Game {
 
 				// collide with question pellet
 				if (object.getType() == GameObject.TYPE.QUESTION_PELLET) {
+					questionPellet.stopDrawing();
+					changeAIBehaviour();
 					setUpTempGhosts((QuestionPellet) object);
+					//System.out.println("pacman touched question pellet, " + object.type);
 				}
 
 				// collide with poison pellet
 				if (object.getType() == GameObject.TYPE.POISON_PELLET) {
-					pacman.playDeathAnim();
 					poisonPellet.stopDrawing();
+					ghost.setState(Ghost.STATE.DEAD);
+					ghost2.setState(Ghost.STATE.DEAD);
+					ghost3.setState(Ghost.STATE.DEAD);
+					pacman.playDeathAnim();
+					//System.out.println("pacman touched poison pellet, " + object.type);
 				}
 				emptySpaces.add(object);
 				objects.remove(object);
+				//System.out.println("there are number of poison pellets after: " + getNumberOfPoisonPellets(objects));
 				break;
 			}
 		}
 	}
-	
 
 	/* Checks if pacman has died and resets all moving objects*/
 	public void checkState() {
@@ -397,10 +448,15 @@ public class Game {
 		ScoreHandler scoreHandler = new ScoreHandler();
 		scoreHandler.writeScore(score, name, map);
 	}
-	
-	
-	
+
+
+
+
 	/** ALL PUBLIC GETTERS BELOW **/
+
+	public ArrayList<MovingCharacter> getCharacters() {
+		return characters;
+	}
 
 	/* Public getter to reference map type */
 	public PoisonPellet getPoisonPellet() {
@@ -455,12 +511,7 @@ public class Game {
 		
 		return this.map;
 	}
-	
-	/* Public getter to reference map type */
-	public GasZone getGasZone() {
-		
-		return this.gasZone;
-	}	
+
 	
 	/* Public getter to reference game mode */
 	public int getPlayers() {
@@ -492,5 +543,39 @@ public class Game {
 		return score;
 	}
 
+	public Timer getTimer() {
+		return this.timer;
+	}
 
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public QuestionPellet getQuestionPellet() {
+		return questionPellet;
+	}
+
+	public void setGameViewController(GameViewController gameViewController) {
+		this.gameViewController = gameViewController;
+	}
+
+	public GameViewController getGameViewController() {
+		return gameViewController;
+	}
+
+	public void saveGameIntoJson(Score score) {
+		ScoreSetting scoreSetting = new ScoreSetting(score);
+		try {
+			scoreSetting.saveGame();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
+
+//{
+//		"id": "1",
+//		"name": "tomer",
+//		"score": "200",
+//		"date": "12/08/2018"
+//		}

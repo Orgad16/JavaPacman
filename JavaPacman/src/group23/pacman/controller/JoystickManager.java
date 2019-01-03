@@ -11,6 +11,63 @@ import java.util.Vector;
 
 /**
  * Created By Tony on 12/12/2018
+ *
+ * The sole purpose of this class is to manage the input from the physical joystick controllers we have.
+ * The joysticks are constructed of a simple joystick stick which can move up,down,left,right, as well as two buttons.
+ *
+ * In other words, each joystick can input only one of the following keys: up,down,left,right,one,two (6 inputs).
+ *
+ * The JoystickManager class, allows us, the developers, to register a joystick that is mapped to normal keyboard keys,
+ * and then have the ability to listen to it's input in a wrapping callback interface.
+ *
+ *
+ * For Example:
+ *
+ * Let's assume we have mapped the joystick we have to the following keyboard keys such that:
+ *
+ * Stick UP -> Arrow Key UP
+ * Stick DOWN -> Arrow Key DOWN
+ * Stick LEFT -> Arrow Key LEFT
+ * Stick RIGHT -> Arrow Key RIGHT
+ * Button ONE -> Enter
+ * Button TWO -> SHIFT
+ *
+ * We assume that this is the key-binding that was set-up for the joystick through 3rd party software.
+ *
+ * In order to have that joystick registered within the application we have to call the register method like so:
+ *
+ * <pre>
+ *     {@code
+ *      JoystickManager.shared.register(KeyCode.UP,
+ *                                      KeyCode.DOWN,
+ *                                      KeyCode.LEFT,
+ *                                      KeyCode.RIGHT,
+ *                                      KeyCode.ENTER,
+ *     }                                KeyCode.SHIFT);
+ * </pre>
+ *
+ * This method would return us a joystick id, which is unique to that specific joystick.
+ *
+ * We can then start listening to the events after we register the singleton instance as a handler:
+ *
+ * <pre>
+ *     {@code
+ *       primaryScene.setOnKeyPressed(JoystickManager.shared);
+ *     }
+ * </pre>
+ *
+ * Where @code{primaryScene} is our primary scene used in JavaFX.
+ *
+ * Finally, to start receiving events use the @code{subscribe} method:
+ *
+ * <pre>
+ *     {@code
+ *          JoystickManager.shared.subscribe(identifier, (joystickId, selectedKey) -> {
+ *              //do something with the selected key
+ *          });
+ *     }
+ * </pre>
+ *
  */
 public final class JoystickManager implements EventHandler<KeyEvent>{
 
@@ -66,6 +123,7 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
 
     /**
      * Register a new joystick controller.
+     *
      * @param up The up key binding.
      * @param down The down key binding.
      * @param left The left key binding.
@@ -79,14 +137,18 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
         // create instance
         Joystick joystick = new Joystick(up, down, left,right,primary,secondary);
 
+        // get all codes
         KeyCode[] allcodes = joystick.getKeys();
+
+        // get inner mappings
         Map<KeyCode,Key> innerMapping = joystick.getKeyBindings();
 
         for (KeyCode code: allcodes) {
             Map<Integer,Key> keyMap = key_mappings.get(code);
-            if(keyMap == null) {
+
+            if(keyMap == null)
                 keyMap = new HashMap<>();
-            }
+
             Key k = innerMapping.get(code);
             keyMap.put(joystick.id,k);
 
@@ -122,14 +184,36 @@ public final class JoystickManager implements EventHandler<KeyEvent>{
     }
 
 
+    /**
+     * This interface serves as a callback.
+     * It only has one method "onJoystickTriggered"
+     * and is activated when the JoystickManager receives input events meant for the joystick.
+     */
+    @FunctionalInterface
     public interface JoystickListener {
+        /**
+         * This method is called from the handle method in the JoystickManager class, where the input from the user is
+         * translated into Joystick input based on the input that was registered using the "Register" method.
+         * The method will be called with two parameters, which are the joystick id and the selected key.
+         *
+         * These parameters are enough to let us know what key was pressed as well as which user activated it.
+         *
+         * @param joystickId The id of the registered joystick control.
+         * @param selectedKey The key that was pressed: UP, DOWN, LEFT, RIGHT, ONE, TWO.
+         */
         void onJoystickTriggered(int joystickId,Key selectedKey);
     }
 
+    /**
+     * Key enum, contains all the possible actions a joystick has.
+     */
     public enum Key{
         UP,DOWN,LEFT,RIGHT, ONE, TWO
     }
 
+    /**
+     * Helper class.
+     */
     private static class Joystick {
         private static int id_counter = 1;
 

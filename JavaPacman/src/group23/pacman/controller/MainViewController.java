@@ -29,6 +29,9 @@ public class MainViewController extends RootController implements JoystickManage
     @FXML
     private ToggleButton leaderboardBtn;
 
+    @FXML
+    private ToggleButton exitBtn;
+
     /**
      * navigation handler.
      */
@@ -42,6 +45,7 @@ public class MainViewController extends RootController implements JoystickManage
         navigationAdapter.addRow(playBtn);
         navigationAdapter.addRow(settingsBtn);
         navigationAdapter.addRow(leaderboardBtn);
+        navigationAdapter.addRow(exitBtn);
 
         // highlight default
         navigationAdapter.current().setSelected(true);
@@ -69,8 +73,6 @@ public class MainViewController extends RootController implements JoystickManage
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
-
         // register controller to joystick manager
         JoystickManager
                 .shared
@@ -79,7 +81,9 @@ public class MainViewController extends RootController implements JoystickManage
 
     @Override
     public void didEnterBackground() {
-        JoystickManager.shared.unsubscribe(JOYSTICK_LISTENER_ID);
+        JoystickManager
+                .shared
+                .unsubscribe(JOYSTICK_LISTENER_ID);
     }
 
     public void handleAction() {
@@ -91,11 +95,16 @@ public class MainViewController extends RootController implements JoystickManage
                 break;
             case 1:
                 // options
-                //TODO: go to options
+                OptionsController questionController = new OptionsController();
+                MainApp.getInstance().pushViewController(questionController);
                 break;
             case 2:
                 // leaderboards
-                //TODO: go to leaderboards
+                LeaderboardViewController leaderboardViewController = new LeaderboardViewController();
+                MainApp.getInstance().pushViewController(leaderboardViewController);
+                break;
+            case 3:
+                MainApp.getInstance().exit();
                 break;
         }
     }

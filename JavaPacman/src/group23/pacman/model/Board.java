@@ -105,7 +105,7 @@ public class Board {
 			 * S is the spawn point of the main character
 			 * G is the spawn point of a ghost
 			 * Q is the question pellet
-			 * Z is the position that the temp ghosts start from
+
 			 */
 
 			// getting the questions for the question pellets

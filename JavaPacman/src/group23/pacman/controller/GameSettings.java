@@ -1,5 +1,6 @@
 package group23.pacman.controller;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -30,10 +31,16 @@ public class GameSettings {
      */
     private int numbrOfPlayers;
 
+    private boolean soundEnabled = false;
+
+    private boolean fullScreenEnabled = false;
+
+    private boolean tonugeEnabled = false;
+
     /**
      * The names of the players
      */
-    private List<String> playerNames = new ArrayList<>();
+    private String[] playerNames = new String[]{null,null};
 
     private GameSettings() { }
 
@@ -70,11 +77,37 @@ public class GameSettings {
         this.numbrOfPlayers = numbrOfPlayers;
     }
 
-    public List<String> getPlayerNames() {
-        return playerNames;
+    public void addPlayerName(String playerName,int index) {
+        if(playerNames.length - 1 < index )
+            return;
+        playerNames[index] = playerName;
     }
 
-    public void setPlayerNames(List<String> playerNames) {
-        this.playerNames = playerNames;
+    public List<String> getPlayerNames(){
+        return Arrays.asList(playerNames);
+    }
+
+    public boolean isSoundEnabled() {
+        return soundEnabled;
+    }
+
+    public void setSoundEnabled(boolean soundEnabled) {
+        this.soundEnabled = soundEnabled;
+    }
+
+    public boolean isFullScreenEnabled() {
+        return fullScreenEnabled;
+    }
+
+    public void setFullScreenEnabled(boolean fullScreenEnabled) {
+        this.fullScreenEnabled = fullScreenEnabled;
+    }
+
+    public boolean isTonugeEnabled() {
+        return tonugeEnabled;
+    }
+
+    public void setTonugeEnabled(boolean tonugeEnabled) {
+        this.tonugeEnabled = tonugeEnabled;
     }
 }

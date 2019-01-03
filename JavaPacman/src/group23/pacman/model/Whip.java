@@ -68,8 +68,8 @@ public class Whip extends GameObject implements MovingCharacter {
 	/* Cap charges at 6 */
 	public void addCharges() {
 		
-		charges = charges + 3;
-		charges = (charges > MAX_CHARGES) ? MAX_CHARGES : charges;
+		charges = charges + 1;
+		//charges = (charges > MAX_CHARGES) ? MAX_CHARGES : charges;
 	}
 	
 	

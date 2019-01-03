@@ -5,7 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import group23.pacman.model.Question;
 import group23.pacman.model.Score;
+import javafx.util.Pair;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +17,12 @@ public class SysData {
 
     final String questionPath = "src/assets/jsonFiles/questions.json";
     final String gameRecordsPath = "src/assets/jsonFiles/gameRecords.json";
+    final String mapsPath = "maps/";
+    final String gameSettingsPath = "src/assets/jsonFiles/gameSettings.json";
     private JsonHandler questionHandler;
     private JsonHandler recordsHandler;
-
+    private JsonHandler gameSettingsHandler;
+    private String mapContent;
     public static final SysData instance = new SysData();
 
 
@@ -25,14 +31,40 @@ public class SysData {
      * @param pathTo the path to the json file, questions or game scores
      * @throws IOException
      */
-    private void initHandler(String pathTo) throws IOException {
-        if (pathTo.equals("question")) {
-            if (questionHandler == null)
-                questionHandler = new JsonHandler(questionPath);
-        }
-        else {
-            if (recordsHandler == null)
-                recordsHandler = new JsonHandler(gameRecordsPath);
+    private void initHandler(String pathTo, String helper) throws IOException {
+
+        switch (pathTo) {
+            case "question":
+                if (questionHandler == null)
+                    questionHandler = new JsonHandler(questionPath,true,"{\"questions\" : []}",true);
+                break;
+            case "maps":
+                if (mapContent == null) {
+                    BufferedReader br = new BufferedReader(new FileReader(mapsPath + helper));
+                    try {
+                        StringBuilder sb = new StringBuilder();
+                        String line = br.readLine();
+
+                        while (line != null) {
+                            sb.append(line);
+                            sb.append(System.lineSeparator());
+                            line = br.readLine();
+                        }
+                        mapContent = sb.toString();
+                    } finally {
+                        br.close();
+                    }
+                }
+                break;
+            case "gameSettings":
+                if (gameSettingsHandler == null)
+                    gameSettingsHandler = new JsonHandler(gameSettingsPath, true, "{\"settings\" : []}", true);
+                break;
+            default:
+                // will go to records
+                if (recordsHandler == null)
+                    recordsHandler = new JsonHandler(gameRecordsPath,true, "{\"game_records\" : [] }",true);
+                break;
         }
     }
 
@@ -44,7 +76,7 @@ public class SysData {
      */
     public JsonArray getQuestions() throws IOException {
 
-        initHandler("question");
+        initHandler("question", null);
 
         return questionHandler.getContent().get("questions").getAsJsonArray();
     }
@@ -59,7 +91,7 @@ public class SysData {
      */
     public void removeQuestion(String questionId) throws IOException {
 
-        initHandler("question");
+        initHandler("question",null);
 
         questionHandler.removeFromJson(questionId, "question", "questions");
     }
@@ -72,7 +104,7 @@ public class SysData {
      */
     public void addQuestion(JsonObject objectToWrite) throws IOException{
 
-        initHandler("question");
+        initHandler("question", null);
 
         questionHandler.writeSingle(objectToWrite, "questions");
     }
@@ -86,7 +118,7 @@ public class SysData {
      */
     public void editQuestion(String questionToEdit, JsonObject contentToInsert) throws IOException {
 
-        initHandler("question");
+        initHandler("question", null);
 
         questionHandler.editQuestion(questionToEdit, contentToInsert, "questions");
 
@@ -95,26 +127,41 @@ public class SysData {
 
     /**
      * this function will return the highest game scores
+     * @param numberOfRecords the number of records you want to get (0 -> all records)
      * @return JsonArray of game scores
      * @throws IOException
      */
-    public JsonArray getGameScores() throws IOException {
+    public JsonArray getGameScores(int numberOfRecords) throws IOException {
 
-        initHandler("records");
+        initHandler("records", null);
+        JsonArray jsonToReturn = recordsHandler.getContent().get("game_records").getAsJsonArray();
+        if (numberOfRecords == 0) {
+            return jsonToReturn;
+        } else {
+            JsonArray array = new JsonArray(numberOfRecords);
+            int index = 0;
+            for (JsonElement element : jsonToReturn) {
+                // stopping after we reached the number of records required
+                if (index >= numberOfRecords) { break; }
 
-        return recordsHandler.getContent().get("game_records").getAsJsonArray();
+                // adding the elements to the returned array
+                array.add(element);
+
+                index ++;
+            }
+            return array;
+        }
     }
 
 
     /**
      * this function will remove the game score from the json file
      * @param gameId the game id
-     * @param conditionField the conditional field that we check against
      * @throws IOException
      */
     public void removeGameScore(String gameId) throws IOException{
 
-        initHandler("records");
+        initHandler("records", null);
 
         recordsHandler.removeFromJson(gameId, "id", "game_records");
     }
@@ -127,7 +174,7 @@ public class SysData {
      */
     public void addGameScore(JsonObject objectToWrite) throws IOException{
 
-        initHandler("records");
+        initHandler("records", null);
 
         recordsHandler.writeSingle(objectToWrite, "game_records");
 
@@ -138,11 +185,11 @@ public class SysData {
 
         // getting the questions as json array
         SysData sysData = new SysData();
-        JsonArray jsonList = null;
+        JsonArray jsonList = new JsonArray();
         try {
             jsonList = sysData.getQuestions();
         } catch (IOException e) {
-            e.printStackTrace();
+            qList = new ArrayList<>();
         }
 
         // loop over the json array and create a Question entity
@@ -176,6 +223,20 @@ public class SysData {
 
     }
 
+
+    /**
+     * this function will return the content of a given map in map folder
+     * @param mapName the name of the map (file name including ending)
+     * @return String value of the content of the file
+     * @throws IOException
+     */
+    public String getMap(String mapName) throws IOException {
+
+        initHandler(mapsPath, mapName);
+
+        return this.mapContent;
+    }
+
 }
 
 // json file example for game records:
@@ -192,7 +253,7 @@ public class SysData {
 //         "id": "2",
 //         "name": "tony",
 //         "score": "123",
-//         "time":"1:24"
+//         "timer":"1:24"
 //         "date":"22222222"
 //         }
 //         ]

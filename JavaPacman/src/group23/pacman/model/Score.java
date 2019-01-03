@@ -4,8 +4,8 @@ import group23.pacman.model.Timer;
 
 public class Score {
 
-    /*game id */
-    private int id;
+    /* id of the score*/
+    private String id;
 
     /*User's nickname in a game */
     private String nickName;
@@ -14,15 +14,13 @@ public class Score {
     private int score;
 
     /* show time game duration*/
-    private int timeGame;
+    private String timeGame;
 
     /* show game date*/
-    private long gameDate;
+    private String gameDate;
 
 
-
-    public Score(int id,String nickName, int score, int timeGame, long gameDate) {
-        this.id=id;
+    public Score(String nickName, int score, String timeGame, String gameDate) {
         this.nickName = nickName;
         this.score = score;
         this.timeGame = timeGame;
@@ -34,24 +32,16 @@ public class Score {
         return nickName;
     }
 
-    public long getGameDate() {
+    public String getGameDate() {
         return gameDate;
     }
 
-    public void setGameDate(long gameDate) {
+    public void setGameDate(String gameDate) {
         this.gameDate = gameDate;
     }
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getScore() {
@@ -62,11 +52,15 @@ public class Score {
         this.score = score;
     }
 
-    public int getTimeGame() {
+    public String getTimeGame() {
         return timeGame;
     }
 
-    public void setTimeGame(int timeGame) {
+    public void setTimeGame(String timeGame) {
         this.timeGame = timeGame;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

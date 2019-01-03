@@ -10,28 +10,32 @@ import java.util.ArrayList;
 
 public class ScoreSetting {
 
+    private Score score;
+    private ArrayList<Score> sList;
 
+    public ScoreSetting(Score score) {
+        this.score = score;
+    }
 
-    public void saveGame (Score scoreGame) throws IOException {
+    public void saveGame () throws IOException {
 
         JsonObject jsonObj = new JsonObject();
 
-        jsonObj.addProperty("id",scoreGame.getId());
+        jsonObj.addProperty("id",String.valueOf(getNumberOfScores() + 1));
 
-        jsonObj.addProperty("name",scoreGame.getNickName());
+        jsonObj.addProperty("name", score.getNickName());
 
-        jsonObj.addProperty("score",scoreGame.getScore());
+        jsonObj.addProperty("score",score.getScore());
 
-        jsonObj.addProperty("time",scoreGame.getTimeGame());
+        jsonObj.addProperty("timer",score.getTimeGame());
 
-        jsonObj.addProperty("date",scoreGame.getGameDate());
+        jsonObj.addProperty("date",score.getGameDate());
 
         try {
             SysData.instance.addGameScore(jsonObj);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -41,22 +45,18 @@ public class ScoreSetting {
      * @return list of all time scoring playing the game
      */
 
-    public static ArrayList<Score> getAllScore(){
-        ArrayList<Score> sList = new ArrayList<>();
+    public ArrayList<Score> getAllScore(){
+        sList = new ArrayList<>();
         // getting the questions as json array
         SysData sysData = new SysData();
         JsonArray jsonList = null;
         try {
-            jsonList = sysData.getGameScores();
+            jsonList = sysData.getGameScores(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
         // loop over the json array and create a score entity
         for (JsonElement element : jsonList) {
-
-
-            // getting the the game id
-            int id = element.getAsJsonObject().get("id").getAsInt();
 
             // getting the nickname of the user in game
             String nickName = element.getAsJsonObject().get("name").getAsString();
@@ -65,16 +65,25 @@ public class ScoreSetting {
             int gScore = element.getAsJsonObject().get("score").getAsInt();
 
             // getting the game time
-            int gTime= element.getAsJsonObject().get("time").getAsInt();
+            String gTime= element.getAsJsonObject().get("timer").getAsString();
 
             //getting the game date
-            long dateStamp= element.getAsJsonObject().get("date").getAsLong();
+            String dateStamp= element.getAsJsonObject().get("date").getAsString();
 
-            Score s= new Score(id,nickName,gScore,gTime,dateStamp);
+            Score s= new Score(nickName,gScore,gTime,dateStamp);
 
             sList.add(s);
         }
 
-            return sList;
+        return sList;
+    }
+
+    public ArrayList<Score> getsList() {
+        return sList;
+    }
+
+    public int getNumberOfScores() {
+        getAllScore();
+        return getsList().size();
     }
 }

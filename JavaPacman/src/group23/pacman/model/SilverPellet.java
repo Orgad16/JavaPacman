@@ -16,7 +16,7 @@ public class SilverPellet extends Pellet{
 	@Override
 	public void setImage() {
 		
-		image = new Image("assets/tempSpecialPellet.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
+		image = new Image("assets/pellet_powerup.png",SPRITE_WIDTH,SPRITE_HEIGHT,false,false);
 		this.type = GameObject.TYPE.SILVER_PELLET;
 	}
 

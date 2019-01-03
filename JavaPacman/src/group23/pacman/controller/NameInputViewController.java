@@ -11,35 +11,59 @@ import javafx.scene.layout.HBox;
  */
 public class NameInputViewController extends RootController implements JoystickManager.JoystickListener{
 
-    private static final String JOYSTICK_LISTENER_ID = "NameInputViewController";
-
+    /**
+     * The back button.
+     */
     @FXML
     private ToggleButton back;
 
+    /**
+     * The next button
+     */
     @FXML
     private ToggleButton next;
 
+    /**
+     * The hbox for the first 13 letters
+     */
     @FXML
     private HBox letters1;
 
+    /**
+     * The hbox for the remaining 13 letters
+     */
     @FXML
     private HBox letters2;
 
+    /**
+     * The name label which displays the current name of the player.
+     */
     @FXML
     private Label nameLabel;
 
+    /**
+     * The title label.
+     */
     @FXML
     private Label title_label;
 
-
+    /**
+     * String builder to hold the current name being inserted.
+     */
     private StringBuilder currentName = new StringBuilder();
 
+    /**
+     * The current player index (player 0 or player 1)
+     */
     private int playerIndex;
 
-    // adapter used for joystick navigation
-    UINavigationAdapter<ToggleButton> movmentAdapter = new UINavigationAdapter<>();
+    /**
+     * adapter used for joystick navigation
+     */
+    private UINavigationAdapter<ToggleButton> movementAdapter = new UINavigationAdapter<>();
 
     public NameInputViewController(int playerIndex) {
+        //load view
         super("/group23/pacman/view/NameInputViewController.fxml");
 
         // init variables
@@ -69,24 +93,14 @@ public class NameInputViewController extends RootController implements JoystickM
         }
 
         // setup movement adapter
-        movmentAdapter.addRow(firstRow);
-        movmentAdapter.addRow(secondRow);
-        movmentAdapter.addRow(back,next);
-        movmentAdapter.current().setSelected(true);
-
-
-        // reset all player names
-        if(playerIndex == 0){
-            GameSettings.instance.getPlayerNames().clear();
-        }
-
+        movementAdapter.addRow(firstRow);
+        movementAdapter.addRow(secondRow);
+        movementAdapter.addRow(back,next);
+        movementAdapter.current().setSelected(true);
     }
 
     @Override
     public void didBecomeActive() {
-        view.setOnKeyPressed(JoystickManager.shared);
-
-        // register controller to joystick manager
         JoystickManager
                 .shared
                 .subscribe(identifier(), this);
@@ -99,39 +113,41 @@ public class NameInputViewController extends RootController implements JoystickM
 
     @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
-        //TODO change this later to match the current joystick
         if(joystickId == playerIndex + 1){
             switch (selectedKey){
+                /* NAVIGATION CONTROL */
                 case UP:
-                    movmentAdapter.current().setSelected(false);
-                    movmentAdapter.move_up().setSelected(true);
+                    movementAdapter.current().setSelected(false);
+                    movementAdapter.move_up().setSelected(true);
                     break;
                 case RIGHT:
-                    movmentAdapter.current().setSelected(false);
-                    movmentAdapter.move_right().setSelected(true);
+                    movementAdapter.current().setSelected(false);
+                    movementAdapter.move_right().setSelected(true);
                     break;
                 case DOWN:
-                    movmentAdapter.current().setSelected(false);
-                    movmentAdapter.move_down().setSelected(true);
+                    movementAdapter.current().setSelected(false);
+                    movementAdapter.move_down().setSelected(true);
                     break;
                 case LEFT:
-                    movmentAdapter.current().setSelected(false);
-                    movmentAdapter.move_left().setSelected(true);
+                    movementAdapter.current().setSelected(false);
+                    movementAdapter.move_left().setSelected(true);
                     break;
+                /* ACTION CONTROL */
                 case ONE:
-                    ToggleButton current = movmentAdapter.current();
+                    ToggleButton current = movementAdapter.current();
                     if(current == next) {
 
                         //go to next
                         if(playerIndex + 1 == GameSettings.instance.getNumbrOfPlayers()){
                             // go to map selection
+                            GameSettings.instance.addPlayerName(currentName.toString(),playerIndex);
                             MainApp.getInstance().pushViewController(
                                     new MapSelectionViewController(),
                                     true
                             );
                         }else {
                             // go to next player name
-                            GameSettings.instance.getPlayerNames().add(currentName.toString());
+                            GameSettings.instance.addPlayerName(currentName.toString(),playerIndex);
                             MainApp.getInstance().pushViewController(
                                     new NameInputViewController(playerIndex + 1),
                                     true
@@ -140,7 +156,7 @@ public class NameInputViewController extends RootController implements JoystickM
 
                     } else if(current == back) {
                         // go back
-                        MainApp.getInstance().popViewController(true);
+                        MainApp.getInstance().popViewController();
                     } else {
                       // append letter
                       appendLetter(current.getText());
@@ -153,14 +169,21 @@ public class NameInputViewController extends RootController implements JoystickM
         }
     }
 
-    public void deleteLetter(){
+    /**
+     * Helper method used delete a letter.
+     */
+    private void deleteLetter(){
         if(currentName.length() == 0)
             return;
         currentName.deleteCharAt(currentName.length()-1);
         nameLabel.setText("NAME: "+currentName.toString());
     }
 
-    public void appendLetter(String letter){
+    /**
+     * Helper method used to append a letter
+     * @param letter the letter to add to the name.
+     */
+    private void appendLetter(String letter){
         currentName.append(letter);
         nameLabel.setText("NAME: "+currentName.toString());
     }
