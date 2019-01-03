@@ -710,6 +710,8 @@ public class GameViewController extends RootController implements JoystickManage
             time = System.currentTimeMillis();
         }
 
+        if (gameStateController.gameOver() && GameSettings.instance.getNumbrOfPlayers() == 1)
+            showGameEnd();
     }
 
     public void setTimerLabel(int timer) {

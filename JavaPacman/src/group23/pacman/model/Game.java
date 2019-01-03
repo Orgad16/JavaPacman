@@ -142,7 +142,6 @@ public class Game {
         if(locations.isEmpty()){
             System.err.println("NO MOVEMENT LOCATIONS FOUND");
 			locations = board.getPermGhostsStart();
-            return;
         }
 
 		Random rnd = new Random();
