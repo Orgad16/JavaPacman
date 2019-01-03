@@ -92,8 +92,10 @@ public class OptionsController extends RootController implements JoystickManager
                 GameSettings.instance.setTonugeEnabled(!oldToungeValue);
                 break;
             case 3:
+                // tutorial
                 break;
             case 4:
+                // question management
                 break;
         }
     }

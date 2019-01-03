@@ -1,1 +1,4 @@
-{"game_records": [{"id":"1","name":"AABB","score":1000,"timer":"01:55","date":"01/03/2019"}, {"id":"2","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}]}
+{"game_records": [{"id":"1","name":"AABB","score":1000,"timer":"01:55","date":"01/03/2019"}, {"id":"2","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"},
+  {"id":"3","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}, {"id":"4","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}, {"id":"5","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"},
+  {"id":"6","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}, {"id":"7","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}, {"id":"8","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"},
+  {"id":"9","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}, {"id":"10","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}, {"id":"11","name":"AABB","score":800,"timer":"01:55","date":"01/03/2019"}]}
