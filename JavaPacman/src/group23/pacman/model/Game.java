@@ -235,6 +235,7 @@ public class Game {
 		emptySpaces.remove(object);
 	}
 
+
 	public List<Pair<Integer,Integer>>  movementLocations(){
         List<Pair<Integer,Integer>> locations = board.getOnlyTurns();
         int tempX = (int) (pacman.getX() - X_OFFSET()) / TILE_SIZE;

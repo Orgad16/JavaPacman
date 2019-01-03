@@ -348,8 +348,6 @@ public class GameViewController extends RootController implements JoystickManage
         if (tempGhosts.size() == 0) {
             duringQuestion = false;
         }
-
-
     }
 
 
