@@ -41,6 +41,7 @@ public class Board {
 	private boolean[][] node;
 	private boolean[][] ghostOnlyPath;
 	private List<Pair<Integer,Integer>> onlyTurns = new ArrayList<>();
+	private List<Pair<Integer,Integer>> permGhostsStart = new ArrayList<>();
 
 	/* Spawn point coordinates */
 	private int[] ghostCoords;
@@ -187,6 +188,7 @@ public class Board {
 					else if (line.charAt(i) == 'G'){
 						ghostCoords[0] = (position-2)*TILE_SIZE + X_OFFSET();
 						ghostCoords[1] = (row-2)*TILE_SIZE + Y_OFFSET;
+						permGhostsStart.add(new Pair<>(position, row));
 						position++;
 					}
 //					else if (line.charAt(i) == 'Z'){
@@ -295,6 +297,10 @@ public class Board {
 
 	public List<Pair<Integer, Integer>> getOnlyTurns() {
 		return onlyTurns;
+	}
+
+	public List<Pair<Integer,Integer>> getPermGhostsStart() {
+		return permGhostsStart;
 	}
 
 	public int[] getTempGhosts() {

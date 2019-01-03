@@ -141,6 +141,7 @@ public class Game {
 
         if(locations.isEmpty()){
             System.err.println("NO MOVEMENT LOCATIONS FOUND");
+			locations = board.getPermGhostsStart();
             return;
         }
 
@@ -217,7 +218,7 @@ public class Game {
 
 		}
         // when we are chasing temp ghosts we will not see question pellets
-        if (!getGameViewController().duringQuestion && objects.contains(questionPellet) && pelletsEaten > 25) {
+        if (!getGameViewController().duringQuestion && objects.contains(questionPellet) && pelletsEaten > 10) {
 			questionPellet.update(emptySpaces);
 			if (questionPellet.hitBox.getY() != 0.0 && questionPellet.hitBox.getX() != 0.0) {
 				objects.add(questionPellet);
@@ -241,7 +242,7 @@ public class Game {
         int tempY = (int) (pacman.getY() - Y_OFFSET) / TILE_SIZE;
 
         // filter locations close to the pacman
-        return locations.stream().filter(o -> ( tempX + 3 < o.getKey() && tempY + 3 < o.getValue())).collect(Collectors.toList());
+        return locations.stream().filter(o -> ( tempX + 3 <= o.getKey() && tempY + 3 <= o.getValue())).collect(Collectors.toList());
     }
 
 
@@ -318,12 +319,17 @@ public class Game {
 								score -= 50;
 								break;
 						}
+						ghost.setState(Ghost.STATE.DEAD);
+						ghost2.setState(Ghost.STATE.DEAD);
+						ghost3.setState(Ghost.STATE.DEAD);
 						pacman.playDeathAnim();
 					}
 
+					// kill all temp ghosts
 					for (TemporaryGhost temporaryGhost : temporaryGhosts) {
 						temporaryGhost.setState(Ghost.STATE.DEAD);
 					}
+
 					// no longer chasing temp ghosts so we can see question pellets
 					gameViewController.setDuringQuestion(false);
 					characters.removeAll(temporaryGhosts);
