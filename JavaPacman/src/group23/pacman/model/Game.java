@@ -141,7 +141,8 @@ public class Game {
 
         if(locations.isEmpty()){
             System.err.println("NO MOVEMENT LOCATIONS FOUND");
-            return;
+            locations = board.getPermGhostsStart();
+            //return;
         }
 
 		Random rnd = new Random();
@@ -234,6 +235,7 @@ public class Game {
 	private void removePelletFromEmptySpaces(GameObject object) {
 		emptySpaces.remove(object);
 	}
+
 
 	public List<Pair<Integer,Integer>>  movementLocations(){
         List<Pair<Integer,Integer>> locations = board.getOnlyTurns();

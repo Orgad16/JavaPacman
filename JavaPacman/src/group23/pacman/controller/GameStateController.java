@@ -55,7 +55,7 @@ public class GameStateController {
 		
 		/* Check to make sure we're not out of time */
 		checkTimer();
-		
+
 		
 		/* Make sure timer doesn't continue running while death animation is being played */
 		if (game.getPacman().getState() == STATE.DEATH_ANIMATION) {
@@ -70,9 +70,6 @@ public class GameStateController {
 			if (game.getPacman().getLives() == 0) {
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
-
-				int score = game.getIntScore();
-				int time = game.getTimer().getTimeRemaining();
 
 				gameViewController.stopGame();
 				gameOver = true;

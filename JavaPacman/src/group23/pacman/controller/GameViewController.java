@@ -348,8 +348,6 @@ public class GameViewController extends RootController implements JoystickManage
         if (tempGhosts.size() == 0) {
             duringQuestion = false;
         }
-
-
     }
 
 
@@ -709,6 +707,9 @@ public class GameViewController extends RootController implements JoystickManage
             }
             time = System.currentTimeMillis();
         }
+
+        if (gameStateController.gameOver() && GameSettings.instance.getNumbrOfPlayers() == 1)
+            showGameEnd();
 
     }
 
