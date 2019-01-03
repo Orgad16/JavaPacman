@@ -601,9 +601,11 @@ public class GameViewController extends RootController implements JoystickManage
     }
 
     private void playSfx() {
-        mediaPlayer.setStartTime(Duration.ZERO);
-        mediaPlayer.seek(Duration.ZERO);
-        mediaPlayer.play();
+        if (GameSettings.instance.isSoundEnabled()) {
+            mediaPlayer.setStartTime(Duration.ZERO);
+            mediaPlayer.seek(Duration.ZERO);
+            mediaPlayer.play();
+        }
     }
 
     public void startCountdown(String message) {

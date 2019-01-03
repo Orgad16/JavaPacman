@@ -71,9 +71,6 @@ public class GameStateController {
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
 
-				int score = game.getIntScore();
-				int time = game.getTimer().getTimeRemaining();
-
 				gameViewController.stopGame();
 				gameOver = true;
 				int case1 = gameViewController.handleSwitch(true, false);
@@ -90,6 +87,7 @@ public class GameStateController {
 			}
 		}
 		else if (game.levelCleared()) {
+			gameViewController.stopGame();
 			levelCleared = true;
 			int case2 = gameViewController.handleSwitch(true, false);
 			if (case2 == 1) {

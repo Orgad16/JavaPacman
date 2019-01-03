@@ -31,11 +31,11 @@ public class GameSettings {
      */
     private int numbrOfPlayers;
 
-    private boolean soundEnabled = false;
+    private boolean soundEnabled = true;
 
-    private boolean fullScreenEnabled = false;
+    private boolean fullScreenEnabled = true;
 
-    private boolean tonugeEnabled = false;
+    private boolean tonugeEnabled = true;
 
     /**
      * The names of the players

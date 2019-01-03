@@ -1,6 +1,7 @@
 package group23.pacman.model;
 
 
+import group23.pacman.controller.GameSettings;
 import group23.pacman.view.Animation;
 import group23.pacman.view.AnimationManager;
 
@@ -242,21 +243,23 @@ public class Pacman extends GameObject implements MovingCharacter {
     
     /* Plays Pacman's sound effects */
 	private void playSfx(int type) {
+		if (GameSettings.instance.isSoundEnabled()) {
 		/* Type 0 = Whip sound */
-		if (type == 0){
-			MediaPlayer mediaPlayer0 = new MediaPlayer(whipSound);
-			mediaPlayer0.play();
-			mediaPlayer0.setOnEndOfMedia(() -> {
-                		mediaPlayer0.dispose();
-           	 	});
-		}
+			if (type == 0) {
+				MediaPlayer mediaPlayer0 = new MediaPlayer(whipSound);
+				mediaPlayer0.play();
+				mediaPlayer0.setOnEndOfMedia(() -> {
+					mediaPlayer0.dispose();
+				});
+			}
 		/* Type 1 = Chomp noise*/
-		else if (type == 1){
-			MediaPlayer mediaPlayer = new MediaPlayer(chompNoise);
-			mediaPlayer.play();
-			mediaPlayer.setOnEndOfMedia(() -> {
-                		mediaPlayer.dispose();
-           	 	});
+			else if (type == 1) {
+				MediaPlayer mediaPlayer = new MediaPlayer(chompNoise);
+				mediaPlayer.play();
+				mediaPlayer.setOnEndOfMedia(() -> {
+					mediaPlayer.dispose();
+				});
+			}
 		}
 	}
 	
