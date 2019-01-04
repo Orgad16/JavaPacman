@@ -2,10 +2,14 @@ package group23.pacman.controller;
 
 import group23.pacman.MainApp;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 
 public class OptionsController extends RootController implements JoystickManager.JoystickListener {
+
+    private Stage questionManagementStage = null;
 
     @FXML private ToggleButton sound_btn;
     @FXML private Label sound_lbl;
@@ -96,6 +100,17 @@ public class OptionsController extends RootController implements JoystickManager
                 break;
             case 4:
                 // question management
+                if (questionManagementStage != null) {
+                    questionManagementStage.close();
+                }
+                questionManagementStage = new Stage();
+
+                QuestionsViewController controller = new QuestionsViewController();
+
+                Scene scene = new Scene(controller.view);
+                questionManagementStage.setScene(scene);
+
+                questionManagementStage.show();
                 break;
         }
     }

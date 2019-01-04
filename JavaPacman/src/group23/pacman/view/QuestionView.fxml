@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import ui.UIView?>-->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<UIView fx:id="root" stylesheets="@../../../assets/css/main_style.css"
+        xmlns="http://javafx.com/javafx/8.0.121"
+        xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: white;">
+    <padding><Insets bottom="8" left="8" right="8" top="8" /></padding>
+    <VBox spacing="8">
+        <TextField fx:id="questionTextField" promptText="Question"/>
+        <TextField fx:id="answer1TextField" promptText="First Answer"/>
+        <TextField fx:id="answer2TextField" promptText="Second Answer"/>
+        <TextField fx:id="answer3TextField" promptText="Third Answer"/>
+        <TextField fx:id="answer4TextField" promptText="Forth Answer (Optional)"/>
+        <HBox spacing="8">
+            <Label text="Correct Answer"/>
+            <RadioButton fx:id="rd_1" text="1" selected="true"/>
+            <RadioButton fx:id="rd_2" text="2"/>
+            <RadioButton fx:id="rd_3" text="3"/>
+            <RadioButton fx:id="rd_4" text="4"/>
+        </HBox>
+
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <Button fx:id="btn_cancel" text="CANCEL"/>
+            <Button fx:id="btn_save" text="SAVE"/>
+        </HBox>
+    </VBox>
+</UIView>
