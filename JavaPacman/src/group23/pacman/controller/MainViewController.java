@@ -1,8 +1,14 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.view.BackgroundAnimationManager;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.paint.Color;
 
 /**
  * Created by Antonio Zaitoun on 10/12/2018.
@@ -32,6 +38,8 @@ public class MainViewController extends RootController implements JoystickManage
     @FXML
     private ToggleButton exitBtn;
 
+
+
     /**
      * navigation handler.
      */
@@ -40,7 +48,6 @@ public class MainViewController extends RootController implements JoystickManage
 
     public MainViewController() {
         super("/group23/pacman/view/MainViewController.fxml");
-
         // add buttons to navigation adapter
         navigationAdapter.addRow(playBtn);
         navigationAdapter.addRow(settingsBtn);
@@ -49,6 +56,33 @@ public class MainViewController extends RootController implements JoystickManage
 
         // highlight default
         navigationAdapter.current().setSelected(true);
+
+
+        Canvas canvas = new Canvas(1440, 1000);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        BackgroundAnimationManager backgroundAnimationManagerPacman = new BackgroundAnimationManager(-150, 100, 1590, "pacman", gc, 'R');
+        BackgroundAnimationManager backgroundAnimationManagerGhost = new BackgroundAnimationManager(-60, 100, 1590, "ghost", gc, 'R');
+        BackgroundAnimationManager backgroundAnimationManagerGhost2 = new BackgroundAnimationManager(0, 100, 1590, "ghost", gc, 'R');
+
+        getRoot().getChildren().add(backgroundAnimationManagerPacman);
+        getRoot().getChildren().add(backgroundAnimationManagerGhost);
+        getRoot().getChildren().add(backgroundAnimationManagerGhost2);
+
+
+        getRoot().getChildren().add(canvas);
+        new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+                backgroundAnimationManagerPacman.startMoving();
+                backgroundAnimationManagerGhost.startMoving();
+                backgroundAnimationManagerGhost2.startMoving();
+
+            }
+        }.start();
+
+
     }
 
     @Override
