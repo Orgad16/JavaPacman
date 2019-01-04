@@ -11,10 +11,11 @@ public class AssetManager {
 
     private static final String DEFAULT_DIR_NAME = "support-files";
 
-    private static File RESOURCE_DIR = new File("/"  + DEFAULT_DIR_NAME);
+    private static File RESOURCE_DIR = new File(new File(".").getAbsolutePath() + "/" + DEFAULT_DIR_NAME);
 
     private static void setup_dirs() {
         RESOURCE_DIR.mkdirs();
+        System.out.println("RES DIR SET TO " + RESOURCE_DIR.getAbsolutePath());
     }
 
     static {

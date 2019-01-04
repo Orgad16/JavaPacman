@@ -225,7 +225,7 @@ public class MainApp extends Application{
 	}
 
 	public static void main(String[] args) {
-		
+
 		//assure that all assets exist on disk
 		AssetManager.init(
 				MapsAssetProtocol.class,
