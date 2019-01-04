@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="20019165-d1b7-4601-986f-f8a664e0bb7c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/QuestionsViewController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/SingleQuestionViewController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/view/QuestionCellView.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/view/QuestionView.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/view/QuestionsViewController.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/view/question/QuestionCell.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/group23/pacman/view/question/QuestionView.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/group23/pacman/MainApp.class" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_8.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/LeaderboardViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/LeaderboardViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/OptionsController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/OptionsController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/view/OptionsController.fxml" afterPath="$PROJECT_DIR$/src/group23/pacman/view/OptionsController.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JavaPacman.iml" afterPath="$PROJECT_DIR$/JavaPacman.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/view/QuestionView.fxml" afterPath="$PROJECT_DIR$/src/group23/pacman/view/QuestionView.fxml" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,12 +62,12 @@
       </file>
       <file leaf-file-name="QuestionView.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/view/QuestionView.fxml">
-          <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+          <provider editor-type-id="JavaFX-Scene-Builder">
             <state />
           </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="78" lean-forward="false" selection-start-line="10" selection-start-column="78" selection-end-line="10" selection-end-column="78" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="58" lean-forward="false" selection-start-line="14" selection-start-column="58" selection-end-line="14" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -88,7 +80,7 @@
           </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-9">
-              <caret line="2" column="20" lean-forward="true" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+              <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -332,44 +324,6 @@
               <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
               <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="jsonFiles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pacman" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pacman" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JavaPacman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JavaPacman" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pacman" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -381,7 +335,7 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544361795768" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Pacman-pc_eclipse/JavaPacman" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15517241" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -626,11 +580,11 @@
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3253521" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32462686" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2885572" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28731343" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Sequence" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1080,18 +1034,18 @@ locations</expression-string>
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-9">
-          <caret line="2" column="20" lean-forward="true" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/view/QuestionView.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+      <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="78" lean-forward="false" selection-start-line="10" selection-start-column="78" selection-end-line="10" selection-end-column="78" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="58" lean-forward="false" selection-start-line="14" selection-start-column="58" selection-end-line="14" selection-end-column="58" />
           <folding />
         </state>
       </provider>
@@ -1125,6 +1079,7 @@ locations</expression-string>
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
+          <last-edited>scala-sdk-2.11.12</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1153,6 +1108,7 @@ locations</expression-string>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1172,7 +1128,7 @@ locations</expression-string>
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>junit-4.12</last-edited>
+          <last-edited>jfoenix-8.0.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
