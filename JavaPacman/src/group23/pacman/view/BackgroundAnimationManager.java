@@ -137,7 +137,7 @@ public class BackgroundAnimationManager extends Pane{
     }
 
     public void stop() {
-        //timer.stop();
+        gc.clearRect(x,y,SPRITE_WIDTH,SPRITE_HEIGHT);
     }
 
     /*

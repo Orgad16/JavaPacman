@@ -38,7 +38,9 @@ public class MainViewController extends RootController implements JoystickManage
     @FXML
     private ToggleButton exitBtn;
 
-
+    BackgroundAnimationManager backgroundAnimationManagerPacman;
+    BackgroundAnimationManager backgroundAnimationManagerGhost;
+    BackgroundAnimationManager backgroundAnimationManagerGhost2;
 
     /**
      * navigation handler.
@@ -61,16 +63,15 @@ public class MainViewController extends RootController implements JoystickManage
         Canvas canvas = new Canvas(1440, 1000);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        BackgroundAnimationManager backgroundAnimationManagerPacman = new BackgroundAnimationManager(-150, 100, 1590, "pacman", gc, 'R');
-        BackgroundAnimationManager backgroundAnimationManagerGhost = new BackgroundAnimationManager(-60, 100, 1590, "ghost", gc, 'R');
-        BackgroundAnimationManager backgroundAnimationManagerGhost2 = new BackgroundAnimationManager(0, 100, 1590, "ghost", gc, 'R');
-
-        getRoot().getChildren().add(backgroundAnimationManagerPacman);
-        getRoot().getChildren().add(backgroundAnimationManagerGhost);
-        getRoot().getChildren().add(backgroundAnimationManagerGhost2);
-
+        setUpBackgroudAnimations(gc);
 
         getRoot().getChildren().add(canvas);
+
+        startAnimations();
+
+    }
+
+    public void startAnimations() {
         new AnimationTimer() {
 
             @Override
@@ -81,8 +82,22 @@ public class MainViewController extends RootController implements JoystickManage
 
             }
         }.start();
+    }
 
+    public void stopAnimations() {
+        backgroundAnimationManagerPacman.stop();
+        backgroundAnimationManagerGhost.stop();
+        backgroundAnimationManagerGhost2.stop();
+    }
 
+    public void setUpBackgroudAnimations(GraphicsContext gc) {
+        backgroundAnimationManagerPacman = new BackgroundAnimationManager(-150, 100, 1590, "pacman", gc, 'R');
+        backgroundAnimationManagerGhost = new BackgroundAnimationManager(-60, 100, 1590, "ghost", gc, 'R');
+        backgroundAnimationManagerGhost2 = new BackgroundAnimationManager(0, 100, 1590, "ghost", gc, 'R');
+
+        getRoot().getChildren().add(backgroundAnimationManagerPacman);
+        getRoot().getChildren().add(backgroundAnimationManagerGhost);
+        getRoot().getChildren().add(backgroundAnimationManagerGhost2);
     }
 
     @Override
@@ -99,6 +114,7 @@ public class MainViewController extends RootController implements JoystickManage
                     navigationAdapter.move_down().setSelected(true);
                     break;
                 case ONE:
+                    stopAnimations();
                     handleAction();
                     break;
             }
