@@ -91,9 +91,9 @@ public class MainViewController extends RootController implements JoystickManage
     }
 
     public void setUpBackgroudAnimations(GraphicsContext gc) {
-        backgroundAnimationManagerPacman = new BackgroundAnimationManager(-150, 100, 1590, "pacman", gc, 'R');
-        backgroundAnimationManagerGhost = new BackgroundAnimationManager(-60, 100, 1590, "ghost", gc, 'R');
-        backgroundAnimationManagerGhost2 = new BackgroundAnimationManager(0, 100, 1590, "ghost", gc, 'R');
+        backgroundAnimationManagerPacman = new BackgroundAnimationManager(-150, 100, 1590, "pacman", gc, 'R', 0.3f);
+        backgroundAnimationManagerGhost = new BackgroundAnimationManager(-60, 100, 1590, "ghost1", gc, 'R', 0.3f);
+        backgroundAnimationManagerGhost2 = new BackgroundAnimationManager(0, 100, 1590, "ghost2", gc, 'R', 0.3f);
 
         getRoot().getChildren().add(backgroundAnimationManagerPacman);
         getRoot().getChildren().add(backgroundAnimationManagerGhost);

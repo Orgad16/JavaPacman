@@ -1,7 +1,11 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.view.BackgroundAnimationManager;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
 import ui.UIViewController;
 
@@ -16,6 +20,9 @@ public class PlayerSelectionController extends RootController implements Joystic
     @FXML
     private ToggleButton players_2;
 
+    BackgroundAnimationManager backgroundAnimationManagerGhost;
+    private boolean isGoingUp = true;
+
     private UINavigationAdapter<ToggleButton> navigationAdapter = new UINavigationAdapter<>();
 
     private static final String JOYSTICK_LISTENER_ID = "PlayerSelectionController";
@@ -24,6 +31,36 @@ public class PlayerSelectionController extends RootController implements Joystic
         super("/group23/pacman/view/PlayerSelectionController.fxml");
         players_1.setSelected(true);
         navigationAdapter.addRow(players_1,players_2);
+        Canvas canvas = new Canvas(1440, 1000);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        setUpBackgroudAnimations(gc);
+
+        getRoot().getChildren().add(canvas);
+
+        startAnimations();
+    }
+
+    public void startAnimations() {
+        new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+                backgroundAnimationManagerGhost.startMoving();
+            }
+        }.start();
+    }
+
+    public void stopAnimations() {
+        backgroundAnimationManagerGhost.stop();
+    }
+
+    public void setUpBackgroudAnimations(GraphicsContext gc) {
+
+        backgroundAnimationManagerGhost = new BackgroundAnimationManager(800, 1000, 80, "ghost1", gc, 'U', 0.3f);
+
+        getRoot().getChildren().add(backgroundAnimationManagerGhost);
+
     }
 
     @Override
@@ -56,6 +93,7 @@ public class PlayerSelectionController extends RootController implements Joystic
                     break;
                 case ONE:
                     // select
+                    stopAnimations();
                     GameSettings.instance.setNumbrOfPlayers(navigationAdapter.getY() + 1);
                     NameInputViewController controller = new NameInputViewController(0);
                     MainApp.getInstance().pushViewController(controller,true);
@@ -63,6 +101,7 @@ public class PlayerSelectionController extends RootController implements Joystic
                 case TWO:
                     // go back
                     //app.show_main_menu();
+                    stopAnimations();
                     MainApp.getInstance().popViewController(true);
                     break;
             }
