@@ -39,6 +39,7 @@ public class TutorialViewController extends RootController implements JoystickMa
 
     /**
      * Array which holds the slides
+     * TODO: update slides here.
      */
     private Image[] slides = {
             new Image("assets/Pacman/Whip/left-whip1.png"),
@@ -47,22 +48,30 @@ public class TutorialViewController extends RootController implements JoystickMa
             new Image("assets/Pacman/Whip/right-whip1.png")
     };
 
+    /**
+     * The current slide.
+     */
     private int currentSlide = 0;
 
+    /**
+     * The navigation adapter.
+     */
     private UINavigationAdapter<ToggleButton> adapter = new UINavigationAdapter<>();
 
 
     public TutorialViewController() {
         super("/group23/pacman/view/TutorialViewController.fxml");
+
+        // setup adapter
         adapter.addRow(back,prev,next);
         adapter.current().setSelected(true);
 
+        // update slide
         updateSlide();
     }
 
     @Override
     public void didBecomeActive() {
-
         // register controller to joystick manager
         JoystickManager
                 .shared
@@ -100,6 +109,10 @@ public class TutorialViewController extends RootController implements JoystickMa
         }
     }
 
+    /**
+     * handles the action from the current button.
+     * @param current The current button selected.
+     */
     private void activate(ToggleButton current) {
         if (current == prev) {
             // prev
@@ -124,6 +137,9 @@ public class TutorialViewController extends RootController implements JoystickMa
         }
     }
 
+    /**
+     * Updates the slide.
+     */
     private void updateSlide(){
         Image slide = slides[currentSlide];
         imageView.setImage(slide);
