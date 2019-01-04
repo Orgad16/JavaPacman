@@ -97,6 +97,7 @@ public class OptionsController extends RootController implements JoystickManager
                 break;
             case 3:
                 // tutorial
+                MainApp.getInstance().pushViewController(new TutorialViewController());
                 break;
             case 4:
                 // question management
