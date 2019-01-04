@@ -69,7 +69,6 @@ public class ScoreHandler {
 				bufferedReader.close();
 			}
 			catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -128,7 +127,6 @@ public class ScoreHandler {
 			printWriter.close();
 		} 
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

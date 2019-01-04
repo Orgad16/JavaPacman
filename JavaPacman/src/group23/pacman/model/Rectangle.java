@@ -61,12 +61,10 @@ public class Rectangle {
     }
 
 	public double getHeight() {
-		// TODO Auto-generated method stub
 		return height;
 	}
 
 	public double getWidth() {
-		// TODO Auto-generated method stub
 		return width;
 	}
 

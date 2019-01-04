@@ -39,7 +39,6 @@ public class LeaderboardViewController extends RootController implements Joystic
 
             @Override
             public Collection<? extends Score> dataSource() {
-                //TODO hookup with valid data source
                 List<Score> data = new ArrayList<>();
                 SysData sysData = new SysData();
                 try {

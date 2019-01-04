@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.ListView?>
+<?import com.jfoenix.controls.JFXButton?>
 <UIView fx:id="root" stylesheets="@../../../assets/css/main_style.css,@../../../ui/res/css/styles.css"
         xmlns="http://javafx.com/javafx/8.0.121"
         xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: black;">
@@ -31,6 +32,7 @@
                                   AnchorPane.rightAnchor="0.0"
                                   AnchorPane.leftAnchor="0.0"
                                   AnchorPane.topAnchor="72.0"/>
+                        <JFXButton fx:id="create" text="Add" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0" style="fab"/>
                     </AnchorPane>
                     <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="275.0" />
                 </items>

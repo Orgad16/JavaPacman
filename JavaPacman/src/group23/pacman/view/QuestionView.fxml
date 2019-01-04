@@ -26,6 +26,8 @@
             <JFXRadioButton fx:id="rd_3" text="3"/>
             <JFXRadioButton fx:id="rd_4" text="4"/>
         </HBox>
+        <JFXTextField fx:id="level" promptText="Question Level" labelFloat="true"/>
+        <JFXTextField fx:id="team" promptText="Team Name" labelFloat="true"/>
 
         <HBox spacing="8" alignment="CENTER_RIGHT">
             <JFXButton fx:id="btn_cancel" text="CANCEL"/>
