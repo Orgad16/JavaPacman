@@ -4,6 +4,12 @@ import group23.pacman.controller.IntroController;
 import group23.pacman.controller.JoystickManager;
 import group23.pacman.controller.MainViewController;
 import group23.pacman.controller.RootController;
+import group23.pacman.model.Question;
+import group23.pacman.system.AssetManager;
+import group23.pacman.system.protocols.MapsAssetProtocol;
+import group23.pacman.system.protocols.QuestionsAssetProtocol;
+import group23.pacman.system.protocols.ScoresAssetProtocol;
+import group23.pacman.system.protocols.SettingsAssetProtocol;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.concurrent.Task;
@@ -219,6 +225,15 @@ public class MainApp extends Application{
 	}
 
 	public static void main(String[] args) {
+		
+		//assure that all assets exist on disk
+		AssetManager.init(
+				MapsAssetProtocol.class,
+				QuestionsAssetProtocol.class,
+				ScoresAssetProtocol.class,
+				SettingsAssetProtocol.class
+		);
+
 		launch(args);
 	}
 
