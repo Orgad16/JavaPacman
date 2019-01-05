@@ -5,6 +5,7 @@ import group23.pacman.model.Game;
 import group23.pacman.model.Pacman.STATE;
 import group23.pacman.controller.GameViewController;
 import group23.pacman.model.Timer;
+import group23.pacman.system.AudioManager;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -84,6 +85,7 @@ public class GameStateController {
 				pacmanLives = game.getPacman().getLives();
 				gameViewController.showLivesLeft(pacmanLives);
 				gameViewController.startCountdown("Respawning in");
+				AudioManager.shared.play("death");
 			}
 		}
 		else if (game.levelCleared()) {

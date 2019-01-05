@@ -148,7 +148,6 @@ public class Pacman extends GameObject implements MovingCharacter {
 		playAnimation();
 	}
 
-	
 	/* Checks for collisions */
     public boolean collidedWith(GameObject object) {
     	
@@ -158,7 +157,7 @@ public class Pacman extends GameObject implements MovingCharacter {
     	if(this.hitBox.intersects(hitBox)){
 			switch (object.getType()){
 				case PELLET:
-					AudioManager.shared.play("chomp");
+					AudioManager.shared.play("eat");
 					break;
 				case QUESTION_PELLET:
 					AudioManager.shared.play("candy1");
@@ -186,8 +185,6 @@ public class Pacman extends GameObject implements MovingCharacter {
     	
     	this.whip.endAnim();
     	this.state = STATE.DEATH_ANIMATION;
-		AudioManager.shared.play("death");
-    	
     }
 
     

@@ -248,8 +248,7 @@ public class MainApp extends Application{
 		AudioManager.shared.register("candy1","/assets/sfx/candy_1.mp3");
 		AudioManager.shared.register("candy2","/assets/sfx/candy_2.mp3");
 		AudioManager.shared.register("death","/assets/sfx/death.mp3");
-		AudioManager.shared.register("eat1","/assets/sfx/eat_1.mp3");
-		AudioManager.shared.register("eat2","/assets/sfx/eat_2.mp3");
+		AudioManager.shared.register("eat","/assets/sfx/eat.mp3");
 		AudioManager.shared.register("gamestart","/assets/sfx/game_start.mp3");
 		AudioManager.shared.register("newlevel","/assets/sfx/new_level.mp3");
 

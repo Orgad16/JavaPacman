@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="20019165-d1b7-4601-986f-f8a664e0bb7c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/sfx/eat_1.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/sfx/eat_2.mp3" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/MainApp.java" afterPath="$PROJECT_DIR$/src/group23/pacman/MainApp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java" afterPath="$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/group23/pacman/model/Pacman.java" afterPath="$PROJECT_DIR$/src/group23/pacman/model/Pacman.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -25,11 +26,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/group23/pacman/model/Game.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-744">
+              <caret line="370" column="27" lean-forward="false" selection-start-line="370" selection-start-column="27" selection-end-line="370" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameStateController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="87" column="50" lean-forward="false" selection-start-line="87" selection-start-column="50" selection-end-line="87" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/MainApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1758">
-              <caret line="225" column="0" lean-forward="false" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+            <state relative-caret-position="309">
+              <caret line="250" column="41" lean-forward="true" selection-start-line="250" selection-start-column="41" selection-end-line="250" selection-end-column="41" />
               <folding>
                 <element signature="method#pushViewController#1;class#MainApp#0" expanded="false" />
                 <element signature="method#popViewController#1;class#MainApp#0" expanded="false" />
@@ -41,8 +62,8 @@
       <file leaf-file-name="GameViewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="199" column="8" lean-forward="true" selection-start-line="199" selection-start-column="8" selection-end-line="199" selection-end-column="46" />
+            <state relative-caret-position="231">
+              <caret line="473" column="14" lean-forward="false" selection-start-line="473" selection-start-column="11" selection-end-line="473" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -58,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Pacman.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Pacman.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/group23/pacman/model/Pacman.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="188" column="42" lean-forward="false" selection-start-line="188" selection-start-column="42" selection-end-line="188" selection-end-column="42" />
+            <state relative-caret-position="149">
+              <caret line="183" column="24" lean-forward="true" selection-start-line="183" selection-start-column="24" selection-end-line="183" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -84,8 +105,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get(0)</find>
-      <find>timeLab</find>
       <find>true</find>
       <find>offset</find>
       <find>offset()</find>
@@ -114,6 +133,8 @@
       <find>/assets/</find>
       <find>update</find>
       <find>sfx</find>
+      <find>respa</find>
+      <find>respawning in</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -141,7 +162,6 @@
         <option value="$PROJECT_DIR$/src/group23/pacman/system/SysData.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/model/Score.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/model/Board.java" />
-        <option value="$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/controller/GameSettings.java" />
         <option value="$PROJECT_DIR$/src/assets/jsonFiles/questions.json" />
         <option value="$PROJECT_DIR$/src/assets/jsonFiles/gameRecords.json" />
@@ -174,10 +194,11 @@
         <option value="$PROJECT_DIR$/src/group23/pacman/controller/MapSelectionViewController.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/controller/NameInputViewController.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/controller/PlayerSelectionController.java" />
-        <option value="$PROJECT_DIR$/src/group23/pacman/MainApp.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java" />
+        <option value="$PROJECT_DIR$/src/group23/pacman/MainApp.java" />
         <option value="$PROJECT_DIR$/src/group23/pacman/model/Pacman.java" />
+        <option value="$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java" />
       </list>
     </option>
   </component>
@@ -563,7 +584,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="806" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -572,7 +592,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28197673" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28052327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Sequence" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -773,14 +793,6 @@ locations</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="128" column="31" lean-forward="false" selection-start-line="128" selection-start-column="31" selection-end-line="128" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/model/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1036,17 +1048,6 @@ locations</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="47" column="19" lean-forward="false" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
-          <folding>
-            <element signature="method#update#0;class#GameStateController#0" expanded="false" />
-            <element signature="method#checkTimer#0;class#GameStateController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/IntroController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1071,17 +1072,6 @@ locations</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/MainApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1758">
-          <caret line="225" column="0" lean-forward="false" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
-          <folding>
-            <element signature="method#pushViewController#1;class#MainApp#0" expanded="false" />
-            <element signature="method#popViewController#1;class#MainApp#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/MainViewController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
@@ -1090,18 +1080,45 @@ locations</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/MainApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="199" column="8" lean-forward="true" selection-start-line="199" selection-start-column="8" selection-end-line="199" selection-end-column="46" />
-          <folding />
+        <state relative-caret-position="309">
+          <caret line="250" column="41" lean-forward="true" selection-start-line="250" selection-start-column="41" selection-end-line="250" selection-end-column="41" />
+          <folding>
+            <element signature="method#pushViewController#1;class#MainApp#0" expanded="false" />
+            <element signature="method#popViewController#1;class#MainApp#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/group23/pacman/model/Pacman.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="188" column="42" lean-forward="false" selection-start-line="188" selection-start-column="42" selection-end-line="188" selection-end-column="42" />
+        <state relative-caret-position="149">
+          <caret line="183" column="24" lean-forward="true" selection-start-line="183" selection-start-column="24" selection-end-line="183" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/model/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-744">
+          <caret line="370" column="27" lean-forward="false" selection-start-line="370" selection-start-column="27" selection-end-line="370" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="473" column="14" lean-forward="false" selection-start-line="473" selection-start-column="11" selection-end-line="473" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/group23/pacman/controller/GameStateController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="87" column="50" lean-forward="false" selection-start-line="87" selection-start-column="50" selection-end-line="87" selection-end-column="50" />
           <folding />
         </state>
       </provider>
