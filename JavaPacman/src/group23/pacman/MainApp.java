@@ -223,6 +223,8 @@ public class MainApp extends Application{
 
 		primaryScene.setOnKeyPressed(JoystickManager.shared);
 
+
+
 	}
 
 	public static void main(String[] args) {
@@ -242,6 +244,16 @@ public class MainApp extends Application{
 		AudioManager.shared.register("highscore","/assets/sfx/highScore.mp3");
 		AudioManager.shared.register("menu","/assets/sfx/menuSelect.mp3");
 		AudioManager.shared.register("toggle","/assets/sfx/toggle.mp3");
+
+		AudioManager.shared.register("candy1","/assets/sfx/candy_1.mp3");
+		AudioManager.shared.register("candy2","/assets/sfx/candy_2.mp3");
+		AudioManager.shared.register("death","/assets/sfx/death.mp3");
+		AudioManager.shared.register("eat1","/assets/sfx/eat_1.mp3");
+		AudioManager.shared.register("eat2","/assets/sfx/eat_2.mp3");
+		AudioManager.shared.register("gamestart","/assets/sfx/game_start.mp3");
+		AudioManager.shared.register("newlevel","/assets/sfx/new_level.mp3");
+
+
 
 		launch(args);
 	}

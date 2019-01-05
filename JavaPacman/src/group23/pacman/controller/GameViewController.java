@@ -7,6 +7,7 @@ import group23.pacman.model.GameObject;
 import group23.pacman.model.TemporaryGhost;
 import group23.pacman.MainApp;
 import group23.pacman.model.*;
+import group23.pacman.system.AudioManager;
 import group23.pacman.view.DialogView;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -196,6 +197,7 @@ public class GameViewController extends RootController implements JoystickManage
         // starting the game
         startGame();
 
+        AudioManager.shared.play("gamestart");
     }
 
     @Override
