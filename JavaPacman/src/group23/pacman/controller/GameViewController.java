@@ -975,12 +975,28 @@ public class GameViewController extends RootController implements JoystickManage
         return hBox;
     }
 
+    /**
+     * this function will return the current number of player that are alive
+     * @return int value
+     */
+
+    public int checkOfAlivePlayers() {
+
+        if (playersStatus[currentPlayerIndex] && playersStatus[getOtherPlayer()]) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
     public int handleSwitch(boolean isDone, boolean timeOut) {
 
         // check number of players in game settings
         int numberOfPlayers = GameSettings.instance.getNumbrOfPlayers();
 
         if (numberOfPlayers == 1) { return 1; }
+
+        if (checkOfAlivePlayers() < 2 && timeOut) { return 1; }
 
         // if the player cleared or failed the level
         if (isDone) {
@@ -997,6 +1013,10 @@ public class GameViewController extends RootController implements JoystickManage
 
             // hide timer because it is meaningless with only one player alive.
             timerLabel.setVisible(false);
+        } else {
+            if (!playersStatus[getOtherPlayer()]) {
+                timerLabel.setVisible(false);
+            }
         }
 
         // if the timer (of 40 secs) ran out
