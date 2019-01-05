@@ -42,6 +42,11 @@ public class GameSettings {
      */
     private String[] playerNames = new String[]{null,null};
 
+
+
+
+
+
     private GameSettings() { }
 
 

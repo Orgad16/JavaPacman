@@ -1,5 +1,6 @@
 package group23.pacman.system.protocols;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import group23.pacman.system.AssetProtocol;
 import group23.pacman.system.JsonHandler;
@@ -50,7 +51,7 @@ public class QuestionsAssetProtocol implements AssetProtocol {
 
             // fetch the data from the file
             JsonHandler jsonHandler = new JsonHandler("src/assets/jsonFiles/questions.json", true, "", false);
-            JsonObject content = jsonHandler.getContent();
+            JsonArray content = jsonHandler.getContent().get("questions").getAsJsonArray();
 
             // adding the data to the json object
             object.add("questions", content);

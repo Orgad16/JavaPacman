@@ -29,9 +29,9 @@ public class JsonHandler {
         }catch (Exception e){
             System.err.println("json not found, creating empty file");
 
-            if(createIfNotExist && external) {
-                saveDataInFile(defaultValueOnFail,path);
-            }
+//            if(createIfNotExist && external) {
+//                saveDataInFile(defaultValueOnFail,path);
+//            }
         }
         this.content = reader != null
                 ? jsonParser.parse(reader).getAsJsonObject()
