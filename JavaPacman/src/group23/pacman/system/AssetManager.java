@@ -11,7 +11,7 @@ public class AssetManager {
 
     private static final String DEFAULT_DIR_NAME = "support-files";
 
-    private static File RESOURCE_DIR = new File(new File(".").getAbsolutePath() + "/" + DEFAULT_DIR_NAME);
+    private static File RESOURCE_DIR = new File(new File(".").getAbsolutePath() + File.separator + DEFAULT_DIR_NAME);
 
     private static void setup_dirs() {
         RESOURCE_DIR.mkdirs();
@@ -62,5 +62,9 @@ public class AssetManager {
      */
     public static class MissingAssetException extends RuntimeException {
         public MissingAssetException(String s) { super(s); }
+    }
+
+    public static String file(String name) {
+        return RESOURCE_DIR.getAbsolutePath() + File.separator + name;
     }
 }

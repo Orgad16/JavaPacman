@@ -253,7 +253,7 @@ public class MainApp extends Application{
 		AudioManager.shared.register("newlevel","/assets/sfx/new_level.mp3");
 
 
-
+		AudioManager.shared.setVolume(0.3);
 		launch(args);
 	}
 

@@ -15,10 +15,10 @@ import java.util.List;
 
 public class SysData {
 
-    final String questionPath = "src/assets/jsonFiles/questions.json";
-    final String gameRecordsPath = "src/assets/jsonFiles/gameRecords.json";
+    final String questionPath = AssetManager.file("questions.json");
+    final String gameRecordsPath = AssetManager.file("game_records.json");
     final String mapsPath = "maps/";
-    final String gameSettingsPath = "src/assets/jsonFiles/gameSettings.json";
+    final String gameSettingsPath = AssetManager.file("game_settings.json");
     private JsonHandler questionHandler;
     private JsonHandler recordsHandler;
     private JsonHandler gameSettingsHandler;

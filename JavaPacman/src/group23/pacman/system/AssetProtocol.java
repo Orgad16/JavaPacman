@@ -1,6 +1,6 @@
 package group23.pacman.system;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * Created by Antonio Zaitoun on 04/01/2019.
@@ -24,4 +24,23 @@ public interface AssetProtocol {
      * @param directory Is the directory in which the assets will be created.
      */
     void createDefaultFiles(File directory);
+
+    /**
+     *
+     */
+    default boolean makeFile(File fileName, String fileContent) {
+        try {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(fileName), "utf-8"))) {
+                writer.write(fileContent);
+                return true;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+
