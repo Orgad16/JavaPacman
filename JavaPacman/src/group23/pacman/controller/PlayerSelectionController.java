@@ -59,6 +59,8 @@ public class PlayerSelectionController extends RootController implements Joystic
 
         backgroundAnimationManagerGhost = new BackgroundAnimationManager(800, 1000, 80, "ghost1", gc, 'U', 0.3f);
 
+        //backgroundAnimationManagerGhost.setRepeat(false);
+
         getRoot().getChildren().add(backgroundAnimationManagerGhost);
 
     }

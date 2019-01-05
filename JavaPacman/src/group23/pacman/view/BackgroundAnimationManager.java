@@ -26,6 +26,7 @@ public class BackgroundAnimationManager extends Pane{
     private AnimationManager animationManager;
     private GraphicsContext gc;
     private char direction;
+    private boolean repeat;
 
     public BackgroundAnimationManager(int x, int y, int wayToGo, String character, GraphicsContext context, char direction, float speed) {
         this.x = x;
@@ -36,6 +37,7 @@ public class BackgroundAnimationManager extends Pane{
         this.wayToGo = wayToGo;
         setUpAnimations(character, speed);
         this.gc = context;
+        this.repeat = true;
     }
 
     public void startMoving() {
@@ -58,12 +60,25 @@ public class BackgroundAnimationManager extends Pane{
     }
 
     public void updateDestination(int i, int k) {
-        if (direction == 'R' || direction == 'L') {
+        if (direction == 'R') {
             if (i < initX + wayToGo) {
                 this.x = i;
                 this.y = k;
             } else {
-                resetAnimation();
+                if (repeat)
+                    changeDirection(getOppositeDirection(direction));
+
+            }
+        }
+
+        if (direction == 'L') {
+            if (i >= initX) {
+                this.x = i;
+                this.y = k;
+            } else {
+                if (repeat)
+                    changeDirection(getOppositeDirection(direction));
+
             }
         }
 
@@ -71,7 +86,8 @@ public class BackgroundAnimationManager extends Pane{
             this.x = i;
             this.y = k;
             if (k < initY - wayToGo) {
-                changeDirection(getOppositeDirection(direction));
+                if (repeat)
+                    changeDirection(getOppositeDirection(direction));
             }
             return;
         }
@@ -79,8 +95,9 @@ public class BackgroundAnimationManager extends Pane{
         if (direction == 'D') {
             this.x = i;
             this.y = k;
-            if (k >= initY) {
-                changeDirection(getOppositeDirection(direction));
+            if (k >= initY + wayToGo) {
+                if (repeat)
+                    changeDirection(getOppositeDirection(direction));
             }
         }
 
@@ -105,7 +122,7 @@ public class BackgroundAnimationManager extends Pane{
     }
 
     public void resetAnimation() {
-        gc.clearRect(x,y,SPRITE_HEIGHT + 10,SPRITE_WIDTH + 10);
+        gc.clearRect(x,y,SPRITE_HEIGHT,SPRITE_WIDTH + 10);
         this.x = initX;
         this.y = initY;
         startMoving();
@@ -125,10 +142,10 @@ public class BackgroundAnimationManager extends Pane{
                 animationManager.playAction(1);
                 break;
             case 'D':
-                animationManager.playAction(3);
+                animationManager.playAction(2);
                 break;
             case 'L':
-                animationManager.playAction(2);
+                animationManager.playAction(3);
                 break;
         }
     }
@@ -196,6 +213,10 @@ public class BackgroundAnimationManager extends Pane{
 
     public int getWayToGo() {
         return wayToGo;
+    }
+
+    public void setRepeat(boolean b) {
+        this.repeat = b;
     }
 
 }

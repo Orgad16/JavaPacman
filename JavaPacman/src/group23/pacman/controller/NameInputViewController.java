@@ -1,7 +1,11 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.view.BackgroundAnimationManager;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
@@ -62,6 +66,12 @@ public class NameInputViewController extends RootController implements JoystickM
      */
     private UINavigationAdapter<ToggleButton> movementAdapter = new UINavigationAdapter<>();
 
+
+    BackgroundAnimationManager backgroundAnimationManagerPacman;
+    BackgroundAnimationManager backgroundAnimationManagerGhost;
+    BackgroundAnimationManager backgroundAnimationManagerGhost2;
+
+
     public NameInputViewController(int playerIndex) {
         //load view
         super("/group23/pacman/view/NameInputViewController.fxml");
@@ -97,6 +107,16 @@ public class NameInputViewController extends RootController implements JoystickM
         movementAdapter.addRow(secondRow);
         movementAdapter.addRow(back,next);
         movementAdapter.current().setSelected(true);
+
+        Canvas canvas = new Canvas(1440, 1000);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        setUpBackgroudAnimations(gc);
+
+        getRoot().getChildren().add(canvas);
+
+        startAnimations();
+
     }
 
     @Override
@@ -186,5 +206,37 @@ public class NameInputViewController extends RootController implements JoystickM
     private void appendLetter(String letter){
         currentName.append(letter);
         nameLabel.setText("NAME: "+currentName.toString());
+    }
+
+    public void startAnimations() {
+        new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+                backgroundAnimationManagerPacman.startMoving();
+                backgroundAnimationManagerGhost.startMoving();
+                backgroundAnimationManagerGhost2.startMoving();
+
+            }
+        }.start();
+    }
+
+    public void stopAnimations() {
+        backgroundAnimationManagerPacman.stop();
+        backgroundAnimationManagerGhost.stop();
+        backgroundAnimationManagerGhost2.stop();
+    }
+
+    public void setUpBackgroudAnimations(GraphicsContext gc) {
+
+        // creating the animations with the objects
+        backgroundAnimationManagerPacman = new BackgroundAnimationManager(0, -150, 1150, "pacman", gc, 'D', 0.3f);
+        backgroundAnimationManagerGhost = new BackgroundAnimationManager(0, -60, 1150, "ghost1", gc, 'D', 0.3f);
+        backgroundAnimationManagerGhost2 = new BackgroundAnimationManager(0, 0, 1150, "ghost2", gc, 'D', 0.3f);
+
+        // adding the animations to the screen
+        getRoot().getChildren().add(backgroundAnimationManagerPacman);
+        getRoot().getChildren().add(backgroundAnimationManagerGhost);
+        getRoot().getChildren().add(backgroundAnimationManagerGhost2);
     }
 }
