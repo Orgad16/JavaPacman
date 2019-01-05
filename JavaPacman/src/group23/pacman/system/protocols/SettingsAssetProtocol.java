@@ -28,7 +28,7 @@ public class SettingsAssetProtocol implements AssetProtocol{
             JsonObject content = jsonHandler.getContent();
             if (content != null) {
                 //correct file and return true
-                if (content.get("settings").getAsJsonArray() != null)
+                if (content.get("settings").getAsJsonObject() != null)
                     return true;
             } else {
                 // corrupt file and return false
