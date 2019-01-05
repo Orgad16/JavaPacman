@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import ui.UIView?>-->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.UIView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXButton?>
+<UIView fx:id="root" stylesheets="@../../../assets/css/main_style.css"
+        xmlns="http://javafx.com/javafx/8.0.121"
+        xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: white;">
+    <padding><Insets bottom="8" left="8" right="8" top="32" /></padding>
+    <VBox spacing="32">
+        <JFXTextField fx:id="questionTextField" promptText="Question" labelFloat="true"/>
+        <JFXTextField fx:id="answer1TextField" promptText="First Answer" labelFloat="true"/>
+        <JFXTextField fx:id="answer2TextField" promptText="Second Answer" labelFloat="true"/>
+        <JFXTextField fx:id="answer3TextField" promptText="Third Answer" labelFloat="true"/>
+        <JFXTextField fx:id="answer4TextField" promptText="Forth Answer (Optional)" labelFloat="true"/>
+        <HBox spacing="8">
+            <Label text="Correct Answer"/>
+            <JFXRadioButton fx:id="rd_1" text="1" selected="true"/>
+            <JFXRadioButton fx:id="rd_2" text="2"/>
+            <JFXRadioButton fx:id="rd_3" text="3"/>
+            <JFXRadioButton fx:id="rd_4" text="4"/>
+        </HBox>
+        <JFXTextField fx:id="level" promptText="Question Level" labelFloat="true"/>
+        <JFXTextField fx:id="team" promptText="Team Name" labelFloat="true"/>
+
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <JFXButton fx:id="btn_cancel" text="CANCEL"/>
+            <JFXButton fx:id="btn_save" text="SAVE"/>
+        </HBox>
+    </VBox>
+</UIView>

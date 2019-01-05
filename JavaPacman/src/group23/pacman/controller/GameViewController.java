@@ -7,6 +7,7 @@ import group23.pacman.model.GameObject;
 import group23.pacman.model.TemporaryGhost;
 import group23.pacman.MainApp;
 import group23.pacman.model.*;
+import group23.pacman.system.AudioManager;
 import group23.pacman.view.DialogView;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -136,7 +137,7 @@ public class GameViewController extends RootController implements JoystickManage
         if (numberOfPlayers == 1) {
             String playerName = players.get(0);
             playerNameLabel.setText(playerName);
-            game = new Game(selectedMap, numberOfPlayers, 0, 0);
+            game = new Game(selectedMap, numberOfPlayers);
             game.setGameViewController(this);
             gameStateController = new GameStateController(this, game);
             gameStateController.setTimer(new Timer(120));
@@ -144,9 +145,9 @@ public class GameViewController extends RootController implements JoystickManage
         } else {
 
             // init games and game state controllers for the players
-            allGames[0] = new Game(selectedMap, 1, 0, 0);
+            allGames[0] = new Game(selectedMap, 1);
             allGames[0].setGameViewController(this);
-            allGames[1] = new Game(selectedMap, 1, 0,0);
+            allGames[1] = new Game(selectedMap, 1);
             allGames[1].setGameViewController(this);
             allGameStates[0] = new GameStateController(this, allGames[0]);
             allGameStates[1] = new GameStateController(this, allGames[1]);
@@ -196,6 +197,7 @@ public class GameViewController extends RootController implements JoystickManage
         // starting the game
         startGame();
 
+        AudioManager.shared.play("gamestart");
     }
 
     @Override
@@ -214,8 +216,6 @@ public class GameViewController extends RootController implements JoystickManage
 
     @Override
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
-        // TODO: handle joystick controller input
-
         if(joystickId == 1) {
             switch (selectedKey) {
                 case UP:
@@ -348,8 +348,6 @@ public class GameViewController extends RootController implements JoystickManage
         if (tempGhosts.size() == 0) {
             duringQuestion = false;
         }
-
-
     }
 
 
@@ -1049,7 +1047,7 @@ public class GameViewController extends RootController implements JoystickManage
         // update new timer
         updateTimer();
 
-        // TODO: update whip label
+
         updateWhipLabel();
 
         // update player's name

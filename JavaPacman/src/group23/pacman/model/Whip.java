@@ -270,53 +270,44 @@ public class Whip extends GameObject implements MovingCharacter {
 	
 	@Override
 	public boolean checkforQueuedAction() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void setDirection(char qDirection) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public char getQDirection() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void updateDestination() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public char getDirection() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void reset(int x, int y) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void setHasLeftSpawn() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean getHasLeftSpawn() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 
 	@Override
 	public boolean collidedWith(GameObject object) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

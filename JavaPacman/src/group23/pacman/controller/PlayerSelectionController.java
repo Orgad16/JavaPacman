@@ -1,6 +1,7 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.system.AudioManager;
 import group23.pacman.view.BackgroundAnimationManager;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -87,11 +88,13 @@ public class PlayerSelectionController extends RootController implements Joystic
                     // move left
                     navigationAdapter.current().setSelected(false);
                     navigationAdapter.move_left().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case RIGHT:
                     // move right
                     navigationAdapter.current().setSelected(false);
                     navigationAdapter.move_right().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case ONE:
                     // select
@@ -99,12 +102,14 @@ public class PlayerSelectionController extends RootController implements Joystic
                     GameSettings.instance.setNumbrOfPlayers(navigationAdapter.getY() + 1);
                     NameInputViewController controller = new NameInputViewController(0);
                     MainApp.getInstance().pushViewController(controller,true);
+                    AudioManager.shared.play("confirmation");
                     break;
                 case TWO:
                     // go back
                     //app.show_main_menu();
                     stopAnimations();
                     MainApp.getInstance().popViewController(true);
+                    AudioManager.shared.play("confirmation");
                     break;
             }
         }

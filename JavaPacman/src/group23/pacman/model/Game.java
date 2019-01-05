@@ -36,8 +36,6 @@ public class Game {
 	//private Ghost ghost4;
 
 	ArrayList<TemporaryGhost> temporaryGhosts = new ArrayList<>(4);
-
-	//TODO: add temporary ghost
 	
 	/*Ghost A.I scatter behaviour */
 	private int scatterScore;
@@ -84,7 +82,7 @@ public class Game {
 
 	private GameViewController gameViewController;
 
-	public Game(int map,int numPlayers,int player2Ghost,int player3Ghost) {
+	public Game(int map,int numPlayers) {
 		
 		this.map = map;
 		this.numPlayers = numPlayers;
@@ -115,7 +113,7 @@ public class Game {
 		objects.add(poisonPellet);
 		objects.add(questionPellet);
 
-		setUpGhosts(player2Ghost,player3Ghost);
+		setUpGhosts();
 		
 		/* Initialise the variables used to control the AI scatter behaviour */
 		scatter = false;
@@ -172,8 +170,7 @@ public class Game {
 	}
 
 
-	// TODO: remove this function! not needed -> to setup the other users for the ghosts
-	private void setUpGhosts(int player2Ghost,int player3Ghost) {
+	private void setUpGhosts() {
 		
 		Vector<Integer> vector = new Vector<Integer>(4);
 		vector.add(1);
@@ -228,12 +225,12 @@ public class Game {
 			}
 
 		}
-		//TODO: remove the gasZone
 	}
 
 	private void removePelletFromEmptySpaces(GameObject object) {
 		emptySpaces.remove(object);
 	}
+
 
 	public List<Pair<Integer,Integer>>  movementLocations(){
         List<Pair<Integer,Integer>> locations = board.getOnlyTurns();
@@ -341,8 +338,6 @@ public class Game {
 		
 		/* Loops through the game objects to check if the player has collided with a pellet. Pellet is removed on collision */
 		for (GameObject object : objects) {
-
-			// TODO: add if for the other candies
 
 			if (pacman.collidedWith(object)) {
 

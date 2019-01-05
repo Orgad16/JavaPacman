@@ -4,6 +4,13 @@ import group23.pacman.controller.IntroController;
 import group23.pacman.controller.JoystickManager;
 import group23.pacman.controller.MainViewController;
 import group23.pacman.controller.RootController;
+import group23.pacman.model.Question;
+import group23.pacman.system.AssetManager;
+import group23.pacman.system.AudioManager;
+import group23.pacman.system.protocols.MapsAssetProtocol;
+import group23.pacman.system.protocols.QuestionsAssetProtocol;
+import group23.pacman.system.protocols.ScoresAssetProtocol;
+import group23.pacman.system.protocols.SettingsAssetProtocol;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.concurrent.Task;
@@ -216,9 +223,37 @@ public class MainApp extends Application{
 
 		primaryScene.setOnKeyPressed(JoystickManager.shared);
 
+
+
 	}
 
 	public static void main(String[] args) {
+
+		//assure that all assets exist on disk
+		AssetManager.init(
+				MapsAssetProtocol.class,
+				QuestionsAssetProtocol.class,
+				ScoresAssetProtocol.class,
+				SettingsAssetProtocol.class
+		);
+
+		AudioManager.shared.register("whip","/assets/sfx/whipSound.mp3");
+		AudioManager.shared.register("chomp","/assets/sfx/chompNoise.wav");
+		AudioManager.shared.register("confirmation","/assets/sfx/confirmation.mp3");
+		AudioManager.shared.register("highlight","/assets/sfx/highlight.mp3");
+		AudioManager.shared.register("highscore","/assets/sfx/highScore.mp3");
+		AudioManager.shared.register("menu","/assets/sfx/menuSelect.mp3");
+		AudioManager.shared.register("toggle","/assets/sfx/toggle.mp3");
+
+		AudioManager.shared.register("candy1","/assets/sfx/candy_1.mp3");
+		AudioManager.shared.register("candy2","/assets/sfx/candy_2.mp3");
+		AudioManager.shared.register("death","/assets/sfx/death.mp3");
+		AudioManager.shared.register("eat","/assets/sfx/eat.mp3");
+		AudioManager.shared.register("gamestart","/assets/sfx/game_start.mp3");
+		AudioManager.shared.register("newlevel","/assets/sfx/new_level.mp3");
+
+
+
 		launch(args);
 	}
 

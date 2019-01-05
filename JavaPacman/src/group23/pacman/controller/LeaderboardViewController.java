@@ -7,7 +7,10 @@ import group23.pacman.MainApp;
 import group23.pacman.model.Score;
 import group23.pacman.system.SysData;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import ui.UITableView;
 
 import java.io.IOException;
@@ -36,7 +39,6 @@ public class LeaderboardViewController extends RootController implements Joystic
 
             @Override
             public Collection<? extends Score> dataSource() {
-                //TODO hookup with valid data source
                 List<Score> data = new ArrayList<>();
                 SysData sysData = new SysData();
                 try {

@@ -19,7 +19,7 @@
                 <Canvas fx:id="game_canvas" width="768" height="768"/>
 
             </StackPane>
-            <VBox spacing="100" alignment="CENTER" maxWidth="350">
+            <VBox spacing="100" alignment="CENTER" prefWidth="350" maxWidth="350">
                 <padding>
                     <Insets right="100"/>
                 </padding>
@@ -29,9 +29,9 @@
                     <ImageView fx:id="lifeImage1" fitHeight="50.0" fitWidth="50.0"/>
                     <ImageView fx:id="lifeImage2" fitHeight="50.0" fitWidth="50.0"/>
                 </HBox>
-                <Label fx:id="timerLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
-                <Label fx:id="playerNameLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
-                <Label fx:id="whipLabel" styleClass="label-retro" style="-fx-font-size: 40px;"/>
+                <Label alignment="CENTER" fx:id="timerLabel" text="00:00" styleClass="label-retro" style="-fx-font-size: 40px;" maxWidth="300"/>
+                <Label alignment="CENTER" fx:id="playerNameLabel" text="name" styleClass="label-retro" style="-fx-font-size: 30px;" maxWidth="300"/>
+                <Label alignment="CENTER" fx:id="whipLabel" text="0" styleClass="label-retro" style="-fx-font-size: 40px;" maxWidth="300"/>
             </VBox>
         </HBox>
 

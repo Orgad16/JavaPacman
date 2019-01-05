@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<fx:root stylesheets="/ui/res/css/styles.css" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Pane  fx:id="parent" style="-fx-background-color: #3498db;-fx-background-radius: 3 3 3 3;">
+        <VBox fx:id="vbox"  prefWidth="${parent.width}" spacing="4">
+            <padding><Insets top="8" left="8" right="8" bottom="8"/></padding>
+            <Label fx:id="questionName" text="Question...">
+                <font>
+                    <Font name="Helvetica Bold" size="20.0" />
+                </font></Label>
+            <Label maxWidth="${vbox.width}" fx:id="levelDiff" text="Level">
+                <font>
+                    <Font name="Helvetica" size="16.0" />
+                </font></Label>
+            <Label fx:id="teamName" text="Team Name" >
+                <font>
+                    <Font name="Helvetica" size="12.0" />
+                </font></Label>
+        </VBox>
+    </Pane>
+
+
+</fx:root>

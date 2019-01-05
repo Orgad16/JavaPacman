@@ -1,6 +1,7 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.system.AudioManager;
 import group23.pacman.view.BackgroundAnimationManager;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -139,18 +140,22 @@ public class NameInputViewController extends RootController implements JoystickM
                 case UP:
                     movementAdapter.current().setSelected(false);
                     movementAdapter.move_up().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case RIGHT:
                     movementAdapter.current().setSelected(false);
                     movementAdapter.move_right().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case DOWN:
                     movementAdapter.current().setSelected(false);
                     movementAdapter.move_down().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case LEFT:
                     movementAdapter.current().setSelected(false);
                     movementAdapter.move_left().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 /* ACTION CONTROL */
                 case ONE:
@@ -181,9 +186,11 @@ public class NameInputViewController extends RootController implements JoystickM
                       // append letter
                       appendLetter(current.getText());
                     }
+                    AudioManager.shared.play("confirmation");
                     break;
                 case TWO:
                     deleteLetter();
+                    AudioManager.shared.play("highlight");
                     break;
             }
         }

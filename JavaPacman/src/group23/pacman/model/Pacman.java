@@ -2,6 +2,7 @@ package group23.pacman.model;
 
 
 import group23.pacman.controller.GameSettings;
+import group23.pacman.system.AudioManager;
 import group23.pacman.view.Animation;
 import group23.pacman.view.AnimationManager;
 
@@ -147,19 +148,32 @@ public class Pacman extends GameObject implements MovingCharacter {
 		playAnimation();
 	}
 
-	
 	/* Checks for collisions */
     public boolean collidedWith(GameObject object) {
     	
     	
     	Rectangle hitBox = object.getHitBox();
+
+    	if(this.hitBox.intersects(hitBox)){
+			switch (object.getType()){
+				case PELLET:
+					AudioManager.shared.play("eat");
+					break;
+				case QUESTION_PELLET:
+					AudioManager.shared.play("candy1");
+					break;
+				case SILVER_PELLET:
+					AudioManager.shared.play("candy2");
+					break;
+			}
+		}
+
     	
-    	
-    	if (object.getType() == GameObject.TYPE.PELLET || object.getType() == GameObject.TYPE.SILVER_PELLET || object.getType() == TYPE.QUESTION_PELLET || object.getType() == TYPE.POISON_PELLET) {
-    		if (this.hitBox.intersects(hitBox)) {
-    			playSfx(1);
-    		}
-    	}
+//    	if (object.getType() == GameObject.TYPE.PELLET || object.getType() == GameObject.TYPE.SILVER_PELLET || object.getType() == TYPE.QUESTION_PELLET || object.getType() == TYPE.POISON_PELLET) {
+//    		if (this.hitBox.intersects(hitBox)) {
+//    			playSfx(1);
+//    		}
+//    	}
     	
     	
     	return this.hitBox.intersects(hitBox);
@@ -171,8 +185,6 @@ public class Pacman extends GameObject implements MovingCharacter {
     	
     	this.whip.endAnim();
     	this.state = STATE.DEATH_ANIMATION;
-
-    	
     }
 
     
