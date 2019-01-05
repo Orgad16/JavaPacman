@@ -1,6 +1,7 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.system.AudioManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import sun.applet.Main;
@@ -47,10 +48,12 @@ public class MapSelectionViewController extends RootController implements Joysti
                 case LEFT:
                     adapter.current().setSelected(false);
                     adapter.move_left().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case RIGHT:
                     adapter.current().setSelected(false);
                     adapter.move_right().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case ONE:
                     // map selected
@@ -61,10 +64,12 @@ public class MapSelectionViewController extends RootController implements Joysti
 
                     // push to navigation stack
                     MainApp.getInstance().pushViewController(gameViewController);
+                    AudioManager.shared.play("confirmation");
                     break;
                 case TWO:
                     //go back
                     MainApp.getInstance().popViewController();
+                    AudioManager.shared.play("confirmation");
                     break;
             }
         }

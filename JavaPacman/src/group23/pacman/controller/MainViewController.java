@@ -1,6 +1,7 @@
 package group23.pacman.controller;
 
 import group23.pacman.MainApp;
+import group23.pacman.system.AudioManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 
@@ -55,17 +56,21 @@ public class MainViewController extends RootController implements JoystickManage
     public void onJoystickTriggered(int joystickId, JoystickManager.Key selectedKey) {
         // only allow menu control for the first joystick
         if(joystickId == 1) {
+
             switch (selectedKey){
                 case UP:
                     navigationAdapter.current().setSelected(false);
                     navigationAdapter.move_up().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case DOWN:
                     navigationAdapter.current().setSelected(false);
                     navigationAdapter.move_down().setSelected(true);
+                    AudioManager.shared.play("highlight");
                     break;
                 case ONE:
                     handleAction();
+                    AudioManager.shared.play("confirmation");
                     break;
             }
         }

@@ -6,6 +6,7 @@ import group23.pacman.controller.MainViewController;
 import group23.pacman.controller.RootController;
 import group23.pacman.model.Question;
 import group23.pacman.system.AssetManager;
+import group23.pacman.system.AudioManager;
 import group23.pacman.system.protocols.MapsAssetProtocol;
 import group23.pacman.system.protocols.QuestionsAssetProtocol;
 import group23.pacman.system.protocols.ScoresAssetProtocol;
@@ -233,6 +234,14 @@ public class MainApp extends Application{
 				ScoresAssetProtocol.class,
 				SettingsAssetProtocol.class
 		);
+
+		AudioManager.shared.register("whip","/assets/sfx/whipSound.mp3");
+		AudioManager.shared.register("chomp","/assets/sfx/chompNoise.wav");
+		AudioManager.shared.register("confirmation","/assets/sfx/confirmation.mp3");
+		AudioManager.shared.register("highlight","/assets/sfx/highlight.mp3");
+		AudioManager.shared.register("highscore","/assets/sfx/highScore.mp3");
+		AudioManager.shared.register("menu","/assets/sfx/menuSelect.mp3");
+		AudioManager.shared.register("toggle","/assets/sfx/toggle.mp3");
 
 		launch(args);
 	}
