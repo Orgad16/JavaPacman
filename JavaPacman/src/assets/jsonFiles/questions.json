@@ -1,28 +1,172 @@
 {
-  "questions":[
+  "questions" :[
     {
-      "question": "this is a temp question - A:2",
+      "question": "What is the roles of scrum master in agile development method?",
       "answers": [
-        "first answer",
-        "second answer",
-        "third answer",
-        "fourth answer"
+        "Protecting the team from outside interference and helps the team resolve issues or make improvements",
+        "He maintains and communicates to all other participants a clear vision of what the Scrum team is trying to achieve",
+        "Collaborates with internal and external stakeholders to gather and define the product backlog items",
+        "The only authority responsible for what will be developed and in what order"
+      ],
+      "correct_ans": "1",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "For what kind purpose are used scenarios?",
+      "answers": [
+        "Describe a successful user experience",
+        "Description of the normal flow of events and what can go wrong",
+        "Tool used by engineers requirements",
+        "All the answers are correct"
+      ],
+      "correct_ans": "4",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "What is the main difference in the process of collecting and analyzing requirements between following two methods of development: waterfall and agile ",
+      "answers": [
+        "There is no difference between the methods",
+        "In agile the client can modify the requirements and add new requirements during the development process",
+        "In agile it is not possible to start the development process before all the requirements have been collected and analyzed",
+        "In waterfall the client can modify the requirements and add new requirements during the development process"
       ],
       "correct_ans": "2",
       "level": "1",
-      "team": "animal"
+      "team": "scorpion"
     },
     {
-      "question": "this is the second question - A:1",
+      "question": "What are the types of tests? ",
       "answers": [
-        "first answer 1",
-        "second answer 1",
-        "third answer 1",
-        "fourth answer 1"
+        "Structural tests and behavioral tests",
+        "Black box testing and white box testing",
+        "Alpha testing and beta testing",
+        "User testing and system testing"
+      ],
+      "correct_ans": "1",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "What is TDD?",
+      "answers": [
+        "Tests are written before the code. Tests are part of the development process",
+        "Each developer checks his own code",
+        "An experienced testing team that checks the code at the completion of the development process",
+        "Method that checks only the drivers of the progrem"
+      ],
+      "correct_ans": "1",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "What are the differences between Walkthrough and Inspection",
+      "answers": [
+        "Walkthrough is more formal then walkthrough",
+        "Inspection is more formal and more effective than Walkthrough",
+        "walkthrough is mor formal and more effective than inspection",
+        "Inspection is more effective then walkthrough"
+      ],
+      "correct_ans": "2",
+      "level": "2",
+      "team": "scorpion"
+    },
+    {
+      "question": "What involves the preparation of a leader for review?",
+      "answers": [
+        "Determine what will be in the review",
+        "Generate a list of comments",
+        "Inspection",
+        "All answers are incorrect"
       ],
       "correct_ans": "1",
       "level": "2",
-      "team": "animal"
+      "team": "scorpion"
+    },
+    {
+      "question": "Which of the following is not a design pattern?",
+      "answers": [
+        "Singelton",
+        "MVC",
+        "MVVM",
+        "All the answers are correct"
+      ],
+      "correct_ans": "4",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "What is the use of SOA technology?",
+      "answers": [
+        "Create multiple platforms to work with a single product",
+        "Allows working according to fixed protocols and is not flexible",
+        "To combines the legacy technologies of a company with the newer technologies",
+        "A technology that replaces all existing systems in an organization with a single system"
+      ],
+      "correct_ans": "3",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "How can an organization effectively reduce IT costs?",
+      "answers": [
+        "Replacing workers with other workers",
+        "Layoffs",
+        "Use private cloud",
+        "Use a public cloud"
+      ],
+      "correct_ans": "4",
+      "level": "1",
+      "team": "scorpion"
+    },
+    {
+      "question": "Ron changed a feature in the system and as a result another part of the system does not work. What did Ron forget to do?",
+      "answers": [
+        "Regression testing",
+        "User testing",
+        "Release testing",
+        "Black box testing"
+      ],
+      "correct_ans": "1",
+      "level": "2",
+      "team": "scorpion"
+    },
+    {
+      "question": "What are the cases where SaaS is ineffective?",
+      "answers": [
+        "Applications using the web or mobile",
+        "Applications where real-time data processing is required",
+        "Vanilla Systems",
+        "Tax collection systems"
+      ],
+      "correct_ans": "2",
+      "level": "2",
+      "team": "scorpion"
+    },
+    {
+      "question":"Flexibility,Adaptability and Security are all benefits of?",
+      "answers": [
+        "PaaS",
+        "SaaS",
+        "LaaS",
+        "All the answers are correct"
+      ],
+      "correct_ans": "1",
+      "level": "2",
+      "team": "scorpion"
+    },
+    {
+      "question": "Perform tests before releasing the system and after it has been released (in the customer's business), why?",
+      "answers": [
+        "Show the client that the code is working",
+        "Make sure the customer is satisfied",
+        "In case something was destroyed on the way to the customer",
+        "Different types of servers in the developing company and the customer"
+      ],
+      "correct_ans": "4",
+      "level": "2",
+      "team": "scorpion"
     }
   ]
 }
